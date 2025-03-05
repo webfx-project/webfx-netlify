@@ -25,6 +25,8 @@ module:webfx.extras.fonticons
 dev.webfx.extras.fonticons
 module:webfx.extras.fonticons.feather
 dev.webfx.extras.fonticons.feather
+module:webfx.extras.fonticons.material
+dev.webfx.extras.fonticons.material
 module:webfx.extras.geometry
 dev.webfx.extras.geometry
 module:webfx.extras.imagestore
