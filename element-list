@@ -21,6 +21,8 @@ module:webfx.extras.filepicker
 dev.webfx.extras.filepicker
 dev.webfx.extras.filepicker.spi
 dev.webfx.extras.filepicker.spi.impl
+module:webfx.extras.flextable
+dev.webfx.extras.flextable
 module:webfx.extras.fonticons
 dev.webfx.extras.fonticons
 module:webfx.extras.fonticons.feather
@@ -82,8 +84,6 @@ module:webfx.extras.time
 dev.webfx.extras.time
 module:webfx.extras.time.format
 dev.webfx.extras.time.format
-dev.webfx.extras.time.format.spi
-dev.webfx.extras.time.format.spi.impl
 module:webfx.extras.time.layout
 dev.webfx.extras.time.layout
 dev.webfx.extras.time.layout.bar
