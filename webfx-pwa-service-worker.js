@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-08-31T20:16:05Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-08-31T20:52:49Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,8 +8,8 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
-  "/91A23616F052C57B13534312268309BC.cache.js": "76a036c7a3b4b97303f86da7832e23ca87f15d3fc397818a91fe5b3b1092a9b3",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
+  "/CC0FFB1CEADDCA70FD7CBA7E6263413B.cache.js": "c1cbb6835a17fbc92fc53684d195207b6beabf335d841951b5ac43d0f1507431",
   "/dev/webfx/kit/css/main.css": "e5e436c1b2ad68f4ed9924df61b1da86b9dfd29296953dbaded4d50a6c43ce53",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
@@ -152,10 +152,10 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "c4a091dbd98a4dd3669ab2fc5ac8b9449eb2af1e5dba4d11d0fd375459cf1fea",
-  "/webfx-pwa-service-worker.js": "f40e0486ae47f323472a9db9da2783b582266daf3e34c3e7f42d7f49ac524fa8",
+  "/index.html": "e25c3cdd49cb9bdc4bafcb357274cf3b087e5843dc419f9b9a662341cf99b275",
+  "/webfx-pwa-service-worker.js": "ef8a2b114c738d3c5b34cabe101743af758476f823047c9df02fc03e7898c52c",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "a3044df0638cb46bdf8b1585748469ca66ad615565ff7f3c85e07cff2dc575bc"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "e7e0d35d2443bc8e7a8922da63e908213876ee1943df4423ad29f747c12e1e97"
 };
 
 function normalizeAsset(assetLike) {
@@ -443,9 +443,20 @@ self.addEventListener("fetch", event => {
                     const manifestPath = toManifestPathFromRequest(event.request);
                     const knownHash = PATH_TO_HASH[manifestPath];
                     const info = knownHash ? HASH_TO_INFO[knownHash] : null;
-                    if (networkResponse && networkResponse.ok && info && info.preCache === false && !isRangeRequest(event.request)) {
-                        const cache = await caches.open(CACHE_NAME);
-                        await cache.put(toHashRequest(knownHash), networkResponse.clone());
+                    const isRange = isRangeRequest(event.request);
+                    if (networkResponse && networkResponse.ok && info && info.preCache === false) {
+                        if (!isRange && networkResponse.status !== 206) {
+                            // Safe to cache the direct full response
+                            const cache = await caches.open(CACHE_NAME);
+                            await cache.put(toHashRequest(knownHash), networkResponse.clone());
+                        } else {
+                            // Partial content or Range request: background fetch full file once and cache it
+                            try {
+                                const p = backgroundFullFetchAndCache(manifestPath, knownHash);
+                                // Ensure background operation can complete
+                                event.waitUntil(p);
+                            } catch (_) { /* ignore */ }
+                        }
                     }
                 }
             } catch (e2) {
@@ -499,5 +510,25 @@ async function fetchWithRetry(request) {
         } catch (e2) {
             throw e1;
         }
+    }
+}
+
+// Helper: when a lazy asset was requested via Range or returned 206,
+// fetch the full file in the background and cache it by content hash.
+async function backgroundFullFetchAndCache(manifestPath, knownHash) {
+    try {
+        if (!knownHash) return;
+        const cache = await caches.open(CACHE_NAME);
+        // If already cached fully by hash, skip
+        const existing = await cache.match(toHashRequest(knownHash));
+        if (existing) return;
+        // Fetch the full resource without Range constraints
+        const fullReq = toScopedRequest(manifestPath);
+        const resp = await fetchWithRetry(fullReq);
+        if (resp && resp.ok && resp.status !== 206) {
+            await cache.put(toHashRequest(knownHash), resp.clone());
+        }
+    } catch (e) {
+        // best-effort: ignore errors
     }
 }
