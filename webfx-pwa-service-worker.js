@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-08-31T16:02:11Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-08-31T20:16:05Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,7 +8,7 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
-  "/AFCDBF69A020C551426D439D63C3278C.cache.js": "e861ab4e8786b913e8700508f0d185cc6fb734f772b7814baca1ebcec962144e",
+  "/91A23616F052C57B13534312268309BC.cache.js": "76a036c7a3b4b97303f86da7832e23ca87f15d3fc397818a91fe5b3b1092a9b3",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
   "/dev/webfx/kit/css/main.css": "e5e436c1b2ad68f4ed9924df61b1da86b9dfd29296953dbaded4d50a6c43ce53",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
@@ -152,10 +152,10 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "4b9b91e075def953ec8c53218fb6c3d8da2ad0b68d415c593c41eaccc7f518a5",
-  "/webfx-pwa-service-worker.js": "d5a1726a25f34aa6a251dd47974b8b99bb18b12099779dc7e8dc28d6ab3c6580",
+  "/index.html": "c4a091dbd98a4dd3669ab2fc5ac8b9449eb2af1e5dba4d11d0fd375459cf1fea",
+  "/webfx-pwa-service-worker.js": "f40e0486ae47f323472a9db9da2783b582266daf3e34c3e7f42d7f49ac524fa8",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "80f1d710ac6c44869fe4fe0d56afbeef656242ffcce47adbd147cb84a93bf940"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "a3044df0638cb46bdf8b1585748469ca66ad615565ff7f3c85e07cff2dc575bc"
 };
 
 function normalizeAsset(assetLike) {
@@ -435,7 +435,7 @@ self.addEventListener("fetch", event => {
 
         // 4) Network fallback with logging (and lazy cache-as-you-go)
         try {
-            const networkResponse = await fetch(event.request);
+            const networkResponse = await fetchWithRetry(event.request);
             console.log("✅ Fetch succeeded: " + event.request.url + " (status " + networkResponse.status + ")");
             // If this resource is marked for lazy caching, store it now under its hash key
             try {
@@ -443,7 +443,7 @@ self.addEventListener("fetch", event => {
                     const manifestPath = toManifestPathFromRequest(event.request);
                     const knownHash = PATH_TO_HASH[manifestPath];
                     const info = knownHash ? HASH_TO_INFO[knownHash] : null;
-                    if (networkResponse && networkResponse.ok && info && info.preCache === false) {
+                    if (networkResponse && networkResponse.ok && info && info.preCache === false && !isRangeRequest(event.request)) {
                         const cache = await caches.open(CACHE_NAME);
                         await cache.put(toHashRequest(knownHash), networkResponse.clone());
                     }
@@ -463,3 +463,41 @@ self.addEventListener("fetch", event => {
         }
     })());
 });
+
+
+// Helper: detect Range requests (partial content)
+function isRangeRequest(request) {
+    try {
+        const h = request && request.headers && request.headers.get ? request.headers.get("range") : null;
+        return !!(h && h.trim());
+    } catch (e) {
+        return false;
+    }
+}
+
+// Helper: fetch with a fallback retry using a reconstructed Request and no-store cache mode
+async function fetchWithRetry(request) {
+    try {
+        return await fetch(request);
+    } catch (e1) {
+        try {
+            const init = {
+                method: request.method,
+                headers: request.headers,
+                mode: request.mode,
+                credentials: request.credentials,
+                cache: "no-store",
+                redirect: "follow",
+                integrity: request.integrity,
+                referrer: request.referrer,
+                referrerPolicy: request.referrerPolicy,
+                keepalive: request.method === "GET" ? true : undefined,
+                signal: request.signal
+            };
+            const retryReq = new Request(request.url, init);
+            return await fetch(retryReq);
+        } catch (e2) {
+            throw e1;
+        }
+    }
+}
