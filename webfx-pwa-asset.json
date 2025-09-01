@@ -1,5 +1,5 @@
-{"mavenBuildTimestamp": "2025-09-01T08:50:40Z", "assetManifest": {
-  "/A993B3C3D67AB6AABC6261399BF50DB2.cache.js": "dc4252dec18dc269971fdcb35aeb7af4a6112ba0077dfbeb4f583c9fcf56e4c7",
+{"mavenBuildTimestamp": "2025-09-01T09:13:49Z", "assetManifest": {
+  "/9CA3EBCF5ACA8FD68F6AB962D1B4866C.cache.js": "5dcafa72d3ec9069d864d441986d42df00e5c58bc01efb3cee3a1f12b3883556",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
   "/dev/webfx/kit/css/main.css": "e5e436c1b2ad68f4ed9924df61b1da86b9dfd29296953dbaded4d50a6c43ce53",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
@@ -143,8 +143,8 @@
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "95972d4a650b157f9c1f2845c02793d8fb5e97aa5eef712fdda87c0dbd8317ba",
-  "/webfx-pwa-service-worker.js": "09936fde54cc16d6da99c4a39565630d52df5d0797a9f525845e607a60948a79",
+  "/index.html": "5e484bcbb46d30cbb67d59803b49ca9c42381177e5dce55ec4c622b598fb2184",
+  "/webfx-pwa-service-worker.js": "9f9077236032d9bc1f534665cd71bfd003d32806a92d05bfdfe0f7e65604bdcc",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "e54e95193e80d40d88182adfc2f3e5eeb08fc7d01b595e207030115f54fc283d"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "6484659f95ed931ec5a1c0d1cc79cb07998e8ba55a890a52ca668b5e8075751d"
 }}
