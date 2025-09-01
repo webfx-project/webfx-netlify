@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-09-01T09:13:49Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-09-01T10:41:54Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,8 +8,8 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
-  "/9CA3EBCF5ACA8FD68F6AB962D1B4866C.cache.js": "5dcafa72d3ec9069d864d441986d42df00e5c58bc01efb3cee3a1f12b3883556",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
+  "/CA74130950845C0398C8724B6D32D5E0.cache.js": "6600cc0b1d50d98e7627ecd8264cc2c3d4e6b16bc37caae09f5fe26206bfa6c6",
   "/dev/webfx/kit/css/main.css": "e5e436c1b2ad68f4ed9924df61b1da86b9dfd29296953dbaded4d50a6c43ce53",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
@@ -152,10 +152,10 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "5e484bcbb46d30cbb67d59803b49ca9c42381177e5dce55ec4c622b598fb2184",
-  "/webfx-pwa-service-worker.js": "9f9077236032d9bc1f534665cd71bfd003d32806a92d05bfdfe0f7e65604bdcc",
+  "/index.html": "1c18ee5d55f7629f391f604a0c671f66da938dd4ba96ba5c7048beb04544ebe9",
+  "/webfx-pwa-service-worker.js": "c5559426245768564808eebbf6d58ca7b1cb358485d84d8a63715edfe12e6dba",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "6484659f95ed931ec5a1c0d1cc79cb07998e8ba55a890a52ca668b5e8075751d"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "0885592a1cb886e8a3901cb0b3e8c1f1d1c486817d9e4e5906836d6d8721f110"
 };
 
 function normalizeAsset(assetLike) {
