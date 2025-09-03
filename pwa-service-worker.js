@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-09-03T11:09:29Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-09-03T11:47:37Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,9 +8,9 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
-  "/33DF4A0756A270C12E1E18CB1D5FFD56.cache.js": "85404867b8394757980ce5795a03aad64396df0e42426318b31b0ab8da836917",
+  "/2591E51C61BB8F17EDBC78AC3B67A274.cache.js": "f15d27f4ef615e11c1fd28013b54f5c6ebe428a5b026d06297a227ea9c61f7c7",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
-  "/dev/webfx/kit/css/main.css": "4fb25534de286921941c646882c8b1206c90fee7e3f925b6a4e6f708daacd7e1",
+  "/dev/webfx/kit/css/main.css": "2118875b2361dc1fc543482aab0dfc46ab2b8c9f20ce3ee355c11836ebd728b8",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
@@ -152,10 +152,10 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "6dadeeecc3c9a5cdf96b74aefe422445534019f37ea0be752f50588367b7b474",
-  "/webfx-pwa-service-worker.js": "df6aefe206473ea99fc5c61bc972f7a9be04ad0889b16eed57f28838a88127a4",
+  "/index.html": "823fd51bbaea4d779b9d00ff21b57db61b0dab300f06a2ef32bedc777346cb57",
+  "/pwa-service-worker.js": "78d46223f3da294889ea4d3bddaa9c0e75cf60b6f388e5e2430762de5bcd4172",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "2b9222e331627d2960509fa70ac41e50471fb5bfff9648762b025b16b0d6f32c"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "ba5ff08b55cd57d2f07fe5edb32299afa958a5b662d1ee8da15ff09026bb6838"
 };
 
 function normalizeAsset(assetLike) {
@@ -318,7 +318,7 @@ self.addEventListener("fetch", event => {
                                     try {
                                         const cleanupPromise = (async () => {
                                             try {
-                                                const resp = await fetch("/webfx-pwa-asset.json", {cache: "no-cache"});
+                                                const resp = await fetch("/pwa-asset.json", {cache: "no-cache"});
                                                 if (resp && resp.ok) {
                                                     const json = await resp.json();
                                                     const newAsset = (json && (json.assetManifest || json)) || {};
@@ -331,7 +331,7 @@ self.addEventListener("fetch", event => {
                                                         console.log("🧹 No cached entries required cleaning for version change");
                                                     }
                                                 } else {
-                                                    console.log("ℹ️ Could not fetch /webfx-pwa-asset.json (status " + (resp && resp.status) + ")");
+                                                    console.log("ℹ️ Could not fetch /pwa-asset.json (status " + (resp && resp.status) + ")");
                                                 }
                                             } catch (eFetchMan) {
                                                 console.log("ℹ️ Error while fetching/processing new manifest: " + (eFetchMan && eFetchMan.message ? eFetchMan.message : eFetchMan));
