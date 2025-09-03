@@ -1,7 +1,7 @@
-{"mavenBuildTimestamp": "2025-09-03T12:16:00Z", "assetManifest": {
-  "/76647D0AE85D0FB5A082595FE6CE5110.cache.js": "f7d85c1fed4635694e3fc5e36382438e8b72eef92a5580e312efc3446271372f",
+{"mavenBuildTimestamp": "2025-09-03T13:52:39Z", "assetManifest": {
+  "/8D097A97B26CF53E9F4F520852640D42.cache.js": "721a046997e1ab75a78e8df9a7ca21af3953741191978ccda1c2c05081aa39a3",
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
-  "/dev/webfx/kit/css/main.css": "bee7b0f3b8d1d0dc4efa4a1d8fbb0ac34d4cced4e5b52c3c97575d89a26cdef0",
+  "/dev/webfx/kit/css/main.css": "afafb84677fe281db7c302b25cb2acd035e3db4257da208f38ebdcb92343884e",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
@@ -143,8 +143,8 @@
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/index.html": "a10955c44e6f579f2971774be08c6e15bcdbf95224fc3fbc6d113d48da15b2e4",
-  "/pwa-service-worker.js": "0b6f10f207507a334423cb6232db2ceb7cc9e8db1f18ef35f2c8c011f4af98a4",
+  "/index.html": "875f456583134deaa5d4286f501e83ffbfed6071b476fc1ff4bbe20ef0fed433",
+  "/pwa-service-worker.js": "099ab5993a6a3eed7d715d6d3541b0e141c47298a864332274ba7f4caef9ffe4",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "cbff8a986ee0153dc276bfd6ac42a6f169d7cd3be3da7bb8336742271c0cae28"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "2733725d00b7c3c6de14eaa56f65b5ba8a3b0e7b6a93fe28c4acf32491b301c7"
 }}
