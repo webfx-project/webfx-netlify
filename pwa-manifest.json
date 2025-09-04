@@ -1,0 +1,12 @@
+{
+  "id": "dev.webfx.demo.tetris",
+  "name": "Tetris",
+  "short_name": "Tetris",
+  "description": "A JavaFX game written by Gerrit Grunwald and transpiled to JS by WebFX",
+  "categories": ["game", "demo"],
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "black",
+  "theme_color": "black",
+  "orientation": "portrait"
+}
