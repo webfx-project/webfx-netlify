@@ -1,6 +1,6 @@
-{"mavenBuildTimestamp": "2025-09-04T18:34:52Z", "assetManifest": {
-  "/454D512BA469C32663DFA30E130E4CD6.cache.js": "c0dcda5ea115c4946aae7a8d0266446346ee850464663660af82972307988e2b",
-  "/dev/webfx/kit/css/main.css": "850686799d7fa46eecc185ce3e7f93fb8f52f6219f2dd8ea78d7f3954875ed0b",
+{"mavenBuildTimestamp": "2025-10-21T22:44:33Z", "assetManifest": {
+  "/A03E516C7D0B8A6B9A8F86ADE569A068.cache.js": "6459c304841d65db3105da39c5dbb5b2ca09058218ecab005ddb0cc723bb7101",
+  "/dev/webfx/kit/css/main.css": "982ec3c996155374e1026b845bd45296a49ce5010341f4e58ac286f64230ba9d",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
   "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
@@ -41,8 +41,8 @@
   "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
   "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
   "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
-  "/index.html": "b70ae92905f8b1ec11bb1482e6b48e966bf68efd4b3124f19a800d09c07e3ba5",
-  "/pwa-service-worker.js": "efa36845edf3c9bc1f8df03b122f0d037fe4e9fbafb2d2a07226662b5a88e7eb",
+  "/index.html": "0aefe1c1a511a31c0133033c837fd0ca110455f7d662110d2b6d5ae079de0402",
+  "/pwa-service-worker.js": "ec29e4e1bc322ae2629051d8b2852cdd00a5c424222a17ea3b0f21a9a052e83a",
   "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
-  "/webfx_demo_tetris_application_gwt.nocache.js": "d06f09f331f4aa553d66d68b3e0cd2182eca77078f0a87bf098969b98e53b606"
+  "/webfx_demo_tetris_application_gwt.nocache.js": "cb6d1ccb8a81864558caaf2913cf4d32912aea0346f6725a8f116db297d40b93"
 }}
