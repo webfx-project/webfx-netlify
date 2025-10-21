@@ -1,70 +1,286 @@
 
-/*===== webfx-kit-javafxcontrols-web@main.css from webfx-kit-javafxcontrols-peers-gwt-j2cl =====*/
+/*===== webfx-kit-javafxcontrols-web@main.css from webfx-kit-javafxcontrols-peers-elemental2 =====*/
 
 /***** Global variables *****/
 :root {
-    --fx-border-color: #c0c0c0;
-    --fx-border-radius: 5px;
-    --fx-border-style: solid;
-    --fx-border-width: 1px;
-    --fx-border-color-focus: #0096D6;
-    --fx-textfield-background: white;
+    --fx-button-background-color: white;
+    --fx-button-background-image: none;
+    --fx-button-background-radius: var(--fx-button-border-radius);
+    /* Next 3 necessary? (probably never used) */
+    --fx-button-background-position: none;
+    --fx-button-background-repeat: none;
+    --fx-button-background-size: none;
+
+    --fx-button-border-style: solid;
+    --fx-button-border-color: #c0c0c0;
+    --fx-button-border-radius: 5px;
+    --fx-button-border-width: 1px;
+
+    --fx-textfield-background-color: white;
+    --fx-textfield-background-radius: 0;
+    --fx-textfield-border-style: solid;
+    --fx-textfield-border-color: var(--fx-button-border-color);
+    --fx-textfield-border-width: 1px;
+    --fx-textfield-border-radius: var(--fx-button-border-radius);
+
+    --fx-textarea-background-color: var(--fx-textfield-border-style);
+    --fx-textarea-border-style: var(--fx-textfield-border-style);
+    --fx-textarea-border-color: var(--fx-textfield-border-color);
+    --fx-textarea-border-width: var(--fx-textfield-border-width);
+    --fx-textarea-border-radius: var(--fx-textfield-border-radius);
+
+    --fx-button-border-color-focus: var(--fx-border-color-focus);
+
+    --fx-togglebutton-background-color-selected: lightgray;
+    --fx-togglebutton-border-color-selected: darkgray;
+    --fx-togglebutton-background-color-hover: var(--fx-togglebutton-background-color-selected);
+    --fx-togglebutton-border-color-hover: var(--fx-togglebutton-border-color-selected);
+
+    --fx-theme-color: #0095cb;
+    --fx-placholder-color: #888;
+    --fx-progress-indicator-color: var(--fx-theme-color);
+    --fx-hyperlink-text-fill: var(--fx-theme-color);
+    --fx-checkbox-background-color: var(--fx-theme-color);
+    --fx-checkbox-border-color: var(--fx-text-fill);
+    --fx-radiobutton-background-color: var(--fx-theme-color);
+    --fx-radiobutton-border-color: var(--fx-text-fill);
 }
 
 ::placeholder {
-    color: #888;
+    color: var(--fx-placholder-color);
 }
 
-fx-button > fx-background {
-    background: linear-gradient(180deg, white, #e0e0e0);
-    border-radius: var(--fx-border-radius);
+/* Without this rule, the context menu is wrongly shifted up by the browser the first time it is displayed */
+fx-scene > * {
+    overflow: hidden;
 }
 
-fx-button > fx-border, fx-textfield > fx-border, textarea {
-    border-color: var(--fx-border-color);
-    border-style: var(--fx-border-style);
-    border-width: var(--fx-border-width);
-    border-radius: var(--fx-border-radius);
+/* Applying text color to svg path as well by default */
+fx-label, fx-button, fx-togglebutton {
+    --fx-svg-path-fill: var(--fx-text-fill);
 }
 
-fx-textfield:focus-within > fx-border, textarea:focus {
-    border-color: var(--fx-border-color-focus);
-    outline: none !important;
+fx-button, fx-togglebutton {
+    --fx-border-style: var(--fx-button-border-style);
+    --fx-border-color: var(--fx-button-border-color);
+    --fx-border-radius: var(--fx-button-border-radius);
+    --fx-border-width: var(--fx-button-border-width);
+    --fx-background-color: var(--fx-button-background-color);
+    --fx-background-radius: var(--fx-button-background-radius);
+    --fx-background-image: var(--fx-button-background-image);
+    --fx-background-position: var(--fx-button-background-position);
+    --fx-background-repeat: var(--fx-button-background-repeat);
+    --fx-background-size: var(--fx-button-background-size);
 }
 
-textarea {
-    padding: 8px;
-    box-sizing: border-box;
+fx-button:focus-within, fx-togglebutton:focus-within {
+    --fx-button-border-color: var(--fx-button-border-color-focus);
+}
+
+fx-togglebutton:hover {
+    --fx-button-background-color: var(--fx-togglebutton-background-color-hover);
+    --fx-button-border-color: var(--fx-togglebutton-border-color-hover);
+}
+
+fx-togglebutton.pseudo-selected {
+    --fx-button-background-color: var(--fx-togglebutton-background-color-selected);
+    --fx-button-border-color: var(--fx-togglebutton-border-color-selected);
+}
+
+
+fx-hyperlink {
+    --fx-text-fill: var(--fx-hyperlink-text-fill);
 }
 
 fx-hyperlink fx-text:hover {
     text-decoration: underline;
 }
 
-fx-textfield > fx-background {
-    background: var(--fx-textfield-background);
-    border-radius: var(--fx-border-radius);
-}
-
-/* Removing borders, outlines and background for input elements (to not interfere with the above) */
-input[type="text"], input[type="password"] {
+/* Removing borders, outlines and background for input elements (to not interfere with the text field below) */
+input {
     border: none;
     outline: none;
     background-color: transparent;
+    margin: 0;
+    padding: 0;
 }
 
-/*===== webfx-kit-javafxgraphics-web@main.css from webfx-kit-javafxgraphics-peers-gwt-j2cl =====*/
+/* Removing spinner buttons on number inputs. Reasons: 1) Not in JavaFX 2) Make the text field narrower which can cause
+ unwanted clip on the number, ex: on FireFox when app code call setPrefWith(80) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+/* and for FireFox: */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+fx-textfield {
+    --fx-border-style: var(--fx-textfield-border-style);
+    --fx-border-color: var(--fx-textfield-border-color);
+    --fx-border-width: var(--fx-textfield-border-width);
+    --fx-border-radius: var(--fx-textfield-border-radius);
+    --fx-background-color: var(--fx-textfield-background-color);
+    --fx-background-radius: var(--fx-textfield-background-radius);
+}
+
+fx-textfield:focus-within {
+    --fx-textfield-border-color: var(--fx-border-color-focus);
+}
+
+textarea {
+    padding: 8px;
+    box-sizing: border-box;
+    outline: none;
+    background-color: var(--fx-textarea-background-color);
+    border-style: var(--fx-textarea-border-style);
+    border-color: var(--fx-textarea-border-color);
+    border-width: var(--fx-textarea-border-width);
+    border-radius: var(--fx-textarea-border-radius);
+}
+
+textarea:focus {
+    --fx-textarea-border-color: var(--fx-border-color-focus);
+}
+
+fx-titledpane textarea {
+    --fx-textarea-border-radius: 0 0 5px 5px;
+}
+
+/* Cross for the tab close button */
+.tab-close-button {
+    --fx-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' stroke='%23444' stroke-width='2' stroke-linejoin='round' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M 4,4 L 12,12 Z M 4,12 L 12,4 Z\'/%3E%3C/svg%3E");
+}
+
+fx-menuitemcontainer {
+    --fx-background-color-focus: var(--fx-focus-color);
+    --fx-text-fill-focus: white;
+}
+
+/* Ellipsis management for wrapped text inside a label with restricted height */
+
+fx-label.ellipsis {
+    overflow: hidden;
+}
+
+fx-label.ellipsis fx-text {
+    /*text-overflow: ellipsis;*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /* -webkit-line-clamp will be set in JS by HtmlTextPeer */
+}
+
+fx-progressindicator .spinner .segment {
+    background-color: var(--fx-progress-indicator-color);
+}
+
+fx-checkbox .box .mark {
+    --fx-border-style: solid;
+    --fx-border-color: var(--fx-checkbox-border-color);
+    --fx-border-width: 1px;
+    --fx-border-radius: 3px;
+}
+
+fx-checkbox.pseudo-selected .box .mark {
+    --fx-background-radius: 3px;
+    --fx-background-color: var(--fx-checkbox-background-color);
+}
+
+fx-radiobutton .radio .dot {
+    --fx-border-style: solid;
+    --fx-border-color: var(--fx-radiobutton-border-color);
+    --fx-border-width: 1px;
+    --fx-border-radius: 50%;
+}
+
+fx-radiobutton.pseudo-selected .radio .dot {
+    --fx-background-radius: 50%;
+    --fx-background-color: var(--fx-radiobutton-background-color);
+}
+
+/*===== webfx-kit-javafxgraphics-web@main.css from webfx-kit-javafxgraphics-peers-elemental2 =====*/
+
+:root {
+    /* Capturing safe area in CSS variables so they can be accessed by WebFX kit */
+    --safe-area-inset-top:    env(safe-area-inset-top);
+    --safe-area-inset-right:  env(safe-area-inset-right);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    --safe-area-inset-left:   env(safe-area-inset-left);
+
+    /* Text selection mode */
+    --text-user-select: text; /* for texts */
+    --body-user-select: none; /* for everything else */
+
+    /* CSS variables for backgrounds (in JavaFX Region) */
+    --fx-background-color: transparent;
+    --fx-background-image: none;
+    --fx-background-position: none;
+    --fx-background-repeat: none;
+    --fx-background-size: none;
+    --fx-background-radius: var(--fx-border-radius);
+
+    /* CSS variables for borders (in JavaFX Region) */
+    --fx-border-style: none;
+    --fx-border-color: transparent;
+    --fx-border-width: 0;
+    --fx-border-radius: 0;
+
+    /* CSS variables for text fill and svg path fill */
+    --fx-text-fill: black;
+    --fx-svg-path-fill: var(--fx-text-fill);
+
+    /* CSS variable for focus appearance */
+    --fx-focus-color: #0096D6;
+    --fx-background-color-focus: unset;
+    --fx-border-style-focus: dashed;
+    --fx-border-color-focus: var(--fx-focus-color);
+    --fx-border-width-focus: 1px;
+    --fx-text-fill-focus: unset;
+
+    --fx-kit-line-height: 1; /* Default variable for text line height managed by the webfx kit. App CSS can't override
+    it (because it's set at the text element level), but can set --fx-line-height which precedes --fx-kit-line-height */
+}
+
+.unset-variables { /* Dummy selector used just to list unset CSS variables that can be overridden by App CSS */
+    --fx-line-height: 1;
+    --fx-svg-path-stroke: transparent;
+}
 
 /* Mocking some basic JavaFX behaviours */
+
+html, body {
+    height: 100dvh;
+    /* Also disabling overscroll (prevents SpaceFX ship drag to work when coming back to PWA on iOS) */
+    overscroll-behavior: none;
+}
+
 body {
     overflow: hidden; /* Disabling browser horizontal and vertical scroll bars */
     margin: 0; /* Removing the default margin around the body */
-    /* Disabling user selection by default */
+    /* Disabling user selection by default (like in JavaFX) but enabling selection on text (as opposed to JavaFX - see fx-text CSS rule)  */
+    -webkit-user-select: var(--body-user-select);
+    -moz-user-select: var(--body-user-select);
+    -ms-user-select: var(--body-user-select);
+    user-select: var(--body-user-select);
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+}
+
+fx-scene { /* main stage scene or popup scenes */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+body > fx-scene { /* main stage scene only */
+    height: 100dvh;
+}
+
+/* Workaround for iOS Safari bug not returning the correct initial window height for PWA with 'black-translucent' status bar (such as SpaceFX PWA) */
+body { /* Although we don't want that padding, we apply it initially because this fixes the bug. GwtJ2clPrimaryStagePeer will then erase that padding */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Making disabled nodes semi-transparent */
@@ -72,11 +288,98 @@ body {
     opacity: 50%;
 }
 
-/* When fill and stroke are not set by application code, we make them transparent by default like in JavaFX (otherwise
- the browser will make them black). */
-fx-svgpath svg {
-    fill: none;
-    stroke: none;
+/* Disabling default focus outline (focus appearance will be set by other rules in this CSS or javafx-controls CSS) */
+:focus,
+:focus-visible {
+    outline: none;
+}
+
+fx-background {
+    background-color: var(--fx-background-color);
+    border-radius: var(--fx-background-radius);
+    background-image: var(--fx-background-image);
+    background-position: var(--fx-background-position);
+    background-repeat: var(--fx-background-repeat);
+    background-size: var(--fx-background-size);
+}
+
+:focus > fx-background, :focus-visible > fx-background {
+    background-color: var(--fx-background-color-focus, var(--fx-background-color));
+}
+
+fx-border {
+    border-style: var(--fx-border-style);
+    border-color: var(--fx-border-color);
+    border-width: var(--fx-border-width);
+    border-radius: var(--fx-border-radius);
+}
+
+:focus > fx-border, :focus-visible > fx-border {
+    --fx-border-style: var(--fx-border-style-focus);
+    --fx-border-color: var(--fx-border-color-focus);
+    --fx-border-width: var(--fx-border-width-focus);
+}
+
+fx-children { /* Stopping propagation of background and border CSS variables to children */
+    --fx-background-color: transparent;
+    --fx-background-radius: var(--fx-border-radius);
+    --fx-background-image: none;
+    --fx-background-position: none;
+    --fx-background-repeat: none;
+    --fx-background-size: none;
+    --fx-border-style: none;
+    --fx-border-color: none;
+    --fx-border-radius: 0;
+    --fx-border-width: 0;
+}
+
+/* The default JavaFX behaviour for Text wrapping is equivalent to HTML "break-word", which is not the default in HTML
+   (the default in HTML being "normal"). So we apply "break-word". */
+fx-text {
+    color: var(--fx-text-fill);
+    word-break: break-word;
+    overflow-wrap: break-word; /* fallback for better browser support */
+    /* Also enabling selection on text (as opposed to JavaFX, but it's expected by most web users) */
+    -webkit-user-select: var(--text-user-select);
+    -moz-user-select: var(--text-user-select);
+    -ms-user-select: var(--text-user-select);
+    user-select: var(--text-user-select);
+
+    line-height: var(--fx-line-height, var(--fx-kit-line-height));
+}
+
+:focus fx-text, :focus-visible fx-text {
+    color: var(--fx-text-fill-focus, var(--fx-text-fill));
+}
+
+fx-svgpath svg path:not([stroke]) {
+    stroke: var(--fx-svg-path-stroke); /* unset by default */
+}
+
+/* Applying the default JavaFX behaviour for SVGPath - Note that CSS fill is prioritized over SVG fill! */
+fx-svgpath svg path:not([fill]):not([stroke]) { /* if the application code didn't set neither fill nor stroke */
+    fill: var(--fx-svg-path-fill);
+}
+
+fx-svgpath svg path:not([fill])[stroke] { /* if the application code set the stroke but not the fill */
+    --fx-svg-path-fill: transparent; /* then the fill is transparent */
+    fill: var(--fx-svg-path-fill);
+}
+
+/*===== webfx-extras-ckeditor-web@main.css from webfx-extras-webtext-peers-elemental2 =====*/
+
+/* Applying same user-select setting as fx-text to fx-htmltext */
+fx-htmltext {
+    color: var(--fx-text-fill);
+    -webkit-user-select: var(--text-user-select);
+    -moz-user-select: var(--text-user-select);
+    -ms-user-select: var(--text-user-select);
+    user-select: var(--text-user-select);
+}
+
+/* Hiding the warning message from CKEditor 4.22.1 */
+.cke_notifications_area {
+    display: none;
 }
 /*===== fx2048-web@main.css from webfx-demo-fx2048-application =====*/
 
@@ -86,14 +389,20 @@ fx-svgpath svg {
 }
 
 :root {
-    --fx-border-width: 0;
+    --fx-border-style-focus: none;
+    --fx-button-background-color: transparent;
+    --fx-button-border-width: 0;
+}
+
+fx-button {
+    cursor: pointer;
 }
 
 .game-root {
     /* JavaFX CSS:
     -fx-background-color: #faf8ef;
     */
-    background-color: #faf8ef;
+    --fx-background-color: #faf8ef;
 }
 
 .game-vbox {
@@ -103,9 +412,9 @@ fx-svgpath svg {
     -fx-background-radius: 3;
     -fx-border-radius: 3;
     */
-    background-color: #bbada0;
+    --fx-background-color: #bbada0;
     padding: 5px 15px 5px 15px;
-    border-radius: 3px;
+    --fx-border-radius: 3px;
 }
 
 .game-titScore {
@@ -114,7 +423,7 @@ fx-svgpath svg {
     -fx-text-fill: #eee4da;
     */
     font-size: 13px;
-    color: #eee4da;
+    --fx-text-fill: #eee4da;
 }
 
 .game-score {
@@ -123,7 +432,7 @@ fx-svgpath svg {
     -fx-text-fill: white;
     */
     font-size: 25px;
-    color: white;
+    --fx-text-fill: white;
 }
 
 .game-points {
@@ -133,7 +442,7 @@ fx-svgpath svg {
     -fx-fill: red;
     */
     font-size: 25px;
-    color: rgba(119, 110, 101, 0.9);
+    --fx-text-fill: rgba(119, 110, 101, 0.9);
 }
 
 .game-time {
@@ -142,7 +451,7 @@ fx-svgpath svg {
     -fx-text-fill: #bbada0;
     */
     font-size: 14px;
-    color: #bbada0;
+    --fx-text-fill: #bbada0;
 }
 
 .game-backGrid {
@@ -153,9 +462,9 @@ fx-svgpath svg {
     -fx-background-radius: 6;
     -fx-border-radius: 6;
     */
-    background-color: #bbada0;
-    border-color: #bbada0;
-    border-radius: 6px;
+    --fx-background-color: #bbada0;
+    --fx-border-color: #bbada0;
+    --fx-border-radius: 6px;
 }
 
 .game-grid {
@@ -164,9 +473,9 @@ fx-svgpath svg {
     -fx-background-radius: 3;
     -fx-border-radius: 3;
     */
-    background-color: #bbada0;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-background-color: #bbada0;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-grid-cell {
@@ -196,7 +505,7 @@ fx-svgpath svg {
     -fx-text-fill: #776e65;
     */
     font-size: 80px;
-    color: #776e65;
+    --fx-text-fill: #776e65;
 }
 
 .game-subtitle {
@@ -206,7 +515,7 @@ fx-svgpath svg {
     -fx-effect: dropshadow( three-pass-box, rgba(243, 215, 116, 1), 10, 0.5, 0, 0 );
     */
     font-size: 40px;
-    color: #f2b179;
+    --fx-text-fill: #f2b179;
     text-shadow: 0 0 20px #f2b179;
 }
 
@@ -220,11 +529,11 @@ fx-svgpath svg {
     -fx-border-radius: 6;
     */
     font-size: 60px;
-    color: #f9f6f2;
-    border-color: #f9f6f2;
-    border-width: 2;
-    background-radius: 6;
-    border-radius: 6;
+    --fx-text-fill: #f9f6f2;
+    --fx-border-color: #f9f6f2;
+    --fx-border-width: 2px;
+    --fx-background-radius: 6;
+    --fx-border-radius: 6;
 }
 
 .game-overlay-pause, .game-overlay-quit, .game-overlay-about {
@@ -233,7 +542,7 @@ fx-svgpath svg {
     -fx-background-color: #f9f6f2;
     */
     opacity: 0.9;
-    background-color: #f9f6f2;
+    --fx-background-color: #f9f6f2;
 }
 
 .game-lblPause, .game-lblOver, .game-lblQuit {
@@ -242,7 +551,7 @@ fx-svgpath svg {
     -fx-text-fill: #776e65;
     */
     font-size: 60px;
-    color: #776e65;
+    --fx-text-fill: #776e65;
 }
 
 .game-lblWarning {
@@ -253,7 +562,7 @@ fx-svgpath svg {
     */
     font-size: 18px;
     font-style: italic;
-    color: #f65e3b;
+    --fx-text-fill: #f65e3b;
 }
 
 .game-lblAbout {
@@ -262,7 +571,7 @@ fx-svgpath svg {
     -fx-fill: #776e65;
     */
     font-size: 50px;
-    color: #776e65;
+    --fx-text-fill: #776e65;
 }
 
 .game-lblAbout2 {
@@ -273,7 +582,7 @@ fx-svgpath svg {
     -fx-translate-y: -25;
     */
     font-size: 25px;
-    color: #f2b179;
+    --fx-text-fill: #f2b179;
     text-shadow: 0 0 20px #f2b179;
     transform: translate(0px, -25px);
     display:inline-block;
@@ -285,7 +594,7 @@ fx-svgpath svg {
     -fx-text-fill: #cdc1b4;
     */
     font-size: 25px;
-    color: black; /*#cdc1b4;*/
+    --fx-text-fill: black; /*#cdc1b4;*/
 }
 
 .game-lblAboutSub2 {
@@ -294,14 +603,14 @@ fx-svgpath svg {
     -fx-text-fill: derive(#cdc1b4,-40%);
     */
     font-size: 25px;
-    color: #8a745c;
+    --fx-text-fill: #8a745c;
 }
 
 .game-overlay-won {
     /* JavaFX CSS:
     -fx-background-color: rgba(237, 194, 46, 0.5);
     */
-    background-color: rgba(237, 194, 46, 0.5);
+    --fx-background-color: rgba(237, 194, 46, 0.5);
 }
 
 .game-lblWon {
@@ -310,7 +619,7 @@ fx-svgpath svg {
     -fx-text-fill: #f9f6f2;
     */
     font-size: 60px;
-    color: #f9f6f2;
+    --fx-text-fill: #f9f6f2;
 }
 
 .game-overlay-over {
@@ -319,7 +628,7 @@ fx-svgpath svg {
     -fx-background-color: #f9f6f2;
     */
     opacity: 0.6;
-    background-color: #f9f6f2;
+    --fx-background-color: #f9f6f2;
 }
 
 .game-button {
@@ -334,7 +643,7 @@ fx-svgpath svg {
     -fx-padding: 6 20 12 20;
     */
     font-size: 30px;
-    color: white;
+    --fx-text-fill: white;
     /*padding: 6px 20px 12px 20px;*/
 }
 
@@ -343,9 +652,9 @@ fx-svgpath svg {
 }
 
 .game-button > fx-border {
-    border-color: #8f7a66;
-    border-width: 2px;
-    border-radius: 3px;
+    --fx-border-color: #8f7a66;
+    --fx-border-width: 2px;
+    --fx-border-radius: 3px;
 }
 
 .game-button:pressed {
@@ -371,10 +680,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #776e65;
-    background-color: #eee4da;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #776e65;
+    --fx-background-color: #eee4da;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-4    {
@@ -386,10 +695,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #776e65;
-    background-color: #ede0c8;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #776e65;
+    --fx-background-color: #ede0c8;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-8    {
@@ -401,10 +710,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #f9f6f2;
-    background-color: #f2b179;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #f2b179;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-16   {
@@ -416,10 +725,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #f9f6f2;
-    background-color: #f59563;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #f59563;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 
@@ -432,10 +741,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #f9f6f2;
-    background-color: #f67c5f;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #f67c5f;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-64   {
@@ -447,10 +756,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 55px;
-    color: #f9f6f2;
-    background-color: #f65e3b;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #f65e3b;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-128  {
@@ -465,13 +774,13 @@ fx-svgpath svg {
     -fx-border-width: 1;
     */
     font-size: 45px;
-    color: #f9f6f2;
-    background-color: #edcf72;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #edcf72;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
     effect: dropshadow( three-pass-box, rgba(243, 215, 116, 0.2381), 30, 0.5, 0, 0 );
-    border-color: rgba(255, 255, 255, 0.14286);
-    border-width: 1;
+    --fx-border-color: rgba(255, 255, 255, 0.14286);
+    --fx-border-width: 1;
 }
 
 .game-tile-256  {
@@ -486,13 +795,13 @@ fx-svgpath svg {
     -fx-border-width: 1;
     */
     font-size: 45px;
-    color: #f9f6f2;
-    background-color: #edcc61;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #edcc61;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
     effect: dropshadow( three-pass-box, rgba(243, 215, 116, 0.31746), 30, 0.5, 0, 0 );
-    border-color: rgba(255, 255, 255, 0.19048);
-    border-width: 1;
+    --fx-border-color: rgba(255, 255, 255, 0.19048);
+    --fx-border-width: 1;
 }
 
 .game-tile-512  {
@@ -507,13 +816,13 @@ fx-svgpath svg {
     -fx-border-width: 1;
     */
     font-size: 45px;
-    color: #f9f6f2;
-    background-color: #edc850;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #edc850;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
     effect: dropshadow( three-pass-box, rgba(243, 215, 116, 0.39683), 30, 0.5, 0, 0 );
-    border-color: rgba(255, 255, 255, 0.2381);
-    border-width: 1;
+    --fx-border-color: rgba(255, 255, 255, 0.2381);
+    --fx-border-width: 1;
 }
 
 .game-tile-1024 {
@@ -528,13 +837,13 @@ fx-svgpath svg {
     -fx-border-width: 1;
     */
     font-size: 35px;
-    color: #f9f6f2;
-    background-color: #edc53f;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #edc53f;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
     effect: dropshadow( three-pass-box, rgba(243, 215, 116, 0.47619), 30, 0.5, 0, 0 );
-    border-color: rgba(255, 255, 255, 0.28571);
-    border-width: 1;
+    --fx-border-color: rgba(255, 255, 255, 0.28571);
+    --fx-border-width: 1;
 }
 
 .game-tile-2048 {
@@ -549,13 +858,13 @@ fx-svgpath svg {
     -fx-border-width: 1;
     */
     font-size: 35px;
-    color: #f9f6f2;
-    background-color: #edc22e;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #edc22e;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
     effect: dropshadow( three-pass-box, rgba(243, 215, 116, 0.55556), 30, 0.5, 0, 0 );
-    border-color: rgba(255, 255, 255, 0.33333);
-    border-width: 1;
+    --fx-border-color: rgba(255, 255, 255, 0.33333);
+    --fx-border-width: 1;
 }
 
 .game-tile-4096   {
@@ -567,10 +876,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 30px;
-    color: #f9f6f2;
-    background-color: #b885ac;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #b885ac;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-8192   {
@@ -582,10 +891,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 30px;
-    color: #f9f6f2;
-    background-color: #af6da9;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #af6da9;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-16384 {
@@ -597,10 +906,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 30px;
-    color: #f9f6f2;
-    background-color: #ab61a7;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #ab61a7;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-32768 {
@@ -612,10 +921,10 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 30px;
-    color: #f9f6f2;
-    background-color: #a755a6;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #a755a6;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 .game-tile-65536, .game-tile-131072, .game-tile-262144 {
@@ -627,17 +936,17 @@ fx-svgpath svg {
     -fx-border-radius: 3;
     */
     font-size: 25px;
-    color: #f9f6f2;
-    background-color: #3c3a32;
-    background-radius: 3;
-    border-radius: 3;
+    --fx-text-fill: #f9f6f2;
+    --fx-background-color: #3c3a32;
+    --fx-background-radius: 3;
+    --fx-border-radius: 3;
 }
 
 /*
 SVG ICONS https://icomoon.io/app/
 */
 
-#mSave > fx-background {
+#mSave {
     /* JavaFX CSS:
     -fx-shape: "M16 18l8-8h-6v-8h-4v8h-6zM23.273 14.727l-2.242 2.242 8.128 3.031-13.158 4.907-13.158-4.907 8.127-3.031-2.242-2.242-8.727 3.273v8l16 6 16-6v-8z";
     -fx-background-color: #f9f6f2;
@@ -647,7 +956,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M16 18l8-8h-6v-8h-4v8h-6zM23.273 14.727l-2.242 2.242 8.128 3.031-13.158 4.907-13.158-4.907 8.127-3.031-2.242-2.242-8.727 3.273v8l16 6 16-6v-8z"></path></svg>');
+    --fx-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M16 18l8-8h-6v-8h-4v8h-6zM23.273 14.727l-2.242 2.242 8.128 3.031-13.158 4.907-13.158-4.907 8.127-3.031-2.242-2.242-8.727 3.273v8l16 6 16-6v-8z"></path></svg>');
     translate: 0px -3px;
 }
 
@@ -669,7 +978,7 @@ SVG ICONS https://icomoon.io/app/
     */
 }
 
-#mRestore > fx-background {
+#mRestore {
     /* JavaFX CSS:
     -fx-shape: "M0 28h32v2h-32zM32 24v2h-32v-2l4-8h8v4h8v-4h8zM7 10l9-9 9 9h-7v8h-4v-8z";
     -fx-background-color: #f9f6f2;
@@ -679,7 +988,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M0 28h32v2h-32zM32 24v2h-32v-2l4-8h8v4h8v-4h8zM7 10l9-9 9 9h-7v8h-4v-8z"></path></svg>');
+    --fx-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M0 28h32v2h-32zM32 24v2h-32v-2l4-8h8v4h8v-4h8zM7 10l9-9 9 9h-7v8h-4v-8z"></path></svg>');
 }
 
 #mRestore button {
@@ -700,7 +1009,7 @@ SVG ICONS https://icomoon.io/app/
     */
 }
 
-#mPause > fx-background {
+#mPause {
     /* JavaFX CSS:
     -fx-shape: "M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM10 10h4v12h-4zM18 10h4v12h-4z";
     -fx-background-color: #f9f6f2;
@@ -710,7 +1019,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM10 10h4v12h-4zM18 10h4v12h-4z"></path></svg>');
+    --fx-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM10 10h4v12h-4zM18 10h4v12h-4z"></path></svg>');
 }
 
 #mPause button {
@@ -731,7 +1040,7 @@ SVG ICONS https://icomoon.io/app/
     */
 }
 
-#mReplay > fx-background {
+#mReplay {
     /* JavaFX CSS:
     -fx-shape: "M0 27.429v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804zM0.321 13.143v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402z";
     -fx-background-color: #f9f6f2;
@@ -741,7 +1050,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M0 27.429v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804zM0.321 13.143v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402z"></path></svg>');
+    --fx-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M0 27.429v-8q0-0.464 0.339-0.804t0.804-0.339h8q0.464 0 0.804 0.339t0.339 0.804-0.339 0.804l-2.446 2.446q1.268 1.179 2.875 1.821t3.339 0.643q2.393 0 4.464-1.161t3.321-3.196q0.196-0.304 0.946-2.089 0.143-0.411 0.536-0.411h3.429q0.232 0 0.402 0.17t0.17 0.402q0 0.089-0.018 0.125-1.143 4.786-4.786 7.759t-8.536 2.973q-2.607 0-5.045-0.982t-4.348-2.804l-2.304 2.304q-0.339 0.339-0.804 0.339t-0.804-0.339-0.339-0.804zM0.321 13.143v-0.125q1.161-4.786 4.821-7.759t8.571-2.973q2.607 0 5.071 0.991t4.375 2.795l2.321-2.304q0.339-0.339 0.804-0.339t0.804 0.339 0.339 0.804v8q0 0.464-0.339 0.804t-0.804 0.339h-8q-0.464 0-0.804-0.339t-0.339-0.804 0.339-0.804l2.464-2.464q-2.643-2.446-6.232-2.446-2.393 0-4.464 1.161t-3.321 3.196q-0.196 0.304-0.946 2.089-0.143 0.411-0.536 0.411h-3.554q-0.232 0-0.402-0.17t-0.17-0.402z"></path></svg>');
 }
 
 #mReplay button {
@@ -762,7 +1071,7 @@ SVG ICONS https://icomoon.io/app/
     */
 }
 
-#mInfo > fx-background {
+#mInfo {
     /* JavaFX CSS:
     -fx-shape: "M1344 1472v128q0 26-19 45t-45 19h-512q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h64v-384h-64q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h384q26 0 45 19t19 45v576h64q26 0 45 19t19 45zm-128-1152v192q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-192q0-26 19-45t45-19h256q26 0 45 19t19 45z";
     -fx-background-color: #f9f6f2;
@@ -772,7 +1081,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="300 250 1400 1400"><path fill="white" d="M1344 1472v128q0 26-19 45t-45 19h-512q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h64v-384h-64q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h384q26 0 45 19t19 45v576h64q26 0 45 19t19 45zm-128-1152v192q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-192q0-26 19-45t45-19h256q26 0 45 19t19 45z"></path></svg>');
+    --fx-button-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="300 250 1400 1400"><path fill="white" d="M1344 1472v128q0 26-19 45t-45 19h-512q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h64v-384h-64q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h384q26 0 45 19t19 45v576h64q26 0 45 19t19 45zm-128-1152v192q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-192q0-26 19-45t45-19h256q26 0 45 19t19 45z"></path></svg>');
 }
 
 #mInfo button {
@@ -793,7 +1102,7 @@ SVG ICONS https://icomoon.io/app/
     */
 }
 
-#mQuit > fx-background {
+#mQuit {
     /* JavaFX CSS:
     -fx-shape: "M20 4.581v4.249c1.131 0.494 2.172 1.2 3.071 2.099 1.889 1.889 2.929 4.4 2.929 7.071s-1.040 5.182-2.929 7.071c-1.889 1.889-4.4 2.929-7.071 2.929s-5.182-1.040-7.071-2.929c-1.889-1.889-2.929-4.4-2.929-7.071s1.040-5.182 2.929-7.071c0.899-0.899 1.94-1.606 3.071-2.099v-4.249c-5.783 1.721-10 7.077-10 13.419 0 7.732 6.268 14 14 14s14-6.268 14-14c0-6.342-4.217-11.698-10-13.419zM14 0h4v16h-4z";
     -fx-background-color: #f9f6f2;
@@ -803,7 +1112,7 @@ SVG ICONS https://icomoon.io/app/
     */
     width: 40px;
     height: 40px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M20 4.581v4.249c1.131 0.494 2.172 1.2 3.071 2.099 1.889 1.889 2.929 4.4 2.929 7.071s-1.040 5.182-2.929 7.071c-1.889 1.889-4.4 2.929-7.071 2.929s-5.182-1.040-7.071-2.929c-1.889-1.889-2.929-4.4-2.929-7.071s1.040-5.182 2.929-7.071c0.899-0.899 1.94-1.606 3.071-2.099v-4.249c-5.783 1.721-10 7.077-10 13.419 0 7.732 6.268 14 14 14s14-6.268 14-14c0-6.342-4.217-11.698-10-13.419zM14 0h4v16h-4z"></path></svg>');
+    --fx-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="white" d="M20 4.581v4.249c1.131 0.494 2.172 1.2 3.071 2.099 1.889 1.889 2.929 4.4 2.929 7.071s-1.040 5.182-2.929 7.071c-1.889 1.889-4.4 2.929-7.071 2.929s-5.182-1.040-7.071-2.929c-1.889-1.889-2.929-4.4-2.929-7.071s1.040-5.182 2.929-7.071c0.899-0.899 1.94-1.606 3.071-2.099v-4.249c-5.783 1.721-10 7.077-10 13.419 0 7.732 6.268 14 14 14s14-6.268 14-14c0-6.342-4.217-11.698-10-13.419zM14 0h4v16h-4z"></path></svg>');
 }
 
 #mQuit button {
@@ -832,7 +1141,7 @@ SVG ICONS https://icomoon.io/app/
 .game-button + span {
     font-family: "Clear Sans Bold";
     font-size: 30px;
-    color: white;
+    --fx-text-fill: white;
 }
 
 a {
