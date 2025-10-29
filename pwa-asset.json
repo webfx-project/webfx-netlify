@@ -1,5 +1,5 @@
-{"mavenBuildTimestamp": "2025-10-21T10:22:20Z", "assetManifest": {
-  "/12799CB576923F62D26C8389FBE991A4.cache.js": "1481cbfd3781259641e612477682294e68bf20139cea98847974daf8f6ac3266",
+{"mavenBuildTimestamp": "2025-10-29T11:38:44Z", "assetManifest": {
+  "/467DEBB429EA7CCA4D53DB4F6E7323D1.cache.js": "4d419c5fda8e82e878be75f5f9ece987f36c1f4d3ed74d549b09fc84e1a786a2",
   "/dev/webfx/kit/css/main.css": "42212f96bf8547bc9513d7fe75ef0e90c04d2b22db8c8cf621ca0a00dbf9d1ac",
   "/emul/java/util/regex/xregexp.js": "263ed3cef90a59f0a94fbc2e54dfd0c32526df337132e361e0e9303502828f58",
   "/eu/hansolo/fx/jarkanoid/Emulogic-zrEw.ttf": "0f0b99c1404ba7736cbf2eabcd8772d23fe06e8fd9dc0a2f280204ded9577db4",
@@ -98,8 +98,8 @@
   "/eu/hansolo/fx/jarkanoid/upperRightCorner.png": "d360255ac2c1fdbc0a155bf623d506b09821c89a37f2bcb1d6e78b88f196b4ff",
   "/eu/hansolo/fx/jarkanoid/whiteBlock.png": "b7cc7b506da36aee3e51e261816843d750f153ae36cdbe6a0164ca06153eb9e8",
   "/eu/hansolo/fx/jarkanoid/yellowBlock.png": "f34858abaef3166ee219ab8819c36200c97cb3e8a9a3f6dfe2c651b1be9dbf0a",
-  "/index.html": "62a32f5242d7b2635893549264a5ff93f467ede734fd5c881114d1a2e86dee96",
-  "/pwa-service-worker.js": "43ffe7bbc445d4919fcc7f194f503079f8d70a5262a249c8cc86d7d3347090f8",
+  "/index.html": "00e04f77bdd23dedccc90140bce6860530623db423f729b5c5c409957d395d0c",
+  "/pwa-service-worker.js": "2952b7e2b3d605bb5b53b8f56537b6efb654f876da38c635511984bd3fc97ba2",
   "/webfx_demo_jarkanoid_application_gwt.devmode.js": "580d74dbf2447eb173b0a3fdc6df66da4edef49c18fc65c7b9e6732dc527c4d2",
-  "/webfx_demo_jarkanoid_application_gwt.nocache.js": "5b705022e32010c8a8e82143eb284b2f119667dfa71185d0bdb2cea8e1f06363"
+  "/webfx_demo_jarkanoid_application_gwt.nocache.js": "6ffa631d9210c8a5a36bcdcd41e82832fcfb311baaf08d8fe19c0821bee0922f"
 }}
