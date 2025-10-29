@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-10-21T22:44:33Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-10-29T11:32:30Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,12 +8,12 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
-  "/A03E516C7D0B8A6B9A8F86ADE569A068.cache.js": "6459c304841d65db3105da39c5dbb5b2ca09058218ecab005ddb0cc723bb7101",
+  "/EE5010227B6080BCA98D80AD863741AB.cache.js": "f6dec1f941cc4569902b2abf3a4efeff214733ef8b5f3f22ad53304b1b0134e7",
   "/dev/webfx/kit/css/main.css": "982ec3c996155374e1026b845bd45296a49ce5010341f4e58ac286f64230ba9d",
-  "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
-  "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
-  "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
-  "/dev/webfx/kit/mapper/peers/javafxcontrols/gwt/html/perfect-scrollbar.min.js": "3535c240c3cfef15b9fd77b610c9b41db9ff2f4569949230b7f15a9c8cd0b6e7",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.min.js": "3535c240c3cfef15b9fd77b610c9b41db9ff2f4569949230b7f15a9c8cd0b6e7",
   "/emul/java/util/regex/xregexp.js": "263ed3cef90a59f0a94fbc2e54dfd0c32526df337132e361e0e9303502828f58",
   "/eu/hansolo/fx/tetris/Silkworm.ttf": "5bac9845a9dc198d720a372c610b169dfc911bcdf9171c874256a866ee2e3f64",
   "/eu/hansolo/fx/tetris/blueBlock.png": "e071d656f24fce7b5a08b512b6f667eddd32b97442bb13158873072c5989ccad",
@@ -50,10 +50,10 @@ const ASSET = {
   "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
   "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
   "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
-  "/index.html": "0aefe1c1a511a31c0133033c837fd0ca110455f7d662110d2b6d5ae079de0402",
-  "/pwa-service-worker.js": "ec29e4e1bc322ae2629051d8b2852cdd00a5c424222a17ea3b0f21a9a052e83a",
+  "/index.html": "e4442783dda722ddf13a1c9d575d46f0d7a764c4057865af798525a0a22b5134",
+  "/pwa-service-worker.js": "fe42165abf3df3185ff34f810a1c710c70436e062b77979c42526f7704176a5a",
   "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
-  "/webfx_demo_tetris_application_gwt.nocache.js": "cb6d1ccb8a81864558caaf2913cf4d32912aea0346f6725a8f116db297d40b93"
+  "/webfx_demo_tetris_application_gwt.nocache.js": "6ba537d39dbbbf5f433be2e1eb4f8eb18d4d5546ed68229d73c6ecec06ff30fb"
 };
 
 function normalizeAsset(assetLike) {
