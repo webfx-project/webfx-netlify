@@ -16,6 +16,7 @@
 package org.teavm.runtime.heap;
 
 import org.teavm.interop.Address;
+import org.teavm.interop.Import;
 import org.teavm.interop.StaticInit;
 import org.teavm.interop.Structure;
 import org.teavm.interop.Unmanaged;
@@ -105,8 +106,12 @@ public final class Heap {
         }
         end = start.add(currentSize);
         maxSize = Math.max(currentSize, maxSize);
+        notifyHeapResized();
         return grownBytes >= bytes;
     }
+
+    @Import(name = "notifyHeapResized")
+    private static native void notifyHeapResized();
 
     private static HeapNode lastRecord() {
         HeapRecord record = start.toStructure();
