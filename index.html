@@ -1,5 +1,165 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> The WebFX blog</title><meta name="description" content="WebFX transpiles your JavaFX application into a pure JS webapp (no server, no plugin)."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="favicon.png"><link rel="stylesheet" href="css/hermes.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.webfx.dev/atom.xml" title="The WebFX blog"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="atom.xml" title="The WebFX blog" type="application/atom+xml">
-</head><body><div class="wrap"><header><a class="logo-link" href="index.html"><img src="WebFX.svg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link active" href="index.html" target="_self">BLOG</a></li><li class="nav-list-item"><a class="nav-list-link" href="archives/" target="_self">ARCHIVE</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/webfx-project/webfx" target="_blank">GITHUB</a></li><li class="nav-list-item"><a class="nav-list-link" href="atom.xml" target="_self">FEED</a></li></ul></header><main class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a class="post-title-link" href="2022/10/19/accessing-local-files/">Accessing local files with WebFX</a></h2><div class="post-info">Oct 19, 2022</div><div class="post-content"><p><a target="_blank" rel="noopener" href="https://files.webfx.dev/"><img src="/2022/10/19/accessing-local-files/FilesDemo.png" alt="Files Demo"></a></p>
+</head><body><div class="wrap"><header><a class="logo-link" href="index.html"><img src="WebFX.svg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link active" href="index.html" target="_self">BLOG</a></li><li class="nav-list-item"><a class="nav-list-link" href="archives/" target="_self">ARCHIVE</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/webfx-project/webfx" target="_blank">GITHUB</a></li><li class="nav-list-item"><a class="nav-list-link" href="atom.xml" target="_self">FEED</a></li></ul></header><main class="container"><ul class="home post-list"><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a class="post-title-link" href="2025/11/13/teavm/">WebFX now supports TeaVM: bringing WebAssembly and Kotlin to JavaFX on the Web 🚀</a></h2><div class="post-info">Nov 13, 2025</div><div class="post-content"><p><img src="/2025/11/13/teavm/TeaVM.png" alt="TeaVM"></p>
+<p>We’re excited to announce that <strong>WebFX now officially supports TeaVM</strong>, the Java-to-WebAssembly compiler — unlocking faster startup times, smaller bundles, and broader JVM language compatibility, including <strong>Kotlin</strong> and <strong>Scala</strong>.</p>
+<hr>
+<h2 id="What-is-TeaVM"><a href="#What-is-TeaVM" class="headerlink" title="What is TeaVM?"></a>What is TeaVM?</h2><p><a target="_blank" rel="noopener" href="https://teavm.org/">TeaVM</a> is an ahead-of-time (AOT) compiler that translates <strong>Java bytecode</strong> into <strong>JavaScript</strong> or <strong>WebAssembly (aka Wasm)</strong>.<br>This is a key difference from <strong>GWT</strong>, which transpiles <strong>Java source code</strong> directly into JavaScript.</p>
+<p>Because TeaVM works at the <strong>bytecode level</strong>, it can compile not only Java but <strong>any language that targets the JVM</strong> — such as <strong>Kotlin</strong> and <strong>Scala</strong> — making it a versatile choice for modern web development.</p>
+<hr>
+<h2 id="Why-TeaVM-support-matters"><a href="#Why-TeaVM-support-matters" class="headerlink" title="Why TeaVM support matters"></a>Why TeaVM support matters</h2><h3 id="⚡-WebAssembly-performance"><a href="#⚡-WebAssembly-performance" class="headerlink" title="⚡ WebAssembly performance"></a>⚡ WebAssembly performance</h3><p>One of the biggest benefits of TeaVM is its support for <strong>WebAssembly</strong>.<br>Unlike JavaScript, WebAssembly is a newer low-level binary format—already compiled before it reaches the browser—allowing near-native performance and now supported by all modern browsers.<br>With TeaVM, WebFX applications can now compile to Wasm and run faster — while still offering <strong>direct access to the browser DOM</strong>, something most other Wasm toolchains cannot do.</p>
+<h3 id="💙-Kotlin-and-Scala-support"><a href="#💙-Kotlin-and-Scala-support" class="headerlink" title="💙 Kotlin and Scala support"></a>💙 Kotlin and Scala support</h3><p>TeaVM’s bytecode-based design means it supports <strong>all JVM languages</strong> — including <strong>Kotlin</strong> and <strong>Scala</strong> — right out of the box.<br>This expands WebFX beyond Java, allowing teams to choose their preferred language without giving up the familiar JavaFX programming model.</p>
+<h3 id="🔮-Future-proof-addition"><a href="#🔮-Future-proof-addition" class="headerlink" title="🔮 Future-proof addition"></a>🔮 Future-proof addition</h3><p>By integrating TeaVM alongside GWT, WebFX becomes even more <strong>future-proof</strong>.<br>Developers can pick between <strong>JavaScript (via GWT)</strong> and <strong>WebAssembly (via TeaVM)</strong>, ensuring long-term flexibility as the web platform continues to evolve.</p>
+<hr>
+<h2 id="Why-TeaVM-stands-out-among-WebAssembly-compilers"><a href="#Why-TeaVM-stands-out-among-WebAssembly-compilers" class="headerlink" title="Why TeaVM stands out among WebAssembly compilers"></a>Why TeaVM stands out among WebAssembly compilers</h2><p>While several Java-to-Wasm projects exist (or have existed), TeaVM has proven to be the <strong>most practical and lightweight</strong> solution for real-world web development:</p>
+<table>
+<thead>
+<tr>
+<th>Java -&gt; Wasm compiler</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TeaVM</strong></td>
+<td>Active</td>
+<td>Lightweight, mature, fast, supports Wasm in the browser with direct DOM access! 🤩</td>
+</tr>
+<tr>
+<td><strong>GraalVM (Oracle)</strong></td>
+<td>Active</td>
+<td>Primary server-oriented, heavy output, supports only web workers (no DOM access)</td>
+</tr>
+<tr>
+<td><strong>CheerpJ</strong></td>
+<td>Active</td>
+<td>Embeds mini JVM, large binaries</td>
+</tr>
+<tr>
+<td><strong>Kotlin&#x2F;JS&#x2F;Wasm</strong></td>
+<td>Active (experimental)</td>
+<td>Embeds mini JVM, large binaries</td>
+</tr>
+<tr>
+<td><strong>j2wasm (Google)</strong></td>
+<td>Inactive</td>
+<td>Experimental, abandoned</td>
+</tr>
+<tr>
+<td><strong>JWebAssembly</strong></td>
+<td>Inactive</td>
+<td>Proof of concept</td>
+</tr>
+<tr>
+<td><strong>ByteCoder</strong></td>
+<td>Inactive</td>
+<td>Stagnant development</td>
+</tr>
+</tbody></table>
+<p>Among these, <strong>GraalVM</strong> is probably TeaVM’s <strong>most serious competitor</strong>, especially since it’s backed by Oracle and has strong momentum in the JVM ecosystem.<br>However, GraalVM has historically focused on <strong>server-side execution</strong> of WebAssembly modules.<br>Its browser support is <strong>very recent</strong>, lacks <strong>direct DOM access</strong>, and currently produces <strong>much larger binaries</strong>.</p>
+<p>As the GraalVM browser target matures, we may consider adding GraalVM support to WebFX as well.<br>But for now, <strong>TeaVM clearly offers the most advanced, lightweight, and browser-ready Java → WebAssembly solution</strong> available.</p>
+<hr>
+<h2 id="How-we-integrated-TeaVM-into-WebFX"><a href="#How-we-integrated-TeaVM-into-WebFX" class="headerlink" title="How we integrated TeaVM into WebFX"></a>How we integrated TeaVM into WebFX</h2><p>Adding TeaVM support in addition to GWT turned out to be much easier than expected — thanks to the WebFX Platform, our foundation layer for Java-based cross-platform development (desktop, mobile, and web).</p>
+<p>While WebFX focuses on bringing JavaFX applications to the web, the WebFX Platform is more general-purpose and not tied to JavaFX. It provides the modular building blocks that make WebFX possible — including APIs for UI, I&#x2F;O, and browser integration.</p>
+<p>To make TeaVM compatible with the WebFX stack - which mainly relies on Elemental2 for the web platform — we created a polyfill for Elemental2, this Google library that exposes browser APIs (like the DOM, events, and storage) to Java code.<br>This polyfill is now part of the WebFX Platform and allows TeaVM to seamlessly understand and compile the same Elemental2-based code used by GWT.</p>
+<p><img src="/2025/11/13/teavm/Polyfill.png" alt="Polyfill"></p>
+<p>At the moment, the polyfill covers only the subset of the Elemental2 API used by WebFX itself.<br>However, it can potentially be expanded to cover any additional Elemental2 APIs.<br>Increasing the coverage is a straightforward (if somewhat boring) task, so in principle, any Elemental2-based project could be compiled to WebAssembly through the WebFX Platform.</p>
+<h2 id="And-it-works-You-can-now-build-the-same-WebFX-codebase-with-either-GWT-for-JavaScript-or-TeaVM-for-WebAssembly-—-with-no-changes-to-your-application-code"><a href="#And-it-works-You-can-now-build-the-same-WebFX-codebase-with-either-GWT-for-JavaScript-or-TeaVM-for-WebAssembly-—-with-no-changes-to-your-application-code" class="headerlink" title="And it works!You can now build the same WebFX codebase with either GWT (for JavaScript) or TeaVM (for WebAssembly) — with no changes to your application code."></a>And it works!<br>You can now build the same WebFX codebase with either GWT (for JavaScript) or TeaVM (for WebAssembly) — with no changes to your application code.</h2><h2 id="Try-it-out"><a href="#Try-it-out" class="headerlink" title="Try it out!"></a>Try it out!</h2><p>Check out our demos showing WebFX applications running with TeaVM in the browser:  </p>
+<table>
+<thead>
+<tr>
+<th>WebFX Demo</th>
+<th align="center">Original GWT (JavaScript only)</th>
+<th align="center">TeaVM - JavaScript</th>
+<th align="center">TeaVM - WebAssembly 🤩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tally Counter</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tallycounter.webfx.dev/">TallyCounter-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tallycounter-teavm.webfx.dev/">TallyCounter-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tallycounter-wasm.webfx.dev/">TallyCounter-Wasm</a></td>
+</tr>
+<tr>
+<td>Modern Gauge</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://moderngauge.webfx.dev/">ModernGauge-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://moderngauge-teavm.webfx.dev/">ModernGauge-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://moderngauge-wasm.webfx.dev/">ModernGauge-Wasm</a></td>
+</tr>
+<tr>
+<td>Enzo Clocks</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://enzoclocks.webfx.dev/">EnzoClocks-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://enzoclocks-teavm.webfx.dev/">EnzoClocks-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://enzoclocks-wasm.webfx.dev/">EnzoClocks-Wasm</a></td>
+</tr>
+<tr>
+<td>DemoFX ⓒ ♪</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://demofx.webfx.dev/">DemoFX-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://demofx-teavm.webfx.dev/">DemoFX-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://demofx-wasm.webfx.dev/">DemoFX-Wasm</a></td>
+</tr>
+<tr>
+<td>Cube ⊕</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://cube.webfx.dev/">Cube-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://cube-teavm.webfx.dev/">Cube-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://cube-wasm.webfx.dev/">Cube-Wasm</a></td>
+</tr>
+<tr>
+<td>FX2048</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fx2048.webfx.dev/">FX2048-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fx2048-teavm.webfx.dev/">FX2048-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fx2048-wasm.webfx.dev/">FX2048-Wasm</a></td>
+</tr>
+<tr>
+<td>Food Dice ⓒ ♪</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fooddice.webfx.dev/">FoodDice-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fooddice-teavm.webfx.dev/">FoodDice-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://fooddice-wasm.webfx.dev/">FoodDice-Wasm</a></td>
+</tr>
+<tr>
+<td>SpaceFX ⓒ ♪</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spacefx.webfx.dev/">SpaceFX-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spacefx-teavm.webfx.dev/">SpaceFX-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spacefx-wasm.webfx.dev/">SpaceFX-Wasm</a></td>
+</tr>
+<tr>
+<td>Tetris ⓒ ♪</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tetris.webfx.dev/">Tetris-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tetris-teavm.webfx.dev/">Tetris-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://tetris-wasm.webfx.dev/">Tetris-Wasm</a></td>
+</tr>
+<tr>
+<td>JArkanoid ⓒ ♪</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://jarkanoid.webfx.dev/">JArkanoid-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://jarkanoid-teavm.webfx.dev/">JArkanoid-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://jarkanoid-wasm.webfx.dev/">JArkanoid-Wasm</a></td>
+</tr>
+<tr>
+<td>Pac-Man ⓒ</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://pacman.webfx.dev/">PacMan-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://pacman-teavm.webfx.dev/">PacMan-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://pacman-wasm.webfx.dev/">PacMan-Wasm</a></td>
+</tr>
+<tr>
+<td>MsPac-Man ⓒ</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mspacman.webfx.dev/">MsPacMan-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mspacman-teavm.webfx.dev/">MsPacMan-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mspacman-wasm.webfx.dev/">MsPacMan-Wasm</a></td>
+</tr>
+<tr>
+<td>Colorful Circles</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles.webfx.dev/">ColorfulCircles-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles-teavm.webfx.dev/">ColorfulCircles-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles-wasm.webfx.dev/">ColorfulCircles-Wasm</a></td>
+</tr>
+<tr>
+<td>Particles</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://particles.webfx.dev/">Particles-GWT</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://particles-teavm.webfx.dev/">Particles-TeaVM</a></td>
+<td align="center"><a target="_blank" rel="noopener" href="https://partircles-wasm.webfx.dev/">Particles-Wasm</a></td>
+</tr>
+</tbody></table>
+<h2 id="💡-Note-TeaVM-compiles-to-WebAssembly-GC-the-new-WebAssembly-standard-designed-for-garbage-collected-languages-like-Java-Kotlin-and-Scala-This-feature-is-currently-supported-by-modern-browsers-such-as-Chrome-Edge-Firefox-and-Safari-recent-versions-only"><a href="#💡-Note-TeaVM-compiles-to-WebAssembly-GC-the-new-WebAssembly-standard-designed-for-garbage-collected-languages-like-Java-Kotlin-and-Scala-This-feature-is-currently-supported-by-modern-browsers-such-as-Chrome-Edge-Firefox-and-Safari-recent-versions-only" class="headerlink" title="💡 Note: TeaVM compiles to WebAssembly GC, the new WebAssembly standard designed for garbage-collected languages like Java, Kotlin, and Scala.This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only). "></a>💡 Note: TeaVM compiles to WebAssembly GC, the new WebAssembly standard designed for garbage-collected languages like Java, Kotlin, and Scala.<br>This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only). </h2><p><strong>WebFX + TeaVM &#x3D; Future-ready JavaFX for the Web</strong><br>With TeaVM, WebFX enters the WebAssembly era — faster, lighter, and open to more JVM languages than ever before.</p>
+<p>Stay tuned for more updates as we refine our TeaVM integration and continue making WebFX a flexible and future-proof Java web framework.</p>
+</div></article></li><li class="post-list-item"><article class="post-block"><h2 class="post-title"><a class="post-title-link" href="2022/10/19/accessing-local-files/">Accessing local files with WebFX</a></h2><div class="post-info">Oct 19, 2022</div><div class="post-content"><p><a target="_blank" rel="noopener" href="https://files.webfx.dev/"><img src="/2022/10/19/accessing-local-files/FilesDemo.png" alt="Files Demo"></a></p>
 <p> First of all, a big thank you to the JavaFX community for warmly welcoming us on Twitter. In just a couple of days, you were 100+ to follow us on our brand-new <a target="_blank" rel="noopener" href="https://twitter.com/WebFXProject">@WebFXProject</a> account! And <a target="_blank" rel="noopener" href="https://www.jfx-central.com/">JFX-Central</a> kindly listed us in their <em>Links of the Week</em> on September 30, including our previous blog post and demo. Thank you all for your interest in WebFX! ❤️</p>
 <p>Thank you also for your questions. And it appeared that the most frequent question asked so far was about accessing local files. So we investigated this possibility, and we are glad to announce that now WebFX can access local files. We made this brand-new <a target="_blank" rel="noopener" href="https://files.webfx.dev/">Files demo</a> to demonstrate this.</p>
 <p>This demo lets you select local files with either the <em>Choose files</em> button or drag &amp; drop. The files are listed with their icon and other simple details, and a thumbnail is displayed for images. A grid view is also available with just the thumbnails. You can open your images in full size, and navigate using left &amp; right keys, left &amp; right mouse clicks, or left &amp; right swipes on touch screens. Same with your audio files, which are played together with the equaliser from our DemoFX library. Video files will be played very soon (only the audio is supported for now). Text files are displayed in a TextArea.</p>
