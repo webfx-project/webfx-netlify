@@ -6,19 +6,19 @@
 <p>Because TeaVM works at the <strong>bytecode level</strong>, it can compile not only Java but <strong>any language that targets the JVM</strong> — such as <strong>Kotlin</strong> and <strong>Scala</strong> — making it a versatile choice for modern web development.</p>
 <hr>
 <h1 id="Why-TeaVM-support-matters"><a href="#Why-TeaVM-support-matters" class="headerlink" title="Why TeaVM support matters"></a>Why TeaVM support matters</h1><ul>
-<li>WebAssembly performance</li>
+<li><strong>WebAssembly performance</strong></li>
 </ul>
-<p>One of the biggest benefits of TeaVM is its <strong>WebAssembly</strong> output (in addition to JS). Unlike JavaScript, WebAssembly is a newer low-level binary format—already compiled before it reaches the browser—allowing near-native performance and now supported by all modern browsers. With TeaVM, WebFX applications can now compile to Wasm and run faster — while still offering <strong>direct access to the browser DOM</strong>, something most other Wasm toolchains cannot do.</p>
+<p>One of the biggest benefits of TeaVM is its <strong>WebAssembly</strong> output (in addition to JS). Unlike JavaScript, WebAssembly is a newer low-level binary format — already compiled before it reaches the browser — allowing near-native performance and now supported by all modern browsers. With TeaVM, WebFX applications can now compile to Wasm and run faster — while still offering <strong>direct access to the browser DOM</strong>, something most other Wasm toolchains cannot do.</p>
 <ul>
-<li>Kotlin and Scala support</li>
+<li><strong>Kotlin and Scala support</strong></li>
 </ul>
 <p>TeaVM’s bytecode-based design means it supports <strong>all JVM languages</strong> — including <strong>Kotlin</strong> and <strong>Scala</strong> — right out of the box. This expands WebFX beyond Java, allowing teams to choose their preferred language without giving up the familiar JavaFX programming model.</p>
 <ul>
-<li>Future-proof addition</li>
+<li><strong>Future-proof addition</strong></li>
 </ul>
-<p>By integrating TeaVM alongside GWT, WebFX becomes more <strong>future-proof</strong>. Developers can pick between <strong>JavaScript (via GWT)</strong> and <strong>WebAssembly (via TeaVM)</strong>, ensuring long-term flexibility as the web platform continues to evolve.</p>
+<p>By integrating TeaVM alongside GWT, WebFX becomes more future-proof. Developers can pick between <strong>JavaScript</strong> and <strong>WebAssembly</strong>, ensuring long-term flexibility as the web platform continues to evolve.</p>
 <hr>
-<h1 id="Why-TeaVM-stands-out-among-WebAssembly-compilers"><a href="#Why-TeaVM-stands-out-among-WebAssembly-compilers" class="headerlink" title="Why TeaVM stands out among WebAssembly compilers"></a>Why TeaVM stands out among WebAssembly compilers</h1><p>While several Java-to-Wasm projects exist (or have existed), TeaVM has proven to be the <strong>most practical and lightweight</strong> solution for real-world web development:</p>
+<h1 id="Why-TeaVM-stands-out-among-WebAssembly-compilers"><a href="#Why-TeaVM-stands-out-among-WebAssembly-compilers" class="headerlink" title="Why TeaVM stands out among WebAssembly compilers"></a>Why TeaVM stands out among WebAssembly compilers</h1><p>While several Java-to-Wasm projects exist, TeaVM has proven to be the <strong>most practical and lightweight</strong> solution for real-world web development:</p>
 <table>
 <thead>
 <tr>
@@ -68,10 +68,10 @@
 <hr>
 <h1 id="How-we-integrated-TeaVM-into-WebFX"><a href="#How-we-integrated-TeaVM-into-WebFX" class="headerlink" title="How we integrated TeaVM into WebFX"></a>How we integrated TeaVM into WebFX</h1><p>Adding TeaVM support in addition to GWT turned out to be much easier than expected — thanks to the WebFX Platform, our foundation layer for Java-based cross-platform development (desktop, mobile, and web).</p>
 <p>While WebFX focuses on bringing JavaFX applications to the web, the <a target="_blank" rel="noopener" href="https://github.com/webfx-project/webfx-platform">WebFX Platform</a> is more general-purpose and not tied to JavaFX. It provides the modular building blocks that make WebFX possible — including APIs for UI, I&#x2F;O, and browser integration.</p>
-<p>To make TeaVM compatible with the WebFX stack - which mainly relies on Elemental2 for the web platform — we created a <a target="_blank" rel="noopener" href="https://github.com/webfx-project/webfx-platform/tree/main/webfx-platform-teavm-elemental2-polyfill">polyfill</a> for Elemental2, this Google library that exposes browser APIs (like the DOM, events, and storage) to Java code. This polyfill is now part of the WebFX Platform and allows TeaVM to seamlessly understand and compile the same Elemental2-based code used by GWT.</p>
+<p>To make TeaVM compatible with the WebFX stack - which mainly relies on Elemental2 for the web platform — we created a <strong>polyfill</strong> for Elemental2, this Google library that exposes browser APIs (like the DOM, events, and storage) to Java code. This <a target="_blank" rel="noopener" href="https://github.com/webfx-project/webfx-platform/tree/main/webfx-platform-teavm-elemental2-polyfill">polyfill</a> is now part of the WebFX Platform and allows TeaVM to seamlessly understand and compile the same Elemental2-based code used by GWT.</p>
 <p><img src="/2025/11/13/teavm/Polyfill.png" alt="Polyfill"></p>
-<p>At the moment, the polyfill covers only the subset of the Elemental2 API used by WebFX itself. However, it can potentially be expanded to cover any additional Elemental2 APIs. Increasing the coverage is a straightforward (if somewhat boring) task, so in principle, any Elemental2-based project could be compiled to WebAssembly through the WebFX Platform.</p>
-<p><strong>And it works!</strong> You can now build the same WebFX codebase with either GWT (for JavaScript) or TeaVM (for WebAssembly) — with no changes to your application code.</p>
+<p>At the moment, the polyfill covers only the subset of the Elemental2 API used by WebFX itself. However, it can potentially be expanded to cover any additional Elemental2 APIs. Increasing the coverage is a straightforward (if somewhat boring) task, so in principle, any Elemental2-based project could be compiled to Wasm through the WebFX Platform.</p>
+<p><strong>And it works!</strong> You can now build the same WebFX codebase with either GWT or TeaVM — with no changes to your application code.</p>
 <hr>
 <h1 id="Try-it-out"><a href="#Try-it-out" class="headerlink" title="Try it out!"></a>Try it out!</h1><p>Check out our demos showing WebFX applications running with TeaVM in the browser:  </p>
 <table>
@@ -168,7 +168,7 @@
 <td align="center"><a target="_blank" rel="noopener" href="https://partircles-wasm.webfx.dev/">Particles-Wasm</a></td>
 </tr>
 </tbody></table>
-<p><em>Note: TeaVM compiles to WebAssembly GC, the new WebAssembly standard designed for garbage-collected languages like Java, Kotlin, and Scala. This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only).</em></p>
+<p><em>Note: TeaVM compiles to Wasm GC, the new WebAssembly standard designed for garbage-collected languages like Java, Kotlin, and Scala. This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only).</em></p>
 <hr>
-<p>Stay tuned for more updates as we refine our TeaVM integration and continue making WebFX a flexible and future-proof Java web framework.</p>
+<p>Stay tuned for more updates as we refine our TeaVM integration and continue making WebFX a flexible and future-proof Java web framework!</p>
 </div></article></div></main><footer><div class="paginator"><a class="next" href="../../../../2022/10/19/accessing-local-files/">NEXT</a></div><div class="copyright"><p><a href="https://webfx.dev" target="_blank">WebFX</a> © 2021 - 2025</p></div></footer></div><!--script(async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous")--></body></html>
