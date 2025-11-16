@@ -14,7 +14,7 @@
    id="Layer_1"
    x="0px"
    y="0px"
-   viewBox="0 0 400 200"
+   viewBox="0 0 500 150"
    xml:space="preserve"
    sodipodi:docname="WebFX.svg"
    width="400"
@@ -76,12 +76,13 @@
    id="defs18">
 <linearGradient id="LG6" x1="1" y1="0" x2="0" y2="0" spreadMethod="pad" gradientUnits="objectBoundingBox"><stop offset="0%" stop-color="#ffe580"></stop><stop offset="20%" stop-color="#ff7571"></stop><stop offset="40%" stop-color="#ea5dad"></stop><stop offset="60.00000000000001%" stop-color="#c2a0fd"></stop><stop offset="80%" stop-color="#3bf0e4"></stop><stop offset="100%" stop-color="#b2f4b6"></stop></linearGradient>
 	</defs>
+    <rect width="100%" height="100%" fill="#4E2559" />
 	<text
    id="text15"
    dominant-baseline="baseline"
    width="0"
-   y="100"
-   x="0"
+   y="115"
+   x="50"
    stroke-alignment="center"
    stroke-miterlimit="1"
    style="font-style:normal;font-weight:700;font-size:120px;font-family:Arial;text-anchor:start;fill:url(#LG6);stroke:#ffffff;stroke-width:1.18986607;stroke-miterlimit:1">WebFX</text>
