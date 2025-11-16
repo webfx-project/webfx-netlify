@@ -937,6 +937,10 @@ body {
   background-color: white;
 }
 
+h1 {
+  font-size: 1.4em;
+}
+
 .post-content p {
   text-align: justify;
 }
