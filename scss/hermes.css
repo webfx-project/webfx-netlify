@@ -962,4 +962,8 @@ h1 {
   main.container {
     margin: 40px;
   }
+  .giscus {
+    margin: 40px;
+    width: 660px;
+  }
 }
