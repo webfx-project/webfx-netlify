@@ -6,6 +6,10 @@
   background-color: white;
 }
 
+.post-block .post-title {
+  font-size: 1.49em; /* instead of 1.5em - for better fit with TeaVM post */
+}
+
 h1 {
   font-size: 1.4em;
 }
