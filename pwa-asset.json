@@ -1,5 +1,5 @@
-{"mavenBuildTimestamp": "2025-10-29T11:32:30Z", "assetManifest": {
-  "/EE5010227B6080BCA98D80AD863741AB.cache.js": "f6dec1f941cc4569902b2abf3a4efeff214733ef8b5f3f22ad53304b1b0134e7",
+{"mavenBuildTimestamp": "2025-11-16T17:31:42Z", "assetManifest": {
+  "/270F1107CDA221154A5EFD3C4482D30B.cache.js": "af483757a4f8eb165269e82a71a7b490a517d5005e72f023849e4f0df5c29b79",
   "/dev/webfx/kit/css/main.css": "982ec3c996155374e1026b845bd45296a49ce5010341f4e58ac286f64230ba9d",
   "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
   "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
@@ -41,8 +41,8 @@
   "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
   "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
   "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
-  "/index.html": "e4442783dda722ddf13a1c9d575d46f0d7a764c4057865af798525a0a22b5134",
-  "/pwa-service-worker.js": "fe42165abf3df3185ff34f810a1c710c70436e062b77979c42526f7704176a5a",
+  "/index.html": "1b03eecde2a1776fe6b3cd95f74139a58e76515946de9993736e98e4d61958e8",
+  "/pwa-service-worker.js": "c2d72c1135ec499e2fe34f91702f6aff1dd04f407d1e5f47cde5f4a7f15ada91",
   "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
-  "/webfx_demo_tetris_application_gwt.nocache.js": "6ba537d39dbbbf5f433be2e1eb4f8eb18d4d5546ed68229d73c6ecec06ff30fb"
+  "/webfx_demo_tetris_application_gwt.nocache.js": "79ec05b92c173259d10bc6343e8a896da776c75abeffa56da189801b4397b2f4"
 }}
