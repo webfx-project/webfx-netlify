@@ -929,8 +929,8 @@ footer .copyright a:hover {
   color: #888;
 }
 
-body {
-  background-color: #4E2559;
+:root {
+  --webfx-background-color: #4E2559;
 }
 
 .wrap {
@@ -941,11 +941,15 @@ h1 {
   font-size: 1.4em;
 }
 
-.post-content p {
+.post-content p, .post-block .post-title {
   text-align: justify;
 }
 
-@media screen and (min-width: 740px) {
+table {
+  margin: 2em auto;
+}
+
+@media screen and (min-width: 700px) {
   header {
     padding: 20px 70px 20px 40px;
   }
@@ -956,14 +960,22 @@ h1 {
     width: 300px;
     transform: translateY(-40px);
   }
+}
+@media screen and (min-width: 800px) {
+  body {
+    background-color: var(--webfx-background-color);
+    padding: 30px;
+  }
   .wrap {
-    width: 740px;
+    border-radius: 10px;
+    width: 800px;
+    padding-top: 20px;
   }
   main.container {
     margin: 40px;
   }
   .giscus {
     margin: 40px;
-    width: 660px;
+    width: 720px;
   }
 }
