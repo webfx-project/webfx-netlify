@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> WebFX now supports TeaVM: bringing WebAssembly and Kotlin to JavaFX on the Web! · The WebFX blog</title><meta name="description" content="WebFX now supports TeaVM: bringing WebAssembly and Kotlin to JavaFX on the Web! - Bruno Salmon"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="../../../../favicon.png"><link rel="stylesheet" href="../../../../css/hermes.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.webfx.dev/atom.xml" title="The WebFX blog"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="atom.xml" title="The WebFX blog" type="application/atom+xml">
 </head><body><div class="wrap"><header><a class="logo-link" href="../../../../index.html"><img src="../../../../WebFX.svg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link" href="../../../../index.html" target="_self">BLOG</a></li><li class="nav-list-item"><a class="nav-list-link" href="../../../../archives/" target="_self">ARCHIVE</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/webfx-project/webfx" target="_blank">GITHUB</a></li><li class="nav-list-item"><a class="nav-list-link" href="../../../../atom.xml" target="_self">FEED</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">WebFX now supports TeaVM: bringing WebAssembly and Kotlin to JavaFX on the Web!</h1><div class="post-info">Nov 14, 2025</div><div class="post-content"><p><img src="/2025/11/14/teavm/TeaVM.png" alt="TeaVM"></p>
-<p>We’re excited to announce that WebFX now officially supports TeaVM, a Java to WebAssembly compiler that unlocks faster startup times and broader JVM language compatibility with now Kotlin and Scala!</p>
+<p>TL;DR: We’re excited to announce that WebFX now officially supports TeaVM, a Java to WebAssembly compiler that unlocks faster startup times and broader JVM language compatibility with now Kotlin and Scala!</p>
 <p>We already have multiple live WebFX demos running with TeaVM, which you’ll find below.</p>
 <hr>
-<h1 id="What-is-TeaVM"><a href="#What-is-TeaVM" class="headerlink" title="What is TeaVM?"></a>What is TeaVM?</h1><p><a target="_blank" rel="noopener" href="https://teavm.org/">TeaVM</a> is a compiler that translates <strong>Java bytecode</strong> into JavaScript or WebAssembly. This is a key difference from <strong>GWT</strong>, which transpiles <strong>Java source code</strong> directly into JavaScript.</p>
+<h1 id="What-is-TeaVM"><a href="#What-is-TeaVM" class="headerlink" title="What is TeaVM?"></a>What is TeaVM?</h1><p><a target="_blank" rel="noopener" href="https://teavm.org/">TeaVM</a> is a compiler that translates <strong>Java bytecode</strong> into <strong>JavaScript</strong> or <strong>WebAssembly</strong>. This is a key difference from <strong>GWT</strong>, which transpiles <strong>Java source code</strong> directly into JavaScript.</p>
 <hr>
 <h1 id="Why-TeaVM-support-matters"><a href="#Why-TeaVM-support-matters" class="headerlink" title="Why TeaVM support matters"></a>Why TeaVM support matters</h1><ul>
 <li><strong>WebAssembly performance</strong></li>
 </ul>
-<p>Unlike JavaScript, <strong>WebAssembly</strong> (Wasm) is a low‑level binary format already compiled before it reaches the browser, allowing near‑native performance and now supported by all modern browsers.</p>
+<p>Unlike JavaScript, WebAssembly (Wasm) is a low‑level <strong>binary format</strong> already compiled before it reaches the browser, allowing near‑native performance and now supported by all modern browsers.</p>
 <ul>
 <li><strong>Kotlin and Scala support</strong></li>
 </ul>
@@ -16,10 +16,10 @@
 <ul>
 <li><strong>Future-proofing WebFX</strong></li>
 </ul>
-<p>One of the main reasons WebAssembly is gaining traction is that its bytecode is language-neutral by design (unlike Java bytecode). While JS won’t disappear, it’s likely that more and more web apps will be written in other languages and compiled to Wasm in the future.</p>
+<p>The language-neutral design of its bytecode (as opposed to Java bytecode) is a major reason for WebAssembly’s growing popularity. While JS won’t disappear, it’s likely that more and more web apps will be written in other languages and compiled to Wasm in the future.</p>
 <p>By supporting Wasm today, WebFX is already aligned with this shift, and part of the <strong>emerging “post-JavaScript” era</strong> while still remaining fully compatible with JS.</p>
 <hr>
-<h1 id="Why-we-chose-TeaVM-among-Java-→-Wasm-compilers"><a href="#Why-we-chose-TeaVM-among-Java-→-Wasm-compilers" class="headerlink" title="Why we chose TeaVM among Java → Wasm compilers"></a>Why we chose TeaVM among Java → Wasm compilers</h1><p>While several Java-to-Wasm projects exist, we found that TeaVM was the <strong>most practical and lightweight</strong> solution for real-world Java web development:</p>
+<h1 id="Why-we-chose-TeaVM-among-Java-→-Wasm-compilers"><a href="#Why-we-chose-TeaVM-among-Java-→-Wasm-compilers" class="headerlink" title="Why we chose TeaVM among Java → Wasm compilers"></a>Why we chose TeaVM among Java → Wasm compilers</h1><p>While several Java-to-Wasm projects exist, we found that TeaVM was the <strong>most practical and lightweight</strong> solution for Java web development:</p>
 <table>
 <thead>
 <tr>
@@ -51,7 +51,7 @@
 <tr>
 <td><strong>J2CL&#x2F;Wasm (Google)</strong></td>
 <td>Active</td>
-<td>Quite opaque project with not much communication</td>
+<td>Internal opaque project (very few com and docs)</td>
 </tr>
 <tr>
 <td><strong>ByteCoder</strong></td>
@@ -65,14 +65,14 @@
 </tr>
 </tbody></table>
 <p>Among these, <strong>GraalVM</strong> is probably TeaVM’s most serious competitor, especially given that it’s backed by Oracle. However, GraalVM has historically focused on <strong>server-side execution</strong> of Wasm modules. Its browser support is <strong>only nascent</strong>, <strong>lacks direct DOM access</strong>, and currently produces <strong>much larger binaries</strong>.</p>
-<p>If the GraalVM browser target matures, we may add GraalVM support to WebFX in the future. But for now, we think <strong>TeaVM offers the most advanced, lightweight, and browser-ready Java → WebAssembly solution</strong> available.</p>
+<p>If the GraalVM browser target matures, we may add GraalVM support to WebFX in the future. But for now, <strong>TeaVM</strong> appears to offer the <strong>most advanced, lightweight, and browser-ready Java → WebAssembly solution</strong> available.</p>
 <hr>
 <h1 id="How-we-integrated-TeaVM-into-WebFX"><a href="#How-we-integrated-TeaVM-into-WebFX" class="headerlink" title="How we integrated TeaVM into WebFX"></a>How we integrated TeaVM into WebFX</h1><p>To make TeaVM compatible with the large existing WebFX codebase whose browser interactions are coded with <strong>Elemental2</strong>, the Google library that exposes browser APIs (DOM, events, storage, etc.) to Java, we created a <a target="_blank" rel="noopener" href="https://github.com/webfx-project/webfx-platform/tree/main/webfx-platform-teavm-elemental2-polyfill"><strong>polyfill</strong></a> of Elemental2 that allows TeaVM to seamlessly understand and compile the same Elemental2-based code used by GWT.</p>
 <p><img src="/2025/11/14/teavm/Polyfill.png" alt="Polyfill"></p>
-<p><em>For GWT&#x2F;J2CL developers: this polyfill covers only the subset of the Elemental2 API used by WebFX for now. However, it can be expanded to cover additional Elemental2 APIs as needed. Increasing the coverage is a straightforward (if somewhat repetitive) task, so in principle, it could compile any Elemental2-based project to Wasm.</em></p>
-<p><strong>And it works!</strong> You can now build the same WebFX codebase with either GWT or TeaVM — with no changes at all to your application code.</p>
+<p><em>For GWT&#x2F;J2CL developers: this polyfill covers only the subset of the Elemental2 API used by WebFX for now. However, it can be expanded to cover additional Elemental2 APIs as needed. Increasing the coverage is a straightforward (if somewhat repetitive) task, so in principle, it could compile any Elemental2-based project to Wasm with TeaVM.</em></p>
+<p><strong>And it works!</strong> You can now build the same WebFX codebase with either GWT or TeaVM with no changes at all to your application code.</p>
 <hr>
-<h1 id="Try-it-out-live-WebFX-TeaVM-demos"><a href="#Try-it-out-live-WebFX-TeaVM-demos" class="headerlink" title="Try it out: live WebFX + TeaVM demos"></a>Try it out: live WebFX + TeaVM demos</h1><p>Each demo below is built from the same WebFX codebase, compiled with GWT (JavaScript) and TeaVM (JavaScript and WebAssembly), so you can compare them side by side.</p>
+<h1 id="Try-it-out-live-WebFX-TeaVM-demos"><a href="#Try-it-out-live-WebFX-TeaVM-demos" class="headerlink" title="Try it out: live WebFX + TeaVM demos"></a>Try it out: live WebFX + TeaVM demos</h1><p>Each demo below is built from the same WebFX codebase compiled with GWT (JavaScript) and TeaVM (JavaScript and WebAssembly) so you can compare them side by side.</p>
 <table>
 <thead>
 <tr>
@@ -154,21 +154,9 @@
 <td align="center"><a target="_blank" rel="noopener" href="https://mspacman-teavm.webfx.dev/">MsPacMan-TeaVM</a></td>
 <td align="center"><a target="_blank" rel="noopener" href="https://mspacman-wasm.webfx.dev/">MsPacMan-Wasm</a></td>
 </tr>
-<tr>
-<td>Colorful Circles</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles.webfx.dev/">ColorfulCircles-GWT</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles-teavm.webfx.dev/">ColorfulCircles-TeaVM</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://colorfulcircles-wasm.webfx.dev/">ColorfulCircles-Wasm</a></td>
-</tr>
-<tr>
-<td>Particles</td>
-<td align="center"><a target="_blank" rel="noopener" href="https://particles.webfx.dev/">Particles-GWT</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://particles-teavm.webfx.dev/">Particles-TeaVM</a></td>
-<td align="center"><a target="_blank" rel="noopener" href="https://particles-wasm.webfx.dev/">Particles-Wasm</a></td>
-</tr>
 </tbody></table>
-<p><em>Note: TeaVM compiles to Wasm GC, the new WebAssembly standard (finalized in 2025) designed for garbage-collected languages like Java. This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only).</em></p>
+<p><em>Note: TeaVM compiles to Wasm GC, the new WebAssembly standard designed for garbage-collected languages like Java. This feature is currently supported by modern browsers such as Chrome, Edge, Firefox, and Safari (recent versions only).</em></p>
 <hr>
-<h1 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next?"></a>What’s next?</h1><p>Wasm support in WebFX is already usable today for modern browsers, and we’re now planning to support dual TeaVM&#x2F;GWT builds. WebFX will automatically select the appropriate version at runtime, giving developers the best of both worlds: WebAssembly performance where possible, or full JS backward compatibility where needed.</p>
-<p>Stay tuned for more updates as we refine our TeaVM integration and continue making WebFX a flexible and future-proof Java web framework!</p>
+<h1 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next?"></a>What’s next?</h1><p>Wasm support in WebFX is already usable today for modern browsers, and we’re now planning to support <strong>dual TeaVM&#x2F;GWT builds</strong> for a smooth and reliable transition. WebFX will automatically select the appropriate version at runtime, giving developers the best of both worlds: WebAssembly performance where possible, or full JS backward compatibility where needed.</p>
+<p>You’re very welcome to join this <a target="_blank" rel="noopener" href="https://github.com/webfx-project/webfx-platform/discussions/21">GitHub discussion</a> to share your feedback or leave a comment. And stay tuned for more updates as we refine our TeaVM integration!</p>
 </div></article></div></main><footer><div class="paginator"><a class="next" href="../../../../2022/10/19/accessing-local-files/">NEXT</a></div><div class="copyright"><p><a href="https://webfx.dev" target="_blank">WebFX</a> © 2021 - 2025</p></div></footer></div><!--script(async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous")--></body></html>
