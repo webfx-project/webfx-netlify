@@ -11,15 +11,6 @@
   </url>
   
   <url>
-    <loc>https://blog.webfx.dev/2025/11/15/teavm/</loc>
-    
-    <lastmod>2025-11-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.webfx.dev/2022/07/22/website-launch/</loc>
     
     <lastmod>2025-11-16</lastmod>
@@ -30,6 +21,15 @@
   
   <url>
     <loc>https://blog.webfx.dev/2022/09/26/demofx/</loc>
+    
+    <lastmod>2025-11-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.webfx.dev/2025/11/15/teavm/</loc>
     
     <lastmod>2025-11-16</lastmod>
     
