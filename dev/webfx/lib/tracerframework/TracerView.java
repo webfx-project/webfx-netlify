@@ -491,13 +491,13 @@ public final class TracerView {
                 if (firstFrameCompletion)
                     overlayCharactersMax = 1;
                 long count = pixelComputer.getLastFrameIterations();
-                long t = tracer.getLastFrameComputationTime();
+                long t = Math.max(1, tracer.getLastFrameComputationTime());
                 showOverlayTexts(
-                        completeSpace("Frame"), "" + snapshots.size() + " (" + (int) (100 * completion) + "%)",
+                        completeSpace("Frame"), snapshots.size() + " (" + (int) (100 * completion) + "%)",
                         completeSpace("Iterations"), count == 0 ? null : getIntegerWith2Decimals(count * 100 / MILLION) + "M",
-                        completeSpace("Time"), "" + getIntegerWith2Decimals(t * 100 / 1000) + "s",
-                        completeSpace("IPS"), count == 0 ? null : "" + getIntegerWith2Decimals(count * 100 / t * 1_000 / MILLION) + "M",
-                        completeSpace("FPS"), "" + getIntegerWith2Decimals(1_000 * 100 / t),
+                        completeSpace("Time"), getIntegerWith2Decimals(t * 100 / 1000) + "s",
+                        completeSpace("IPS"), count == 0 ? null : getIntegerWith2Decimals(count * 100 / t * 1_000 / MILLION) + "M",
+                        completeSpace("FPS"), getIntegerWith2Decimals(1_000 * 100 / t),
                         completeSpace("CPU cores"), AVAILABLE_PROCESSORS <= 0 ? "Unrevealed" : "" + AVAILABLE_PROCESSORS,
                         completeSpace(THREADS_TEXT), "" + tracer.getLastThreadsCount(),
                         completeSpace("UI source"), "JavaFX",

@@ -2,7 +2,7 @@ package dev.webfx.lib.tracerframework;
 
 import javafx.scene.paint.Color;
 import dev.webfx.platform.ast.ReadOnlyAstObject;
-import dev.webfx.platform.webworker.spi.base.JavaCodedWebWorkerBase;
+import dev.webfx.platform.worker.workerthread.ApplicationWorkerThreadWorkerBase;
 
 /**
  * @author Bruno Salmon
@@ -28,17 +28,11 @@ public interface PixelComputer {
     // Pixel color extractor from the line storage (once it has been computed)
     Color getPixelResultColor(int x, int y, Object linePixelResultStorage);
 
-    // API when working in UI thread or standard threads (not workers)
-
-    Object createLinePixelResultStorage(); // Empty storage for the line
-
-    void computeAndStorePixelResult(int x, int y, Object linePixelResultStorage);
-
     // API when working with workers
 
-    Class<? extends JavaCodedWebWorkerBase> getWorkerClass();
+    Class<? extends ApplicationWorkerThreadWorkerBase> getWorkerClass();
 
-    ReadOnlyAstObject getLineWorkerParameters(int y, boolean firstWorkerCall);
+    ReadOnlyAstObject getLineWorkerParameters(int y, int n, boolean firstWorkerCall);
 
     Object getLinePixelResultStorage(Object workerResult);
 }

@@ -1,12 +1,11 @@
 package dev.webfx.lib.tracerframework;
 
 import dev.webfx.platform.arch.Arch;
+import dev.webfx.platform.ast.AST;
 import dev.webfx.platform.ast.ReadOnlyAstObject;
 import dev.webfx.platform.console.Console;
-import dev.webfx.platform.uischeduler.UiScheduler;
-import dev.webfx.platform.webworker.WebWorker;
-import dev.webfx.platform.webworker.pool.WebWorkerPool;
-import dev.webfx.platform.webworker.spi.base.JavaCodedWebWorkerBase;
+import dev.webfx.platform.worker.Worker;
+import dev.webfx.platform.worker.mainthread.WorkerPool;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,10 +31,9 @@ public final class TracerEngine {
     private Runnable onFinished;
     private AnimationTimer animationTimer;
     private final AtomicInteger computingThreadsCount = new AtomicInteger();
-    private final boolean usingWorkers;
     private boolean lastFrameHdpi;
     private boolean lastFrameUsedWebAssembly;
-    private final WebWorkerPool webWorkerPool;
+    private final WorkerPool webWorkerPool;
     private long t0, cumulatedComputationTime, lastFrameComputationTime;
     private int lastComputedLineIndex, readyLinesCount, nextLineToPaintIndex, startNumber;
     private LineComputationInfo[] computingLines, readyLines;
@@ -44,9 +42,8 @@ public final class TracerEngine {
     public TracerEngine(Canvas canvas, PixelComputer pixelComputer) {
         this.canvas = canvas;
         this.pixelComputer = pixelComputer;
-        Class<? extends JavaCodedWebWorkerBase> workerClass = pixelComputer.getWorkerClass();
-        usingWorkers = workerClass != null;
-        webWorkerPool = usingWorkers ? new WebWorkerPool(workerClass) : null;
+        Class<?> workerClass = pixelComputer.getWorkerClass();
+        webWorkerPool = new WorkerPool(workerClass.getName());
     }
 
     public int getPlaceIndex() {
@@ -108,7 +105,7 @@ public final class TracerEngine {
         if (computingLines == null || computingLines.length != height) {
             // Will contain the computing info of each line (ordered vertically)
             computingLines = new LineComputationInfo[height];
-            // Same array be will be filled with computed lines ready to be paint (the order may differ depending on their computation time)
+            // The same array but will be filled with computed lines ready to be paint (the order may differ depending on their computation time)
             readyLines     = new LineComputationInfo[height];
         }
         readyLinesCount = nextLineToPaintIndex = 0;
@@ -119,11 +116,8 @@ public final class TracerEngine {
         if (threadsCount > 0) { // Using background thread(s) for the computation
             lastComputedLineIndex = -1;
             // Starting computation jobs in the background
-            for (int i = 1; i <= threadsCount; i++) // Starting non-UI thread
-                if (usingWorkers)
-                    startComputingUsingWorker();
-                else
-                    startComputingUsingThread();
+            for (int i = 1; i <= threadsCount; i++) // Starting the non-UI thread
+                startComputingUsingWorker();
             // Using the UI thread just to paint ready lines on each animation frame
             animationTimer = new AnimationTimer() {
                 @Override
@@ -131,49 +125,64 @@ public final class TracerEngine {
                     paintReadyLines();
                 }
             };
-        } else { // Using UI thread for the computation
-            lastComputedLineIndex = 0;
-            // Using the UI thread to compute and paint the canvas on each animation frame
-            animationTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    pulseComputingUi(now);
-                }
-            };
         }
         animationTimer.start();
-        //Condole.log("Started UI thread + " + (threadCounts == 1 ? 0 : threadCounts) + " background thread(s)");
-    }
-
-    private void startComputingUsingThread() {
-        UiScheduler.runInBackground(this::computeInThread);
     }
 
     private void startComputingUsingWorker() {
-        WebWorker webWorker = webWorkerPool.getWorker();
-        LineComputationInfo[] unit = new LineComputationInfo[1];
+        Worker worker = webWorkerPool.getWorker();
+        int messageQueueSize = 1;
+        int numberOfLinesPerComputation = 1;
+        int lineInfoSize = messageQueueSize * numberOfLinesPerComputation;
+        LineComputationInfo[] lineComputationInfos = new LineComputationInfo[lineInfoSize];
+        int[] receivedLineInfoIndex = { 0 };
+        int[] completionIndex = { -1 };
+        //int[] computedLineInfoIndex = { 0 };
         int workerStartNumber = startNumber;
-        webWorker.setOnMessageHandler(data -> {
+        worker.setOnMessageHandler((data, transfer) -> { // one message per line
             // Checking the tracer hasn't been restarted with new parameters meanwhile
             if (workerStartNumber != startNumber) // If this is the case,
                 return; // we don't continue this old stuff computation
-            LineComputationInfo lineComputationInfo = unit[0];
+            int receivedIndex = receivedLineInfoIndex[0];
+            LineComputationInfo lineComputationInfo = lineComputationInfos[receivedIndex];
             lineComputationInfo.linePixelResultStorage = pixelComputer.getLinePixelResultStorage(data);
-            startComputingLineWorker(webWorker, unit);
             addReadyToPaintLine(lineComputationInfo);
+            receivedLineInfoIndex[0] = (receivedIndex + 1) % lineInfoSize;
+            if (completionIndex[0] >= 0) {
+                if (receivedLineInfoIndex[0] == completionIndex[0]) {
+                    logIfComplete();
+                }
+            } else if ((receivedIndex + 1) % numberOfLinesPerComputation == 0) {
+                int computedIndex = (receivedIndex + 1 - numberOfLinesPerComputation) % lineInfoSize;
+                int n = startComputingLineWorker(worker, lineComputationInfos, computedIndex, numberOfLinesPerComputation);
+                if (n < numberOfLinesPerComputation) {
+                    worker.terminate(); // Will actually put it back into the webWorker pool
+                    completionIndex[0] = (computedIndex + n) % lineInfoSize;
+                }
+            }
         });
-        startComputingLineWorker(webWorker, unit);
+        for (int i = 0; i < messageQueueSize; i++) {
+            startComputingLineWorker(worker, lineComputationInfos, i * numberOfLinesPerComputation, numberOfLinesPerComputation);
+        }
     }
 
-    private void startComputingLineWorker(WebWorker webWorker, LineComputationInfo[] unit) {
-        boolean firstWorkerCall = unit[0] == null;
-        int lineIndex = pickNextLineIndexToCompute();
-        LineComputationInfo lineComputationInfo = unit[0] = getLineComputationInfo(lineIndex);
-        if (lineComputationInfo == null) {
-            webWorker.terminate(); // Will actually put it back into the webWorker pool
-            logIfComplete();
-        } else
-            webWorker.postMessage(pixelComputer.getLineWorkerParameters(lineComputationInfo.cy, firstWorkerCall));
+    private int startComputingLineWorker(Worker webWorker, LineComputationInfo[] lineComputationInfos, int infoIndex, int numberOfLines) {
+        boolean firstWorkerCall = infoIndex == 0 && lineComputationInfos[0] == null;
+        int n = 0, cy = -1;
+        while (n < numberOfLines) {
+            int lineIndex = pickNextLineIndexToCompute();
+            LineComputationInfo lineComputationInfo = lineComputationInfos[infoIndex + n] = getLineComputationInfo(lineIndex);
+            if (lineComputationInfo == null)
+                break;
+            if (cy == -1)
+                cy = lineComputationInfo.cy;
+            n++;
+        }
+        if (n > 0) {
+            ReadOnlyAstObject astParameters = pixelComputer.getLineWorkerParameters(cy, n, firstWorkerCall);
+            webWorker.postMessage(AST.nativeObject(astParameters));
+        }
+        return n;
     }
 
     public void stop() {
@@ -223,7 +232,6 @@ public final class TracerEngine {
     }
 
     private final static long MILLIS_IN_NANO = 1_000_000;
-    private final static long MAX_PULSE_COMPUTATION_TIME_NS = 16 * MILLIS_IN_NANO; // 16ms per frame
 
     private int pickNextLineIndexToCompute() { // Returning height means they have all been computed
         synchronized (this) {
@@ -238,39 +246,8 @@ public final class TracerEngine {
         if (lineComputationInfo == null) {
             computingLines[lineIndex] = lineComputationInfo = new LineComputationInfo();
             lineComputationInfo.cy = lineIndex;
-            lineComputationInfo.linePixelResultStorage = pixelComputer.createLinePixelResultStorage();
         }
         return lineComputationInfo;
-    }
-
-    private void pulseComputingUi(long now) { // Called by the animation timer every 16ms (60 FPS)
-        // Getting the next line index to computed (but for UI thread, we just continue where we stopped last time)
-        int lineIndex = lastComputedLineIndex;
-        LineComputationInfo lineComputationInfo = getLineComputationInfo(lineIndex);
-        while (lineComputationInfo != null) { // non null value until all lines have benn computed
-            int cy = lineComputationInfo.cy;
-            int cx = lineComputationInfo.cx;
-            while (cx < width) {
-                pixelComputer.computeAndStorePixelResult(cx, cy, lineComputationInfo.linePixelResultStorage);
-                // if ui thread (=> in animation frame), we paint the pixel right now
-                Color pixelColor = pixelComputer.getPixelResultColor(cx, cy, lineComputationInfo.linePixelResultStorage);
-                colorizePixel(cx++, cy, pixelColor);
-                // Also checking if the computation time doesn't exceed the frame max time
-                long computationTime = System.nanoTime() - now;
-                if (computationTime > MAX_PULSE_COMPUTATION_TIME_NS) {
-                    cumulatedComputationTime += computationTime;
-                    // Memorizing the horizontal position so we can resume just where we stopped on next call
-                    lineComputationInfo.cx = cx;
-                    return; // End of this frame, the method will be called back for the next
-                }
-            }
-            // Picking up the next line to compute (will return null if all done)
-            lineComputationInfo = getLineComputationInfo(pickNextLineIndexToCompute());
-            if (lineComputationInfo != null)
-                lineComputationInfo.cx = 0;
-        }
-        logIfComplete();
-        finish();
     }
 
     private void logIfComplete() {
@@ -284,21 +261,4 @@ public final class TracerEngine {
         }
     }
 
-    private void computeInThread() {
-        pixelComputer.initFrame(width, height, placeIndex, frameIndex);
-        // Getting the next line index to computed (but for UI thread, we just continue where we stopped last time)
-        int lineIndex = pickNextLineIndexToCompute();
-        LineComputationInfo lineComputationInfo = getLineComputationInfo(lineIndex);
-        while (lineComputationInfo != null) { // non null value until all lines have benn computed
-            int cy = lineComputationInfo.cy;
-            int cx = lineComputationInfo.cx;
-            while (cx < width)
-                pixelComputer.computeAndStorePixelResult(cx++, cy, lineComputationInfo.linePixelResultStorage);
-            // Once all colors of the line have been computed, we pass them to the UI thread
-            addReadyToPaintLine(lineComputationInfo);
-            // Picking up the next line to compute (will return null if all done)
-            lineComputationInfo = getLineComputationInfo(pickNextLineIndexToCompute());
-        }
-        logIfComplete();
-    }
 }
