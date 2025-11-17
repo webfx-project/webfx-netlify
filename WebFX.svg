@@ -81,11 +81,11 @@
    id="text15"
    dominant-baseline="baseline"
    width="0"
-   y="115"
+   y="100"
    x="50"
    stroke-alignment="center"
    stroke-miterlimit="1"
    style="font-style:normal;font-weight:700;font-size:120px;font-family:Arial;text-anchor:start;fill:url(#LG6);stroke:#ffffff;stroke-width:1.18986607;stroke-miterlimit:1">WebFX</text>
-
+    <text x="69" y="135" fill="white" style="letter-spacing: 0.15em;font-size:30px;font-family:Arial">The JavaFX transpiler</text>
 
 </svg>
