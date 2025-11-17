@@ -131,6 +131,7 @@ public final class TracerEngine {
 
     private void startComputingUsingWorker() {
         Worker worker = webWorkerPool.getWorker();
+        // These 2 parameters can eventually be increased
         int messageQueueSize = 1;
         int numberOfLinesPerComputation = 1;
         int lineInfoSize = messageQueueSize * numberOfLinesPerComputation;
@@ -148,17 +149,16 @@ public final class TracerEngine {
             lineComputationInfo.linePixelResultStorage = pixelComputer.getLinePixelResultStorage(data);
             addReadyToPaintLine(lineComputationInfo);
             receivedLineInfoIndex[0] = (receivedIndex + 1) % lineInfoSize;
-            if (completionIndex[0] >= 0) {
-                if (receivedLineInfoIndex[0] == completionIndex[0]) {
-                    logIfComplete();
-                }
-            } else if ((receivedIndex + 1) % numberOfLinesPerComputation == 0) {
+            if (completionIndex[0] < 0 && (receivedIndex + 1) % numberOfLinesPerComputation == 0) {
                 int computedIndex = (receivedIndex + 1 - numberOfLinesPerComputation) % lineInfoSize;
                 int n = startComputingLineWorker(worker, lineComputationInfos, computedIndex, numberOfLinesPerComputation);
                 if (n < numberOfLinesPerComputation) {
                     worker.terminate(); // Will actually put it back into the webWorker pool
                     completionIndex[0] = (computedIndex + n) % lineInfoSize;
                 }
+            }
+            if (receivedLineInfoIndex[0] == completionIndex[0]) {
+                logIfComplete();
             }
         });
         for (int i = 0; i < messageQueueSize; i++) {

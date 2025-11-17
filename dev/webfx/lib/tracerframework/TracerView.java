@@ -100,7 +100,7 @@ public final class TracerView {
 
     public Parent buildView() {
         BorderPane root = new BorderPane();
-        // Following Google Chrome advise, and preventing this warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
+        // Following Google Chrome advice and preventing this warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
         canvas        = WebFxKitLauncher.createWillReadFrequentlyCanvas(canvasWidth, canvasHeight);
         overlayCanvas = new Canvas(canvasWidth, canvasHeight);
         tracer = new TracerEngine(canvas, pixelComputer);
@@ -553,7 +553,7 @@ public final class TracerView {
         if (overlayTextAnimationTimer != null && overlayCharactersMax > charCount + 2) {
             if (overlayCharactersMax > charCount + 220) // Stopping animation after a while
                 stopOverlayTextAnimation();
-            else if (overlayCharactersMax / 20 % 2 == 0) // Blinking cursor every 20 frames
+            else if (overlayCharactersMax / 20 % 2 == 0) // Blinking the cursor every 20 frames
                 octx.fillText(CURSOR_CHAR, 10, yText);
         }
         lastOverlayTexts = texts;
