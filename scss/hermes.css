@@ -968,7 +968,7 @@ table {
 @media screen and (min-width: 800px) {
   body {
     background-color: var(--webfx-background-color);
-    padding: 30px;
+    padding-top: 30px;
   }
   .wrap {
     border-radius: 10px;
