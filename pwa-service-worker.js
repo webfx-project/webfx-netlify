@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-11-24T21:31:36Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-11-25T10:30:24Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -9,7 +9,7 @@ const DEFAULT_PRE_CACHE = false;
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
-  "/BCBE4B1CB6CAB496C207B186E0819B0A.cache.js": {"strategy": "CRITICAL", "hash": "e666bb5989d1f413d0bbd61e4eb11c72cabbef807e8aff5663b556a9b0119224", "size": 630198, "gzipSize": 184734},
+  "/D1F081A19C1FDF83819FB029A62CF5EE.cache.js": {"strategy": "CRITICAL", "hash": "0c2002b3248af1df689a6522fac311c4f8e16b2276cc28587effeed152e592df", "size": 630198, "gzipSize": 184734},
   "/SpaceFX-new-224x264.webp": "6560d79edb4c66f1e7fe37acc54258d29e574d29864d20f7abc6c8dd33cc77ee",
   "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
   "/dev/webfx/kit/css/main.css": "877a18d1d2f08a6c82e8fafa8e09f504e634d7dad6b87c85641573c4a1995347",
@@ -173,11 +173,11 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/pwa-asset.json": "3cd5c7c7370d20ee92fee98b1ee024571ef05c5dd56a0d7e38da5c65a793d50c",
+  "/pwa-asset.json": "2aa43a40ebfb7e9fcf408f6661c8dc98e5936d7f15eb34adecd33ed0f48f615b",
   "/pwa-manifest.json": "234d242279ff012841ea2ffd93e480782af0088246b893e8b4b8a85e3a4472ce",
-  "/pwa-service-worker.js": "3be88ff398b501a4d52c12bc03e7b7e444fb439ec85d4edc8380284261da6e83",
+  "/pwa-service-worker.js": "ce96fd6d3d593da0bf9345627934aefcd8b57fc31b7589d7227223849026fc26",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "959d1e750ddd61b76d384a9b4b39f88660ce0cce79846d5020f8aa5f1ada64e2"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "cb687731f9d7922d5a46883d8997c21d516f9c420475d71884f7479b37ab54cf"
 };
 
 function normalizeAsset(assetLike) {
@@ -215,32 +215,6 @@ function toHashRequest(hash) {
     const scope = getScope();
     const u = scope + hash;
     return new Request(u);
-}
-
-// Remove any cached hash entries that are not present in the provided allowedHashes set
-async function deleteHashesNotIn(allowedHashes, cache) {
-    if (!cache) cache = await caches.open(CACHE_NAME)
-    const keys = await cache.keys();
-    let deletedCount = 0;
-    await Promise.all(keys.map(async (req) => {
-        // Only consider entries that were stored via toHashRequest(hash).
-        // We assume such entries end exactly with the hash (scope + hash) and that hash is a 64-char hex string (sha-256)
-        try {
-            const url = new URL(req.url);
-            const path = url.pathname || "";
-            // scope path + 64 hex chars
-            const scopePath = getScopePathname();
-            const suffix = path.startsWith(scopePath) ? path.substring(scopePath.length) : null;
-            const isHex64 = suffix && /^[a-f0-9]{64}$/i.test(suffix);
-            const hash = isHex64 ? suffix : null;
-            if (!hash) return;
-            if (!allowedHashes.has(hash)) {
-                const ok = await cache.delete(req);
-                if (ok) deletedCount++;
-            }
-        } catch (e) { /* ignore parse errors */ }
-    }));
-    return deletedCount;
 }
 
 function getPathFromRequest(request) {
@@ -302,13 +276,48 @@ const reportProgress = async (completed = false) => {
     });
 };
 
+// Helper to check if critical assets are already in cache (for SW restarts)
+const checkCriticalAssets = async () => {
+    if (isCriticalDone) return true;
+    try {
+        const cache = await caches.open(CACHE_NAME);
+        const critical = Object.entries(HASH_TO_INFO).filter(([, info]) => info && info.strategy === 'CRITICAL');
+
+        // If no critical assets, we are done
+        if (critical.length === 0) {
+            isCriticalDone = true;
+            return true;
+        }
+
+        // Check if all exist in cache
+        const allCached = await Promise.all(critical.map(async ([hash]) => {
+            const req = toHashRequest(hash);
+            const match = await cache.match(req);
+            return !!match;
+        }));
+
+        if (allCached.every(Boolean)) {
+            isCriticalDone = true;
+            return true;
+        }
+    } catch (e) {
+        console.error("Error checking critical assets", e);
+    }
+    return false;
+};
+
 // Handle client messages
 self.addEventListener('message', event => {
     if (event.data && event.data.type === 'check_status') {
-        event.source.postMessage({
-            type: 'status',
-            criticalCompleted: isCriticalDone
-        });
+        (async () => {
+            if (!isCriticalDone) {
+                await checkCriticalAssets();
+            }
+            event.source.postMessage({
+                type: 'status',
+                criticalCompleted: isCriticalDone
+            });
+        })();
     }
 });
 

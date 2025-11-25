@@ -1,6 +1,6 @@
-{"mavenBuildTimestamp": "2025-11-24T21:31:36Z", "assetManifest": {
+{"mavenBuildTimestamp": "2025-11-25T10:30:24Z", "assetManifest": {
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
-  "/BCBE4B1CB6CAB496C207B186E0819B0A.cache.js": {"strategy": "CRITICAL", "hash": "e666bb5989d1f413d0bbd61e4eb11c72cabbef807e8aff5663b556a9b0119224", "size": 630198, "gzipSize": 184734},
+  "/D1F081A19C1FDF83819FB029A62CF5EE.cache.js": {"strategy": "CRITICAL", "hash": "0c2002b3248af1df689a6522fac311c4f8e16b2276cc28587effeed152e592df", "size": 630198, "gzipSize": 184734},
   "/SpaceFX-new-224x264.webp": "6560d79edb4c66f1e7fe37acc54258d29e574d29864d20f7abc6c8dd33cc77ee",
   "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
   "/dev/webfx/kit/css/main.css": "877a18d1d2f08a6c82e8fafa8e09f504e634d7dad6b87c85641573c4a1995347",
@@ -164,9 +164,9 @@
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/pwa-asset.json": "3cd5c7c7370d20ee92fee98b1ee024571ef05c5dd56a0d7e38da5c65a793d50c",
+  "/pwa-asset.json": "2aa43a40ebfb7e9fcf408f6661c8dc98e5936d7f15eb34adecd33ed0f48f615b",
   "/pwa-manifest.json": "234d242279ff012841ea2ffd93e480782af0088246b893e8b4b8a85e3a4472ce",
-  "/pwa-service-worker.js": "3be88ff398b501a4d52c12bc03e7b7e444fb439ec85d4edc8380284261da6e83",
+  "/pwa-service-worker.js": "ce96fd6d3d593da0bf9345627934aefcd8b57fc31b7589d7227223849026fc26",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "959d1e750ddd61b76d384a9b4b39f88660ce0cce79846d5020f8aa5f1ada64e2"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": "cb687731f9d7922d5a46883d8997c21d516f9c420475d71884f7479b37ab54cf"
 }}
