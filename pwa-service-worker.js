@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2025-11-25T10:30:24Z";
+const MAVEN_BUILD_TIMESTAMP = "2025-11-25T12:42:26Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
@@ -8,8 +8,8 @@ const DEFAULT_PRE_CACHE = false;
 // Single asset map that PwaMojo will populate: { "/file1": { preCache: true|false, hash: "XXXX" }, "/file2": "YYYY", ... }
 // If preCache is missing, or the value is a string (treated as a hash), we consider preCache = DEFAULT_PRE_CACHE
 const ASSET = {
+  "/3E199912D7F98EE2DD627AA4202EBC79.cache.js": {"strategy": "CRITICAL", "hash": "88fc2a6847f41f68e24bad08a4a195052473ea7945bac0ec7cbe59ce2851af24", "size": 630198, "gzipSize": 184734},
   "/AppIcon-1024x1024.png": "d92047008fbd04db13315896bc1f31d973eb70f52091dc95f68229b99aae1d1c",
-  "/D1F081A19C1FDF83819FB029A62CF5EE.cache.js": {"strategy": "CRITICAL", "hash": "0c2002b3248af1df689a6522fac311c4f8e16b2276cc28587effeed152e592df", "size": 630198, "gzipSize": 184734},
   "/SpaceFX-new-224x264.webp": "6560d79edb4c66f1e7fe37acc54258d29e574d29864d20f7abc6c8dd33cc77ee",
   "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
   "/dev/webfx/kit/css/main.css": "877a18d1d2f08a6c82e8fafa8e09f504e634d7dad6b87c85641573c4a1995347",
@@ -34,7 +34,7 @@ const ASSET = {
   "/eu/hansolo/spacefx/ScaledImage.java": "1400cc3cb671e3478edcaafd4c044d25e13a535c19b550680895aa20a9cf67a7",
   "/eu/hansolo/spacefx/SpaceFX.java": "2b7d047a3bdebbf7a5684f83bd057d4cf187a29707252b3dbb1f570d8789bbc1",
   "/eu/hansolo/spacefx/SpaceFXView.java": "1dc5b76233626d395ec724d871bb78dcde1af6b5eb78d62d93688575a6a95b68",
-  "/eu/hansolo/spacefx/Spaceboy.ttf": "f2fce21a778bd39b47315eab1fd638e91ab5d4b71413f77aa205ae9ee5e0cf6f",
+  "/eu/hansolo/spacefx/Spaceboy.ttf": {"strategy": "CRITICAL", "hash": "f2fce21a778bd39b47315eab1fd638e91ab5d4b71413f77aa205ae9ee5e0cf6f", "size": 45124, "gzipSize": 13317},
   "/eu/hansolo/spacefx/WaveCoordinate.java": "1e32e04e5aabebbb6935a6d82e81e8bff6b8ea50e86830064810465642099995",
   "/eu/hansolo/spacefx/WaveType.java": "3d94eabc6f973161e728c3bec613d94bb987194a36f599fa127b8734aa0e3a01",
   "/eu/hansolo/spacefx/WebFXUtil.java": "6edd9cd58bd12d57f5dce000792f5cc666192c0e3c9d5c6461bf7b94dadd2b9b",
@@ -120,7 +120,7 @@ const ASSET = {
   "/eu/hansolo/spacefx/furyBonus.png": "370ed356972653a6eae2bd40a955a2a490d01e775f39c52a2b4b7061121563ff",
   "/eu/hansolo/spacefx/gameover.jpg": "a2c0a292185e15b4e493ba2fcbc5cec048d1defc0e7acaa138ea2baa5a793484",
   "/eu/hansolo/spacefx/gameover.mp3": "a0ae240a66c7e5ebabd925264bd21b8b213381ecb1d4d1afb3cba3ef9afa3817",
-  "/eu/hansolo/spacefx/halloffamescreen.jpg": "e0e04de9e254074b112d2db83847ce4e0c85f49faa6d8e7247a2d7845d893233",
+  "/eu/hansolo/spacefx/halloffamescreen.jpg": {"strategy": "CRITICAL", "hash": "e0e04de9e254074b112d2db83847ce4e0c85f49faa6d8e7247a2d7845d893233", "size": 99057, "gzipSize": 94301},
   "/eu/hansolo/spacefx/hit.mp3": "6e8aa17acea6775ec9832efd395e87e2806dddd5c0316435651c5a9f318afac1",
   "/eu/hansolo/spacefx/icon.icns": "4c9bb766ea729e6ce082adb7ef58edb7f6cc51184695a8b1bad4aa1173116398",
   "/eu/hansolo/spacefx/icon.ico": "4ee5591eb3a1c17a2da5e138ee16bb607fc8fa77a1b308990282a2e9c4d569f6",
@@ -165,7 +165,7 @@ const ASSET = {
   "/eu/hansolo/spacefx/speedUp.png": "58b06d0287f690cb56d296b191f7932e1c6c11d1d445e4883dc6c2c73b18941c",
   "/eu/hansolo/spacefx/starburst360Bonus.png": "d6307776e1ede234586f1144416e611c19e91a825a3406a6c89dd39836443c6d",
   "/eu/hansolo/spacefx/starburstBonus.png": "e0c9d258b34cbb4a065b024f03d2bf9702957a4745b0050919ab53aa9481425c",
-  "/eu/hansolo/spacefx/startscreen.jpg": "73ccc486431bd2b48a9a0cc1b99b8a5b4fe8543091f520d706f6e26087b696d7",
+  "/eu/hansolo/spacefx/startscreen.jpg": {"strategy": "CRITICAL", "hash": "73ccc486431bd2b48a9a0cc1b99b8a5b4fe8543091f520d706f6e26087b696d7", "size": 167794, "gzipSize": 167319},
   "/eu/hansolo/spacefx/startscreenIOS.jpg": "1d2ad2675794b80869ef36aa36b7dd117bb069f308290b2284c949e4d731d129",
   "/eu/hansolo/spacefx/torpedo.png": "76d0403f908df787474d6a4da4890493ed8006e7d169e62b668adfc241256ee7",
   "/eu/hansolo/spacefx/torpedoHit2.png": "2add099ef9128b2f33a405b72a2feefaa89eda5d7a5d5ef5b547b6754b70a69c",
@@ -173,11 +173,11 @@ const ASSET = {
   "/eu/hansolo/spacefx/torpedoHitL2.png": "f1ed60d12e4b68a662c13bcc20bbfb76ee54a3e4e36c4498eb5970494ba97685",
   "/eu/hansolo/spacefx/torpedoHitL3.png": "b12a488efc5b7f494f916ac4b9eaa93d76b55f6b0f4cf2f2dbac332b10db9aaa",
   "/eu/hansolo/spacefx/upExplosion.png": "73d0fa8806a5101be5f26f2e719f9994aa0f65412b060bab58c501715d2c2e77",
-  "/pwa-asset.json": "2aa43a40ebfb7e9fcf408f6661c8dc98e5936d7f15eb34adecd33ed0f48f615b",
+  "/pwa-asset.json": "0342f77d7c47de7f870b8258542836cecb2c36e938f0dbef2163b99c88af206a",
   "/pwa-manifest.json": "234d242279ff012841ea2ffd93e480782af0088246b893e8b4b8a85e3a4472ce",
-  "/pwa-service-worker.js": "ce96fd6d3d593da0bf9345627934aefcd8b57fc31b7589d7227223849026fc26",
+  "/pwa-service-worker.js": "1c83a35d343e046869c7705bf266281a35487caa9dd23b3f50a1bda2a85ba225",
   "/webfx_demo_spacefx_application_gwt.devmode.js": "d9c40ea13de38a25b7db40c77ad7f65f4dc07abf021a3631e5c5f3f34fb382e8",
-  "/webfx_demo_spacefx_application_gwt.nocache.js": "cb687731f9d7922d5a46883d8997c21d516f9c420475d71884f7479b37ab54cf"
+  "/webfx_demo_spacefx_application_gwt.nocache.js": {"strategy": "CRITICAL", "hash": "ca1d87d70a589565a7fabbb80f941b43b54dc31b268970d06f67305d246dbb54", "size": 7210, "gzipSize": 2764}
 };
 
 function normalizeAsset(assetLike) {
