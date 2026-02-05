@@ -9,6 +9,23 @@
 
     </head>
     <body>
+        <script>
+            async function unregisterPwaServiceWorker() {
+                if (navigator.serviceWorker) {
+                    navigator.serviceWorker.getRegistrations()
+                        .then(registrations => {
+                            registrations.forEach((registration, i) => registration.unregister());
+                            return null;
+                        });
+                    const cache = await caches.open("webfx-pwa-cache")
+                    const keys = await cache.keys();
+                    await Promise.all(keys.map(async (req) => {
+                        await cache.delete(req);
+                    }));
+                }
+            }
+            unregisterPwaServiceWorker();
+        </script>
         <script type="text/javascript" charset="utf-8" src="./classes.wasm-runtime.js"></script>
         <script type="text/javascript" charset="utf-8" src="./dev/webfx/kit/perfectscrollbar/perfect-scrollbar.min.js"></script>
         <script>
@@ -20,7 +37,8 @@
                 });
                 teavm.exports.main([]);
             }
+            main();
         </script>
-        <script>main()</script>
+
     </body>
 </html>
