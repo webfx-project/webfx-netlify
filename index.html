@@ -3,14 +3,351 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover"/>
-        <meta name="mavenBuildTimestamp" content="2025-11-16T17:30:04Z"/>
+        <meta name="mavenBuildTimestamp" content="2026-02-07T22:25:23Z"/>
         <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'>
         <link rel='manifest' href='./pwa-manifest.json'>
-        <link rel="stylesheet" href="./dev/webfx/kit/css/main.css?v=2025-11-16T17:30:04Z"></link>
+        <style>
+            :root {
+                --progress-circle-radius: 52px;
+                --progress-icon-size: 32px;
+            }
+        
+            #pwa-progress-bar-container {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: calc(var(--progress-circle-radius) * 2 + 16px);
+                height: calc(var(--progress-circle-radius) * 2 + 16px);
+            }
+        
+            .circular-progress {
+                position: relative;
+                width: calc(var(--progress-circle-radius) * 2 + 16px);
+                height: calc(var(--progress-circle-radius) * 2 + 16px);
+            }
+        
+            .circular-progress > svg {
+                transform: rotate(-90deg);
+                width: calc(var(--progress-circle-radius) * 2 + 16px);
+                height: calc(var(--progress-circle-radius) * 2 + 16px);
+            }
+        
+            .circular-progress-bg {
+                fill: none;
+                stroke: #e6e6e6;
+                stroke-width: 8;
+            }
+        
+            .circular-progress-bar {
+                fill: none;
+                stroke: #007bff;
+                stroke-width: 8;
+                stroke-linecap: round;
+                transition: stroke-dashoffset 0.3s ease;
+            }
+        
+            .progress-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .pause-icon {
+                width: var(--progress-icon-size);
+                height: var(--progress-icon-size);
+                background-color: #007bff;
+                border-radius: calc(var(--progress-icon-size) * 0.125);
+            }
+        
+            .play-icon {
+                width: calc(var(--progress-icon-size) * 1.4);
+                height: calc(var(--progress-icon-size) * 1.4);
+                background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 2v20c0 .83.84 1.37 1.55.98l15-10c.68-.49.68-1.47 0-1.96l-15-10C5.84 .63 5 1.17 5 2z" stroke-linejoin="round" fill="%23007bff"/></svg>');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        </style>
+        <link rel="stylesheet" href="./dev/webfx/kit/css/main.css?v=2026-02-07T22:25:23Z"></link>
 
-    </head>
+    
+  <script type="application/json" id="pwa-asset-manifest">{
+  "/288B09BF70E4F6D762807D0BCE7578FC.cache.js": {"strategy": "CRITICAL", "hash": "f4c0cebe7b6cb712f5995f3c5a581012ebb6762fbfc508468981258ed01df505", "size": 474542, "gzipSize": 141117},
+  "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
+  "/dev/webfx/kit/css/main.css": "624468171a19a908c1c65fb066b445918ea537275f52d5955e8ab262fbf32755",
+  "/dev/webfx/kit/perfectscrollbar/elemental2/PerfectScrollbar.java": "89d417919148d7b3098afee8aab16dfbec2b37f83be870380f1c4a66ac56ac5c",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.min.js": "3535c240c3cfef15b9fd77b610c9b41db9ff2f4569949230b7f15a9c8cd0b6e7",
+  "/emul/java/util/regex/xregexp.js": "263ed3cef90a59f0a94fbc2e54dfd0c32526df337132e361e0e9303502828f58",
+  "/eu/hansolo/fx/tetris/Constants.java": "38219f8d13828fa8e9eb2091223c4e315cf0d223ff1ff7ae53d2524a1e51ba1f",
+  "/eu/hansolo/fx/tetris/Fonts.java": "05fba892062c71a3b841fd6b95a17308314d6a8ac563a952887d333cfc45f0f1",
+  "/eu/hansolo/fx/tetris/Launcher.java": "eb88928a40968881a80b4762eb0a53e45a169bafe83378178328b1c68cfe7edd",
+  "/eu/hansolo/fx/tetris/Main.java": "405294e051b8c023372b411a2d40c15292644c9434074648852330722492ac4e",
+  "/eu/hansolo/fx/tetris/PropertyManager.java": "0e4bb6838d8e7f09ec81c880e8482179ddca822d42f8197d21725a0b8e95448d",
+  "/eu/hansolo/fx/tetris/Silkworm.ttf": "5bac9845a9dc198d720a372c610b169dfc911bcdf9171c874256a866ee2e3f64",
+  "/eu/hansolo/fx/tetris/blueBlock.png": "e071d656f24fce7b5a08b512b6f667eddd32b97442bb13158873072c5989ccad",
+  "/eu/hansolo/fx/tetris/blueGlossyBlock.png": "3c5c0b79455138dd44a589c19e8e87864eee9916330d10fd8b269fa9c77d942e",
+  "/eu/hansolo/fx/tetris/cyanBlock.png": "83335bd7209986c7de3b6c9bf2bc1d0d09759d309097e48bb7c353c1345acc6a",
+  "/eu/hansolo/fx/tetris/cyanGlossyBlock.png": "fd82fd27cc397e47b3eb1311eb1d4fcbeea32dea85a561150fe24cdce849b924",
+  "/eu/hansolo/fx/tetris/githubDarkGreenBlock.png": "6e69ed3319027d3f505e5becdc1ea85b62aeaf445bf45de883eaafe6f5cb3586",
+  "/eu/hansolo/fx/tetris/githubGreenBlock.png": "6fe7fcdba296d41e0ef5bc2c69890295274d6e7a80725c310b2afb8309da7951",
+  "/eu/hansolo/fx/tetris/githubLightGreenBlock.png": "0e5fb17403e21ac418f8be8c24221dbdfec5d0be14dac8908376baebfc83df82",
+  "/eu/hansolo/fx/tetris/githubVeryLightGreenBlock.png": "55ef8555e16b4899b53836850fd9b83b6111fcdb18de3592101b8c9b47627eed",
+  "/eu/hansolo/fx/tetris/greenBlock.png": "67f13dc246f068eec67e4c7ae88c3ec8b95e1f22952f2d1ebabb0d48004faa7b",
+  "/eu/hansolo/fx/tetris/greenGlossyBlock.png": "6d67d559975aaa511a6e35a72a01b8015b1648443cdd74f1e02436ade1ebedd0",
+  "/eu/hansolo/fx/tetris/icon.icns": "b4b5bf97c315105652621a5ef7a4de0f6ea66d2d2ba748146f11ce23d8d60f9d",
+  "/eu/hansolo/fx/tetris/icon.ico": "4c5b392069f9b925fa9e12e02888ad7c58f98816b5378ca74333be578f4ef1a2",
+  "/eu/hansolo/fx/tetris/icon.png": "146ec72ab08f02df1ac81e3c2204627a0ff57d82842745e874651e0c6f96e853",
+  "/eu/hansolo/fx/tetris/icon128x128.png": "c20c7edde9aba4f7fafc4284d50d7aba3a326dcac8b82c87234092f72aab9121",
+  "/eu/hansolo/fx/tetris/icon16x16.png": "da9a5ce829084862ed41c2430a0bee8acac6798d65f40900717f4da0fe56fd41",
+  "/eu/hansolo/fx/tetris/icon256x256.png": "82695ea342883558cb00018150fcad23b11cd49afe095125d8f3eaeab796b68b",
+  "/eu/hansolo/fx/tetris/icon32x32.png": "53c3e5cf085ea7d9957ad7611ba884e952ac6f5020727d6563a42648ccc26613",
+  "/eu/hansolo/fx/tetris/icon48x48.png": "00dc08703bb1f6f239975f024b2b1952c88dfa021bfb8e9d62b49bed9d4c70e6",
+  "/eu/hansolo/fx/tetris/orangeBlock.png": "ace81fb73806d621b6fdefdae0a6c1a6919085bad46a9fe8f4a3a61c7e38d386",
+  "/eu/hansolo/fx/tetris/orangeGlossyBlock.png": "fd7de084779c069464e668fa48b63e78afb853d180bacc3a1ee4adf6b6dfb5b2",
+  "/eu/hansolo/fx/tetris/purpleBlock.png": "0eabab27a87da5036944ad7a256f83bcc91574603efecb7b0249fec1e4ad17bc",
+  "/eu/hansolo/fx/tetris/purpleGlossyBlock.png": "ff9a33853f7d502ad444e11c1233ba0e7c644780012a801062bad56d0d584caa",
+  "/eu/hansolo/fx/tetris/redBlock.png": "3c0bd5ce2e9f97c16f557f19cb991107a70de149463c0f1bfaf173a3d0b3092e",
+  "/eu/hansolo/fx/tetris/redGlossyBlock.png": "350d08ada91e539840bfd6e6bedcc56e532c198fb8be6372f045e6c04dd628a6",
+  "/eu/hansolo/fx/tetris/soundtrack.mp3": "63fcf315af202fab5cb51d832064c8bb0b02137baf680f752feff2c17708e5d8",
+  "/eu/hansolo/fx/tetris/startScreen.png": "069ed8e37a319ddf0870df7b8c7a3d3c95c9e42fbe9590597a5a33485a4f6a6b",
+  "/eu/hansolo/fx/tetris/tetris-4-lines.mp3": "378d38993608716165ab5d5b0564cbdb9e6c6a2b44f590b3bf95d8b133546e01",
+  "/eu/hansolo/fx/tetris/tetris-block-falling.mp3": "5727c1405ec7011cc8a59dbba58effba9d88bd8b8dac0b694a22db77467f6b62",
+  "/eu/hansolo/fx/tetris/tetris-block-landed.mp3": "217f3e40249a440baee40400efc624de7e01dee6e1d6f582972139b7daa2cc2f",
+  "/eu/hansolo/fx/tetris/tetris-game-over.mp3": "f1308e7b88767866770ee64034fb4d9144a33f0bb7588ff5dd16bb4a3fabeced",
+  "/eu/hansolo/fx/tetris/tetris-level-up-jingle.mp3": "636c3427f243a19dd4450a119b366ebb7056d7b329a37873db2b4165370f25d8",
+  "/eu/hansolo/fx/tetris/tetris-line-clear.mp3": "97eab9bd2fa9367f32973b0b149978954c71b52d18934a3510708abc57007e9e",
+  "/eu/hansolo/fx/tetris/tetris-move-block.mp3": "c2fa2470fbbc9b900925d3546cd4b9a523eb10df918009282d613b7945e3998f",
+  "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
+  "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
+  "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
+  "/pwa-manifest.json": "8aeb73d96d080308d09d4ad905858d06941fe1e9c77bd512200da8d0fa740834",
+  "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
+  "/webfx_demo_tetris_application_gwt.nocache.js": {"strategy": "CRITICAL", "hash": "7723920c45a85ff1774b1372bbcc92461964badcbf12aef27c6f3b8f1f72341c", "size": 7175, "gzipSize": 2762}
+}</script>
+  
+  <script type="application/json" id="pwa-asset-manifest">{
+  "/288B09BF70E4F6D762807D0BCE7578FC.cache.js": {"strategy": "CRITICAL", "hash": "f4c0cebe7b6cb712f5995f3c5a581012ebb6762fbfc508468981258ed01df505", "size": 474542, "gzipSize": 141117},
+  "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
+  "/dev/webfx/kit/css/main.css": "624468171a19a908c1c65fb066b445918ea537275f52d5955e8ab262fbf32755",
+  "/dev/webfx/kit/perfectscrollbar/elemental2/PerfectScrollbar.java": "89d417919148d7b3098afee8aab16dfbec2b37f83be870380f1c4a66ac56ac5c",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.min.js": "3535c240c3cfef15b9fd77b610c9b41db9ff2f4569949230b7f15a9c8cd0b6e7",
+  "/emul/java/util/regex/xregexp.js": "263ed3cef90a59f0a94fbc2e54dfd0c32526df337132e361e0e9303502828f58",
+  "/eu/hansolo/fx/tetris/Constants.java": "38219f8d13828fa8e9eb2091223c4e315cf0d223ff1ff7ae53d2524a1e51ba1f",
+  "/eu/hansolo/fx/tetris/Fonts.java": "05fba892062c71a3b841fd6b95a17308314d6a8ac563a952887d333cfc45f0f1",
+  "/eu/hansolo/fx/tetris/Launcher.java": "eb88928a40968881a80b4762eb0a53e45a169bafe83378178328b1c68cfe7edd",
+  "/eu/hansolo/fx/tetris/Main.java": "405294e051b8c023372b411a2d40c15292644c9434074648852330722492ac4e",
+  "/eu/hansolo/fx/tetris/PropertyManager.java": "0e4bb6838d8e7f09ec81c880e8482179ddca822d42f8197d21725a0b8e95448d",
+  "/eu/hansolo/fx/tetris/Silkworm.ttf": "5bac9845a9dc198d720a372c610b169dfc911bcdf9171c874256a866ee2e3f64",
+  "/eu/hansolo/fx/tetris/blueBlock.png": "e071d656f24fce7b5a08b512b6f667eddd32b97442bb13158873072c5989ccad",
+  "/eu/hansolo/fx/tetris/blueGlossyBlock.png": "3c5c0b79455138dd44a589c19e8e87864eee9916330d10fd8b269fa9c77d942e",
+  "/eu/hansolo/fx/tetris/cyanBlock.png": "83335bd7209986c7de3b6c9bf2bc1d0d09759d309097e48bb7c353c1345acc6a",
+  "/eu/hansolo/fx/tetris/cyanGlossyBlock.png": "fd82fd27cc397e47b3eb1311eb1d4fcbeea32dea85a561150fe24cdce849b924",
+  "/eu/hansolo/fx/tetris/githubDarkGreenBlock.png": "6e69ed3319027d3f505e5becdc1ea85b62aeaf445bf45de883eaafe6f5cb3586",
+  "/eu/hansolo/fx/tetris/githubGreenBlock.png": "6fe7fcdba296d41e0ef5bc2c69890295274d6e7a80725c310b2afb8309da7951",
+  "/eu/hansolo/fx/tetris/githubLightGreenBlock.png": "0e5fb17403e21ac418f8be8c24221dbdfec5d0be14dac8908376baebfc83df82",
+  "/eu/hansolo/fx/tetris/githubVeryLightGreenBlock.png": "55ef8555e16b4899b53836850fd9b83b6111fcdb18de3592101b8c9b47627eed",
+  "/eu/hansolo/fx/tetris/greenBlock.png": "67f13dc246f068eec67e4c7ae88c3ec8b95e1f22952f2d1ebabb0d48004faa7b",
+  "/eu/hansolo/fx/tetris/greenGlossyBlock.png": "6d67d559975aaa511a6e35a72a01b8015b1648443cdd74f1e02436ade1ebedd0",
+  "/eu/hansolo/fx/tetris/icon.icns": "b4b5bf97c315105652621a5ef7a4de0f6ea66d2d2ba748146f11ce23d8d60f9d",
+  "/eu/hansolo/fx/tetris/icon.ico": "4c5b392069f9b925fa9e12e02888ad7c58f98816b5378ca74333be578f4ef1a2",
+  "/eu/hansolo/fx/tetris/icon.png": "146ec72ab08f02df1ac81e3c2204627a0ff57d82842745e874651e0c6f96e853",
+  "/eu/hansolo/fx/tetris/icon128x128.png": "c20c7edde9aba4f7fafc4284d50d7aba3a326dcac8b82c87234092f72aab9121",
+  "/eu/hansolo/fx/tetris/icon16x16.png": "da9a5ce829084862ed41c2430a0bee8acac6798d65f40900717f4da0fe56fd41",
+  "/eu/hansolo/fx/tetris/icon256x256.png": "82695ea342883558cb00018150fcad23b11cd49afe095125d8f3eaeab796b68b",
+  "/eu/hansolo/fx/tetris/icon32x32.png": "53c3e5cf085ea7d9957ad7611ba884e952ac6f5020727d6563a42648ccc26613",
+  "/eu/hansolo/fx/tetris/icon48x48.png": "00dc08703bb1f6f239975f024b2b1952c88dfa021bfb8e9d62b49bed9d4c70e6",
+  "/eu/hansolo/fx/tetris/orangeBlock.png": "ace81fb73806d621b6fdefdae0a6c1a6919085bad46a9fe8f4a3a61c7e38d386",
+  "/eu/hansolo/fx/tetris/orangeGlossyBlock.png": "fd7de084779c069464e668fa48b63e78afb853d180bacc3a1ee4adf6b6dfb5b2",
+  "/eu/hansolo/fx/tetris/purpleBlock.png": "0eabab27a87da5036944ad7a256f83bcc91574603efecb7b0249fec1e4ad17bc",
+  "/eu/hansolo/fx/tetris/purpleGlossyBlock.png": "ff9a33853f7d502ad444e11c1233ba0e7c644780012a801062bad56d0d584caa",
+  "/eu/hansolo/fx/tetris/redBlock.png": "3c0bd5ce2e9f97c16f557f19cb991107a70de149463c0f1bfaf173a3d0b3092e",
+  "/eu/hansolo/fx/tetris/redGlossyBlock.png": "350d08ada91e539840bfd6e6bedcc56e532c198fb8be6372f045e6c04dd628a6",
+  "/eu/hansolo/fx/tetris/soundtrack.mp3": "63fcf315af202fab5cb51d832064c8bb0b02137baf680f752feff2c17708e5d8",
+  "/eu/hansolo/fx/tetris/startScreen.png": "069ed8e37a319ddf0870df7b8c7a3d3c95c9e42fbe9590597a5a33485a4f6a6b",
+  "/eu/hansolo/fx/tetris/tetris-4-lines.mp3": "378d38993608716165ab5d5b0564cbdb9e6c6a2b44f590b3bf95d8b133546e01",
+  "/eu/hansolo/fx/tetris/tetris-block-falling.mp3": "5727c1405ec7011cc8a59dbba58effba9d88bd8b8dac0b694a22db77467f6b62",
+  "/eu/hansolo/fx/tetris/tetris-block-landed.mp3": "217f3e40249a440baee40400efc624de7e01dee6e1d6f582972139b7daa2cc2f",
+  "/eu/hansolo/fx/tetris/tetris-game-over.mp3": "f1308e7b88767866770ee64034fb4d9144a33f0bb7588ff5dd16bb4a3fabeced",
+  "/eu/hansolo/fx/tetris/tetris-level-up-jingle.mp3": "636c3427f243a19dd4450a119b366ebb7056d7b329a37873db2b4165370f25d8",
+  "/eu/hansolo/fx/tetris/tetris-line-clear.mp3": "97eab9bd2fa9367f32973b0b149978954c71b52d18934a3510708abc57007e9e",
+  "/eu/hansolo/fx/tetris/tetris-move-block.mp3": "c2fa2470fbbc9b900925d3546cd4b9a523eb10df918009282d613b7945e3998f",
+  "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
+  "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
+  "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
+  "/pwa-manifest.json": "8aeb73d96d080308d09d4ad905858d06941fe1e9c77bd512200da8d0fa740834",
+  "/pwa-service-worker.js": "2849b2ce7d2a7c42eab6f2ca652ff654fbda982859a81b1619e878dc5f6ec3e4",
+  "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
+  "/webfx_demo_tetris_application_gwt.nocache.js": {"strategy": "CRITICAL", "hash": "7723920c45a85ff1774b1372bbcc92461964badcbf12aef27c6f3b8f1f72341c", "size": 7175, "gzipSize": 2762}
+}</script>
+  
+  <script type="application/json" id="pwa-asset-manifest">{
+  "/288B09BF70E4F6D762807D0BCE7578FC.cache.js": {"strategy": "CRITICAL", "hash": "f4c0cebe7b6cb712f5995f3c5a581012ebb6762fbfc508468981258ed01df505", "size": 474542, "gzipSize": 141117},
+  "/clear.cache.gif": "afe0dcfca292a0fae8bce08a48c14d3e59c9d82c6052ab6d48a22ecc6c48f277",
+  "/dev/webfx/kit/css/main.css": "624468171a19a908c1c65fb066b445918ea537275f52d5955e8ab262fbf32755",
+  "/dev/webfx/kit/perfectscrollbar/elemental2/PerfectScrollbar.java": "89d417919148d7b3098afee8aab16dfbec2b37f83be870380f1c4a66ac56ac5c",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.css": "7b6508c9e8e04de8ebfec5de2ce1c4303bc46a0a279283eff7e248c1c900a91b",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.externs.js": "95a3f9084f5ca536168b60ffa143446e8ed6f9271111f92e4d0b0d56385c403a",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.js": "dcdccf78523537e1188b5a173b48d497e243891f3aeddaf1e79eb5d10ee3088f",
+  "/dev/webfx/kit/perfectscrollbar/perfect-scrollbar.min.js": "3535c240c3cfef15b9fd77b610c9b41db9ff2f4569949230b7f15a9c8cd0b6e7",
+  "/emul/java/util/regex/xregexp.js": "263ed3cef90a59f0a94fbc2e54dfd0c32526df337132e361e0e9303502828f58",
+  "/eu/hansolo/fx/tetris/Constants.java": "38219f8d13828fa8e9eb2091223c4e315cf0d223ff1ff7ae53d2524a1e51ba1f",
+  "/eu/hansolo/fx/tetris/Fonts.java": "05fba892062c71a3b841fd6b95a17308314d6a8ac563a952887d333cfc45f0f1",
+  "/eu/hansolo/fx/tetris/Launcher.java": "eb88928a40968881a80b4762eb0a53e45a169bafe83378178328b1c68cfe7edd",
+  "/eu/hansolo/fx/tetris/Main.java": "405294e051b8c023372b411a2d40c15292644c9434074648852330722492ac4e",
+  "/eu/hansolo/fx/tetris/PropertyManager.java": "0e4bb6838d8e7f09ec81c880e8482179ddca822d42f8197d21725a0b8e95448d",
+  "/eu/hansolo/fx/tetris/Silkworm.ttf": "5bac9845a9dc198d720a372c610b169dfc911bcdf9171c874256a866ee2e3f64",
+  "/eu/hansolo/fx/tetris/blueBlock.png": "e071d656f24fce7b5a08b512b6f667eddd32b97442bb13158873072c5989ccad",
+  "/eu/hansolo/fx/tetris/blueGlossyBlock.png": "3c5c0b79455138dd44a589c19e8e87864eee9916330d10fd8b269fa9c77d942e",
+  "/eu/hansolo/fx/tetris/cyanBlock.png": "83335bd7209986c7de3b6c9bf2bc1d0d09759d309097e48bb7c353c1345acc6a",
+  "/eu/hansolo/fx/tetris/cyanGlossyBlock.png": "fd82fd27cc397e47b3eb1311eb1d4fcbeea32dea85a561150fe24cdce849b924",
+  "/eu/hansolo/fx/tetris/githubDarkGreenBlock.png": "6e69ed3319027d3f505e5becdc1ea85b62aeaf445bf45de883eaafe6f5cb3586",
+  "/eu/hansolo/fx/tetris/githubGreenBlock.png": "6fe7fcdba296d41e0ef5bc2c69890295274d6e7a80725c310b2afb8309da7951",
+  "/eu/hansolo/fx/tetris/githubLightGreenBlock.png": "0e5fb17403e21ac418f8be8c24221dbdfec5d0be14dac8908376baebfc83df82",
+  "/eu/hansolo/fx/tetris/githubVeryLightGreenBlock.png": "55ef8555e16b4899b53836850fd9b83b6111fcdb18de3592101b8c9b47627eed",
+  "/eu/hansolo/fx/tetris/greenBlock.png": "67f13dc246f068eec67e4c7ae88c3ec8b95e1f22952f2d1ebabb0d48004faa7b",
+  "/eu/hansolo/fx/tetris/greenGlossyBlock.png": "6d67d559975aaa511a6e35a72a01b8015b1648443cdd74f1e02436ade1ebedd0",
+  "/eu/hansolo/fx/tetris/icon.icns": "b4b5bf97c315105652621a5ef7a4de0f6ea66d2d2ba748146f11ce23d8d60f9d",
+  "/eu/hansolo/fx/tetris/icon.ico": "4c5b392069f9b925fa9e12e02888ad7c58f98816b5378ca74333be578f4ef1a2",
+  "/eu/hansolo/fx/tetris/icon.png": "146ec72ab08f02df1ac81e3c2204627a0ff57d82842745e874651e0c6f96e853",
+  "/eu/hansolo/fx/tetris/icon128x128.png": "c20c7edde9aba4f7fafc4284d50d7aba3a326dcac8b82c87234092f72aab9121",
+  "/eu/hansolo/fx/tetris/icon16x16.png": "da9a5ce829084862ed41c2430a0bee8acac6798d65f40900717f4da0fe56fd41",
+  "/eu/hansolo/fx/tetris/icon256x256.png": "82695ea342883558cb00018150fcad23b11cd49afe095125d8f3eaeab796b68b",
+  "/eu/hansolo/fx/tetris/icon32x32.png": "53c3e5cf085ea7d9957ad7611ba884e952ac6f5020727d6563a42648ccc26613",
+  "/eu/hansolo/fx/tetris/icon48x48.png": "00dc08703bb1f6f239975f024b2b1952c88dfa021bfb8e9d62b49bed9d4c70e6",
+  "/eu/hansolo/fx/tetris/orangeBlock.png": "ace81fb73806d621b6fdefdae0a6c1a6919085bad46a9fe8f4a3a61c7e38d386",
+  "/eu/hansolo/fx/tetris/orangeGlossyBlock.png": "fd7de084779c069464e668fa48b63e78afb853d180bacc3a1ee4adf6b6dfb5b2",
+  "/eu/hansolo/fx/tetris/purpleBlock.png": "0eabab27a87da5036944ad7a256f83bcc91574603efecb7b0249fec1e4ad17bc",
+  "/eu/hansolo/fx/tetris/purpleGlossyBlock.png": "ff9a33853f7d502ad444e11c1233ba0e7c644780012a801062bad56d0d584caa",
+  "/eu/hansolo/fx/tetris/redBlock.png": "3c0bd5ce2e9f97c16f557f19cb991107a70de149463c0f1bfaf173a3d0b3092e",
+  "/eu/hansolo/fx/tetris/redGlossyBlock.png": "350d08ada91e539840bfd6e6bedcc56e532c198fb8be6372f045e6c04dd628a6",
+  "/eu/hansolo/fx/tetris/soundtrack.mp3": "63fcf315af202fab5cb51d832064c8bb0b02137baf680f752feff2c17708e5d8",
+  "/eu/hansolo/fx/tetris/startScreen.png": "069ed8e37a319ddf0870df7b8c7a3d3c95c9e42fbe9590597a5a33485a4f6a6b",
+  "/eu/hansolo/fx/tetris/tetris-4-lines.mp3": "378d38993608716165ab5d5b0564cbdb9e6c6a2b44f590b3bf95d8b133546e01",
+  "/eu/hansolo/fx/tetris/tetris-block-falling.mp3": "5727c1405ec7011cc8a59dbba58effba9d88bd8b8dac0b694a22db77467f6b62",
+  "/eu/hansolo/fx/tetris/tetris-block-landed.mp3": "217f3e40249a440baee40400efc624de7e01dee6e1d6f582972139b7daa2cc2f",
+  "/eu/hansolo/fx/tetris/tetris-game-over.mp3": "f1308e7b88767866770ee64034fb4d9144a33f0bb7588ff5dd16bb4a3fabeced",
+  "/eu/hansolo/fx/tetris/tetris-level-up-jingle.mp3": "636c3427f243a19dd4450a119b366ebb7056d7b329a37873db2b4165370f25d8",
+  "/eu/hansolo/fx/tetris/tetris-line-clear.mp3": "97eab9bd2fa9367f32973b0b149978954c71b52d18934a3510708abc57007e9e",
+  "/eu/hansolo/fx/tetris/tetris-move-block.mp3": "c2fa2470fbbc9b900925d3546cd4b9a523eb10df918009282d613b7945e3998f",
+  "/eu/hansolo/fx/tetris/tetris-rotate-block.mp3": "124a70981c0ad048f7e67dad8b50fdf0e30f21460da3a3825075b1cd2fc4f3e3",
+  "/eu/hansolo/fx/tetris/yellowBlock.png": "7eda55e1085c872ee8e62b76bbc11c6946a13ec70b8b91ecdf859b5d03ef6611",
+  "/eu/hansolo/fx/tetris/yellowGlossyBlock.png": "5407f3f33d340e030045e842165d529ddc99340fb8b37b697dc537802e41782e",
+  "/pwa-manifest.json": "8aeb73d96d080308d09d4ad905858d06941fe1e9c77bd512200da8d0fa740834",
+  "/pwa-service-worker.js": "7fc897f5ad8e1ff176c8db6abcfce059bcc42707eaa13a50748649325d9749b3",
+  "/webfx_demo_tetris_application_gwt.devmode.js": "60ed1c89bb731775964fc8e3ee72172895aaf30107fce391c8c198bb06ddb3ac",
+  "/webfx_demo_tetris_application_gwt.nocache.js": {"strategy": "CRITICAL", "hash": "7723920c45a85ff1774b1372bbcc92461964badcbf12aef27c6f3b8f1f72341c", "size": 7175, "gzipSize": 2762}
+}</script>
+  </head>
     <body>
-        <script type="text/javascript" charset="utf-8" src="./webfx_demo_tetris_application_gwt.nocache.js"></script>
+         <div id="pwa-progress-bar-container">
+             <div class="circular-progress">
+                 <svg id="progress-svg">
+                     <circle class="circular-progress-bg" id="progress-bg"></circle>
+                     <circle id="pwa-progress-bar" class="circular-progress-bar"></circle>
+                 </svg>
+                 <div class="progress-icon">
+                     <div id="progress-icon-inner" class="pause-icon"></div>
+                 </div>
+             </div>
+         </div>
+        
+         <script>
+             function loadGwtApp() {
+                 console.log('Injecting application script...');
+                 var script = document.createElement('script');
+                 script.src = "./webfx_demo_tetris_application_gwt.nocache.js";
+                 document.body.appendChild(script);
+             }
+             if ('serviceWorker' in navigator) {
+                 navigator.serviceWorker.register('pwa-service-worker.js');
+                 var isCriticalDone = false; // Don't use `let` declaration otherwise it might be unaccessible in closures on older Safari/WebKit versions on iOS
+        
+                 // Initialize circular progress bar using CSS variable
+                 const radiusValue = getComputedStyle(document.documentElement).getPropertyValue('--progress-circle-radius').trim();
+                 const radius = parseFloat(radiusValue);
+                 const circumference = 2 * Math.PI * radius;
+                 const center = radius + 8; // radius + half stroke width
+        
+                 const bgCircle = document.getElementById('progress-bg');
+                 const bar = document.getElementById('pwa-progress-bar');
+        
+                 if (bgCircle) {
+                     bgCircle.setAttribute('cx', center);
+                     bgCircle.setAttribute('cy', center);
+                     bgCircle.setAttribute('r', radius);
+                 }
+        
+                 if (bar) {
+                     bar.setAttribute('cx', center);
+                     bar.setAttribute('cy', center);
+                     bar.setAttribute('r', radius);
+                     bar.style.strokeDasharray = circumference;
+                     bar.style.strokeDashoffset = circumference;
+                 }
+        
+                 function checkLaunch() {
+                     if (isCriticalDone && navigator.serviceWorker.controller) {
+                         loadGwtApp();
+                     }
+                 }
+                 navigator.serviceWorker.addEventListener('message', event => {
+                     if (event.data) {
+                         if (event.data.type === 'loading_progress') {
+                             const percent = Math.round((event.data.current / event.data.total) * 100);
+                             const container = document.getElementById('pwa-progress-bar-container');
+                             const bar = document.getElementById('pwa-progress-bar');
+                             const icon = document.getElementById('progress-icon-inner');
+                             if (container && bar) {
+                                 if (!event.data.completed && percent < 100) {
+                                     container.style.display = 'block';
+                                     bar.style.strokeDashoffset = circumference - (percent / 100) * circumference;
+                                     if (icon) {
+                                         icon.className = 'pause-icon';
+                                     }
+                                 }
+                                 if (event.data.completed || percent >= 100) {
+                                     bar.style.strokeDashoffset = 0;
+                                     if (icon) {
+                                         icon.className = 'play-icon';
+                                     }
+                                     setTimeout(() => container.style.display = 'none', 800);
+                                 }
+                             }
+                             if (event.data.criticalCompleted && !isCriticalDone) {
+                                 isCriticalDone = true;
+                                 checkLaunch();
+                             }
+                         } else if (event.data.type === 'status') {
+                             if (event.data.criticalCompleted && !isCriticalDone) {
+                                 isCriticalDone = true;
+                                 checkLaunch();
+                             }
+                         }
+                     }
+                 });
+                 if (navigator.serviceWorker.controller) {
+                     navigator.serviceWorker.controller.postMessage({ type: 'check_status' });
+                 } else {
+                     navigator.serviceWorker.addEventListener('controllerchange', () => {
+                         navigator.serviceWorker.controller.postMessage({ type: 'check_status' });
+                     });
+                 }
+             } else {
+                 loadGwtApp();
+             }
+         </script>
 
     </body>
 </html>
