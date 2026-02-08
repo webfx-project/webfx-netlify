@@ -632,7 +632,7 @@ window.onload = function() {
 <div class="sect2">
 <h3 id="_what_is_webfx">What is WebFX?</h3>
 <div class="paragraph">
-<p>WebFX is a JavaFX application transpiler powered by <a href="https://www.gwtproject.org" target="_blank" rel="noopener">GWT</a> or <a href="https://www.teavm.org" target="_blank" rel="noopener">TeaVM</a>. It can transpile a JavaFX application into a traditional self-contained pure JavaScript or WebAssembly web app (with no plugin or server required for its execution in the browser).</p>
+<p>WebFX is a JavaFX application transpiler powered by <a href="https://www.gwtproject.org" target="_blank" rel="noopener">GWT</a> or <a href="https://www.teavm.org" target="_blank" rel="noopener">TeaVM</a>. It can transpile a JavaFX application into a standalone, self-contained JavaScript or WebAssembly web app (with no plugin or server required for execution in the browser).</p>
 </div>
 </div>
 <div class="sect2">
@@ -643,7 +643,7 @@ window.onload = function() {
 </div>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/webfx-project/webfx/tree/main/webfx-kit" target="_blank" rel="noopener">WebFX kit</a> is the heart of WebFX. It&#8217;s a modified version of OpenJFX that can be transpiled. This is achieved by patching the higher layer of OpenJFX (which contains the main JavaFX features and API) to make it GWT and TeaVM compatible, and by replacing the lower layer (the graphic rendering pipeline) by a scene graph &#8594; DOM mapper (the DOM being finally rendered by the browser).</p>
+<p>The <a href="https://github.com/webfx-project/webfx/tree/main/webfx-kit" target="_blank" rel="noopener">WebFX kit</a> is the heart of WebFX. It&#8217;s a modified version of OpenJFX that can be transpiled by GWT and TeaVM. This is achieved by patching the higher layer of OpenJFX (which contains the main JavaFX features and API) to make it GWT and TeaVM compatible, and by replacing the lower layer (the graphic rendering pipeline) with a scene graph &#8594; DOM mapper (rendered by the browser).</p>
 </div>
 </div>
 <div class="sect2">
@@ -651,7 +651,7 @@ window.onload = function() {
 <div class="sect3">
 <h4 id="_no_server">No server</h4>
 <div class="paragraph">
-<p>There are already great solutions to run Swing or JavaFX applications in the browser without plugins by actually running them on a server. And these solutions don&#8217;t have the limitations WebFX currently has. However, a standard self-contained web packaging is a much more simple, scalable and reliable execution model. This is precisely the benefit of WebFX, and probably the main reason why you would prefer it over the other existing solutions.</p>
+<p>There are already great solutions to run Swing or JavaFX applications in the browser without plugins by actually running them on a server. Those solutions avoid some current WebFX limitations, but a standard self-contained web packaging is a much simpler, more scalable, and more reliable execution model. This is precisely the benefit of WebFX, and probably the main reason why you would prefer it over the other existing solutions.</p>
 </div>
 </div>
 <div class="sect3">
@@ -662,22 +662,22 @@ window.onload = function() {
 </div>
 </div>
 <div class="paragraph">
-<p>In addition to the web platform, a WebFX application can also run on desktops &amp; mobiles. WebFX will invoke the standard Java toolchain to produce desktop executables (embedding an optimized JRE), and the Gluon toolchains to produce native executables for the desktop and mobiles.</p>
+<p>In addition to the web platform, a WebFX application can also run on desktop and mobile. WebFX will invoke the standard Java toolchain to produce desktop executables (with an optimized JRE embedded), and the Gluon toolchain to produce native executables for desktop and mobile.</p>
 </div>
 <div class="paragraph">
-<p>Some alternative technologies or JVM languages allow you to do the same but only for the application logic, because they don&#8217;t offer a cross-platform UI toolkit. With WebFX, you can do a full cross-platform development of your entire application from a single-source codebase.</p>
+<p>Some alternative technologies or JVM languages allow you to do the same but only for the application logic, because they don&#8217;t offer a cross-platform UI toolkit. With WebFX, you can do full cross-platform development of your entire application from a single codebase.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_java_full_stack">Java full-stack</h4>
 <div class="paragraph">
-<p>Writing your whole stack in Java is a big advantage, keeping your environment simple and homogeneous from a single Java IDE. This prevents you from having to master other complex ecosystems such as JavaScript or TypeScript, and also allows you to share common code between your backend and frontend using the Java module system - a great advantage compared to heterogeneous systems.</p>
+<p>Writing your whole stack in Java is a big advantage, keeping your environment simple and homogeneous from a single Java IDE. Here, full-stack means you can use Java on both the frontend and backend. This prevents you from having to master other complex ecosystems such as JavaScript or TypeScript, and also allows you to share common code between your backend and frontend using the Java module system - a great advantage compared to heterogeneous systems.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_performance">Performance</h4>
 <div class="paragraph">
-<p>Despite the big size of OpenJFX, WebFX can produce lightweight web apps, as demonstrated by the demos and the website:</p>
+<p>Despite the large size of OpenJFX, WebFX can produce lightweight web apps, as demonstrated by the demos and the website:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -734,7 +734,7 @@ window.onload = function() {
 </tbody>
 </table>
 <div class="paragraph">
-<p><span class="small">* compressed JS size transferred over the network, without eventual images or other resources</span></p>
+<p><span class="small">* compressed JS size transferred over the network, excluding images and other resources</span></p>
 </div>
 <div class="paragraph">
 <p>The secret? Three things:</p>
@@ -748,7 +748,7 @@ window.onload = function() {
 <p>GWT and TeaVM run a dead code elimination (tree-shaking) process, which removes the JavaFX classes not used by the WebFX application.</p>
 </li>
 <li>
-<p>GWT produces amazingly compact and optimized JS code, leading to highly-performant web apps.</p>
+<p>GWT produces compact and optimized JS code, leading to highly performant web apps.</p>
 </li>
 </ul>
 </div>
@@ -756,13 +756,13 @@ window.onload = function() {
 <div class="sect3">
 <h4 id="_gradual_learning_curve">Gradual learning curve</h4>
 <div class="paragraph">
-<p>WebFX is not an additional UI toolkit to learn - it&#8217;s an emulation of the well-known and well-documented JavaFX API. All the powerful JavaFX features that you know and love are available for your web app. You will feel right at home with WebFX!</p>
+<p>WebFX is not an additional UI toolkit to learn - it is an emulation of the well-known and well-documented JavaFX API. All the powerful JavaFX features that you know and love are available for your web app. You will feel right at home with WebFX!</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_fast_development_cycles">Fast development cycles</h4>
 <div class="paragraph">
-<p>You don&#8217;t need to run regular GWT/TeaVM compilations like you would do with a traditional GWT/TeaVM development, because you can already run and debug your WebFX application directly in your Java IDE with the OpenJFX runtime. You typically transpile your app only at the end of a development cycle to check the web version, after you have finished developing a feature using the standard JavaFX development model.</p>
+<p>You don&#8217;t need to run regular GWT/TeaVM compilations as in traditional GWT/TeaVM development, because you can already run and debug your WebFX application directly in your Java IDE with the OpenJFX runtime. You typically transpile your app only at the end of a development cycle to check the web output, after you have finished developing a feature using the standard JavaFX development model.</p>
 </div>
 </div>
 <div class="sect3">
@@ -775,23 +775,23 @@ window.onload = function() {
 <div class="sect2">
 <h3 id="_limitations">Limitations</h3>
 <div class="paragraph">
-<p>The WebFX kit coverage is for now limited to the essential features of JavaFX. So to successfully compile to the web, your JavaFX code needs to meet these 2 requirements:</p>
+<p>The WebFX kit coverage is currently limited to the essential features of JavaFX. So to successfully compile to the web, your JavaFX code needs to meet these two requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>use only the features covered by the WebFX kit (you can check out the <a href="https://javadoc.webfx.dev" target="_blank" rel="noopener">JavaDoc</a> to get an idea of this coverage)</p>
+<p>use only the features covered by the WebFX kit (see the <a href="https://javadoc.webfx.dev" target="_blank" rel="noopener">JavaDoc</a> for coverage)</p>
 </li>
 <li>
-<p>be compatible with GWT and/or TeaVM (no reflection, no multi-threading, no blocking code, etc&#8230;&#8203;)</p>
+<p>be compatible with GWT and/or TeaVM (avoid reflection, multithreading, and blocking code)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>When a JavaFX application meets these 2 requirements, we will call it a <em>WebFX application</em>, and it can be transpiled to the web simply by running a GWT or TeaVM compilation of it together with the WebFX kit.</p>
+<p>When a JavaFX application meets these two requirements, we call it a <em>WebFX application</em>, and it can be transpiled for the web simply by running a GWT or TeaVM compilation of it together with the WebFX kit.</p>
 </div>
 <div class="paragraph">
-<p>The main JavaFX features not yet covered are: JavaFX CSS, FXML, 3D, and most complex controls (ComboBox, TableView, TreeView,&#8230;&#8203;). But we will soon support CSS (using efficient browser CSS mapping rather than JavaFX CSS emulation) and provide simpler alternative WebFX controls to ComboBox and TableView, before considering their actual emulation.</p>
+<p>The main JavaFX features not currently covered are: JavaFX CSS, FXML, 3D, and most complex controls such as ComboBox, TableView, and TreeView. We plan to support CSS (using efficient browser CSS mapping rather than JavaFX CSS emulation) and provide simpler alternative WebFX controls to ComboBox and TableView before considering their actual emulation.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -800,7 +800,7 @@ window.onload = function() {
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Note for the impatient: OpenJFX is a huge library (about 10MB) compared to standard JS frameworks (typically 100KB). It may take some time to complete its coverage - thank you for your understanding. In the near future we hope to release a set of contributor guidelines and will endeavour to build an online community of developers around the project.
+For the impatient: OpenJFX is a huge library (about 10MB) compared to standard JS frameworks (typically 100KB). It may take some time to complete its coverage - thank you for your understanding. In the near future we plan to release a set of contributor guidelines and will work to build an online community of developers around the project.
 </td>
 </tr>
 </table>
@@ -836,7 +836,7 @@ Note for the impatient: OpenJFX is a huge library (about 10MB) compared to stand
 <div class="sect2">
 <h3 id="_introducing_the_webfx_cli">Introducing the WebFX CLI</h3>
 <div class="paragraph">
-<p>The WebFX CLI is an essential Command Line Interface tool that will assist you developing WebFX applications. It will create your application modules as follows:</p>
+<p>The WebFX CLI is an essential Command Line Interface tool that will assist you in developing WebFX applications. It will create your application modules as follows:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -890,10 +890,10 @@ Note for the impatient: OpenJFX is a huge library (about 10MB) compared to stand
 </div>
 </div>
 <div class="paragraph">
-<p>This directive is asking the CLI to identify the list of your dependencies from an analysis of your source code, and automatically populate the dependencies in pom.xml, module-info.java, module.gwt.xml, etc&#8230;&#8203;</p>
+<p>This directive asks the CLI to identify the list of your dependencies from an analysis of your source code, and automatically populate the dependencies in pom.xml, module-info.java, module.gwt.xml, etc&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p>During that process, the CLI takes care of the cross-platform aspects: when a feature is platform-dependent (a different implementation exists for different platforms), it will pick up the right modules (those whose implementation matches the target platform). It is at this point, for example, that the CLI will replace the OpenJFX modules with the WebFX kit modules in your GWT application module.</p>
+<p>During that process, the CLI takes care of the cross-platform aspects: when a feature is platform-dependent (a different implementation exists for different platforms), it will pick the right modules (those whose implementation matches the target platform). It is at this point, for example, that the CLI will replace the OpenJFX modules with the WebFX kit modules in your GWT application module.</p>
 </div>
 </div>
 <div class="sect2">
@@ -952,7 +952,7 @@ As previously mentioned, WebFX CLI requires JDK 13 or above to successfully comp
 </table>
 </div>
 <div class="paragraph">
-<p>This generates an executable fat jar in the target folder that we can execute with java:</p>
+<p>This generates an executable fat jar in the target folder that you can execute with java:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -966,7 +966,7 @@ As previously mentioned, WebFX CLI requires JDK 13 or above to successfully comp
 <div class="sect3">
 <h4 id="_creating_a_permanent_webfx_alias">Creating a permanent <em>webfx</em> alias</h4>
 <div class="paragraph">
-<p>To easily invoke the CLI from a terminal, we need to create a permanent <em>webfx</em> alias. This is done with the following commands (<mark>to run under the webfx-cli directory</mark>):</p>
+<p>To easily invoke the CLI from a terminal, we need to create a permanent <em>webfx</em> alias. Run these commands in the webfx-cli directory:</p>
 </div>
 <div class="listingblock primary">
 <div class="title">Linux</div>
@@ -1046,7 +1046,7 @@ source ~/.bash_profile <i class="conum" data-value="2"></i><b>(2)</b></code></pr
 <div class="sect3">
 <h4 id="_updating_the_webfx_cli_to_the_latest_version">Updating the WebFX CLI to the latest version</h4>
 <div class="paragraph">
-<p>You can check for update at any time by running:</p>
+<p>You can check for updates at any time by running:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1075,7 +1075,7 @@ This is so far the only command that uses <code>git</code> (a <code>git pull</co
 <div class="sect3">
 <h4 id="_creating_and_initializing_your_repository">Creating and initializing your repository</h4>
 <div class="paragraph">
-<p>Let&#8217;s create our first WebFX application. We need to create the repository directory and ask the CLI to initialize it, passing it the groupId, artifactId and version of our application.</p>
+<p>Let&#8217;s create our first WebFX application. We need to create the repository directory and ask the CLI to initialize it, passing the groupId, artifactId, and version of our application.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1085,13 +1085,13 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The init command creates only 2 files: webfx.xml and pom.xml. Note that if this is the first time you have used the CLI, it will download some other files through Maven to retrieve essential information about the available WebFX modules.</p>
+<p>The init command creates only two files: webfx.xml and pom.xml. Note that if this is the first time you have used the CLI, it will download some other files through Maven to retrieve essential information about the available WebFX modules.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_creating_your_application_modules">Creating your application modules</h4>
 <div class="paragraph">
-<p>When we create an application, we pass the fully qualified name of the JavaFX class we want to create, and the prefix to use for the application modules:</p>
+<p>When you create an application, you pass the fully qualified name of the JavaFX class you want to create, and the prefix to use for the application modules:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1134,7 +1134,7 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To generate the executables for the different platforms, you need to pass some extra build options. You can have the list in the build help:</p>
+<p>To generate the executables for the different platforms, you need to pass some extra build options. You can find the list in the build help:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1167,14 +1167,14 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Linux, macOS or Windows</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--gwt</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">html</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HTML</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Web</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Linux, macOS or Windows</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--teavm</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">html</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HTML</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Any desktop OS with Java</p></td>
@@ -1283,7 +1283,7 @@ webfx build --gwt --run <i class="conum" data-value="5"></i><b>(5)</b></code></p
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Build the html executable file with the GWT Maven plugin</td>
+<td>Build the HTML executable file with the GWT Maven plugin</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1317,7 +1317,7 @@ webfx build -gr <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Build the html executable file with the GWT Maven plugin</td>
+<td>Build the HTML executable file with the GWT Maven plugin</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1350,7 +1350,7 @@ As opposed to <code>--show</code>, <code>--locate</code> works even before the b
 </table>
 </div>
 <div class="paragraph">
-<p>The <code>run</code> command has exactly the same options as the <code>build</code> command. The only difference between these 2 commands is that with <code>run</code> you can run the app without rebuilding it (unless <code>--build</code> is specified), and with <code>build</code> you can build the app without running it (unless <code>--run</code> is specified).</p>
+<p>The <code>run</code> command has exactly the same options as the <code>build</code> command. The only difference between these two commands is that with <code>run</code> you can run the app without rebuilding it (unless <code>--build</code> is specified), and with <code>build</code> you can build the app without running it (unless <code>--run</code> is specified).</p>
 </div>
 </div>
 <div class="sect2">
@@ -1375,7 +1375,7 @@ webfx build --teavm --javascript --run <i class="conum" data-value="5"></i><b>(5
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Build the html executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
+<td>Build the HTML executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1409,7 +1409,7 @@ webfx build -tjr <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Build the html executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
+<td>Build the HTML executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1436,13 +1436,13 @@ webfx build -tjr <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>webfx run --teavm --wasm</code> (short syntax <code>webfx run -tw</code>) is not working because http(s) is required for running WebAssembly. But you can use the built-in webserver of your Java IDE to serve the file located by <code>webfx build -twl</code>.
+<code>webfx run --teavm --wasm</code> (short syntax <code>webfx run -tw</code>) does not work because http(s) is required for running WebAssembly. But you can use the built-in web server of your Java IDE to serve the file located by <code>webfx build -twl</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>In the next sections, we won&#8217;t repeat all these commands, we will use only the last command to build and run the application in one go, but of course you can still choose to separate the build and the run.</p>
+<p>In the next sections, we won&#8217;t repeat all these commands; we will use only the last command to build and run the application in one go, but you can still choose to separate build and run.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1484,7 +1484,7 @@ The desktop JAR executable is usually used for local testing. If you want to dis
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can combine the build options. For example <code>webfx build --gwt --openjfx-fatjar</code> (short syntax: <code>webfx build -gf</code>) will build both the GWT html and OpenJFX fat jar executables.
+You can combine the build options. For example <code>webfx build --gwt --openjfx-fatjar</code> (short syntax: <code>webfx build -gf</code>) will build both the GWT HTML and OpenJFX fat jar executables.
 </td>
 </tr>
 </table>
@@ -1493,7 +1493,7 @@ You can combine the build options. For example <code>webfx build --gwt --openjfx
 <div class="sect2">
 <h3 id="_desktop_platform_embedded_jre">Desktop platform (embedded JRE)</h3>
 <div class="paragraph">
-<p>As opposed to the JAR, the embedded JRE will be specific to the target platform. Therefore, a Linux machine will build a Linux executable, a Mac will build a macOS executable, and a Windows machine a Windows executable.</p>
+<p>As opposed to the JAR, the embedded JRE will be specific to the target platform. Therefore, a Linux machine will build a Linux executable, a Mac will build a macOS executable, and a Windows machine will build a Windows executable.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/fvarrui/JavaPackager" target="_blank" rel="noopener">JavaPackager Maven plugin</a> will be invoked to generate the executables and installers for the different platforms.</p>
@@ -1525,7 +1525,7 @@ You can combine the build options. For example <code>webfx build --gwt --openjfx
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Just checks that Xcode is installed with the correct path, otherwise suggest solutions.</td>
+<td>Just checks that Xcode is installed with the correct path, otherwise suggests solutions.</td>
 </tr>
 </table>
 </div>
@@ -1555,7 +1555,7 @@ webfx install inno <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The CLI will help you to customize the installers (application name, icon, etc&#8230;&#8203;) in a next version. For now, we just use the default settings.
+The CLI will help you to customize the installers (application name, icon, etc&#8230;&#8203;) in a future version. For now, we just use the default settings.
 </td>
 </tr>
 </table>
@@ -1567,7 +1567,7 @@ The CLI will help you to customize the installers (application name, icon, etc&#
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-On macOS, you need to configure at least a Team ID in Xcode in order to make the application runnable on your machine. We will provide a guide for this later.
+On macOS, you need to configure at least a Team ID in Xcode to make the application runnable on your machine. We will provide a guide for this later.
 </td>
 </tr>
 </table>
@@ -1603,7 +1603,7 @@ If the application fails to run on macOS, you can try <code>webfx run -k --open<
 <div class="sect2">
 <h3 id="_desktop_platform_native">Desktop platform (native)</h3>
 <div class="paragraph">
-<p>Like for the embedded JRE, 3 different machines are required to target the Linux, macOS, and Windows executables.</p>
+<p>As with the embedded JRE, three different machines are required to target the Linux, macOS, and Windows executables.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/gluonhq/gluonfx-maven-plugin" target="_blank" rel="noopener">GluonFX Maven plugin</a> will be invoked to generate the native desktops.</p>
@@ -1641,7 +1641,7 @@ webfx install xcode <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Just checks that Xcode is installed with the correct path, otherwise suggest solutions.</td>
+<td>Just checks that Xcode is installed with the correct path, otherwise suggests solutions.</td>
 </tr>
 </table>
 </div>
@@ -1678,7 +1678,7 @@ On macOS, you need to configure at least a Team ID in Xcode in order to make the
 </table>
 </div>
 <div class="paragraph">
-<p>Then, you can use the below command:</p>
+<p>Then, you can use the following command:</p>
 </div>
 <div class="listingblock primary">
 <div class="title">Long syntax</div>
@@ -1699,7 +1699,7 @@ On macOS, you need to configure at least a Team ID in Xcode in order to make the
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-On machines that don&#8217;t support OpenGL (such as some Linux virtual machines), JavaFX may report: Error initializing QuantumRenderer: no suitable pipeline found. We will provide later an option to include the JavaFX software pipeline as a backup, but this will increase the size of the executable.
+On machines that don&#8217;t support OpenGL (such as some Linux virtual machines), JavaFX may report: Error initializing QuantumRenderer: no suitable pipeline found. We plan to provide an option later to include the JavaFX software pipeline as a backup, but this will increase the size of the executable.
 </td>
 </tr>
 </table>
@@ -1750,7 +1750,7 @@ webfx install ubuntu-tools</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Only 64-bit architecture is supported (the installation will fail on 32-bit devices). Please check your Android kernel version specifies <code>x64</code>.
+Only 64-bit architecture is supported (the installation will fail on 32-bit devices). Please check that your Android kernel version specifies <code>x64</code>.
 </td>
 </tr>
 </table>
@@ -1759,7 +1759,7 @@ Only 64-bit architecture is supported (the installation will fail on 32-bit devi
 <div class="sect2">
 <h3 id="_ios_platform">iOS platform</h3>
 <div class="paragraph">
-<p>A Mac is required to build the iOS executable.</p>
+<p>A macOS machine is required to build the iOS executable.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/gluonhq/gluonfx-maven-plugin" target="_blank" rel="noopener">GluonFX Maven plugin</a> will be invoked to generate the native iOS application.</p>
@@ -1816,7 +1816,7 @@ You also need a provisioning profile that links the app to your iOS device, othe
 <div class="sect2">
 <h3 id="_developing_in_your_ide">Developing in your IDE</h3>
 <div class="paragraph">
-<p>Instructions for IntelliJ IDEA are provided below, which can be quite easily transposed into other Java IDEs.</p>
+<p>Instructions for IntelliJ IDEA are provided below, which can be easily adapted to other Java IDEs.</p>
 </div>
 <div class="sect3">
 <h4 id="_opening_the_project">Opening the project</h4>
@@ -1838,11 +1838,11 @@ You also need a provisioning profile that links the app to your iOS device, othe
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>select the OpenJFX application module</td>
+<td>Select the OpenJFX application module</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>enter <code class="red">dev.webfx.platform.boot.ApplicationBooter</code> for the main class</td>
+<td>Enter <code class="red">dev.webfx.platform.boot.ApplicationBooter</code> for the main class</td>
 </tr>
 </table>
 </div>
@@ -1869,7 +1869,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 </td>
 <td class="content">
 <div class="paragraph">
-<p>GWT normally doesn&#8217;t support the Java service API, but WebFX does, because the CLI emulates it by generating a GWT super source. You can rely on this feature to declare and implement your own services. Your services can even have platform-dependent implementations. A service can be a cross-platform UI API for example, with an OpenJFX implementation, and a different GWT implementation using the JS library you want for your web app. We will document this later.</p>
+<p>GWT normally doesn&#8217;t support the Java service API, but WebFX does, because the CLI emulates it by generating a GWT super source. You can rely on this feature to declare and implement your own services. Your services can even have platform-dependent implementations. For example, a service can be a cross-platform UI API, with an OpenJFX implementation and a different GWT implementation using the JS library you want for your web app. We will document this later.</p>
 </div>
 </td>
 </tr>
@@ -1882,7 +1882,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 <div class="sect3">
 <h4 id="_building_and_running_the_gwt_application">Building and running the GWT application</h4>
 <div class="paragraph">
-<p>As opposed to the OpenJFX version where the IDE can use its own Java build system, the GWT version can only be built through Maven. One way to build it is to open a terminal window in your IDE, and to type <code>webfx build --gwt</code>.</p>
+<p>Unlike the OpenJFX version where the IDE can use its own Java build system, the GWT version can only be built through Maven. One way to build it is to open a terminal window in your IDE, and to type <code>webfx build --gwt</code>.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1910,7 +1910,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 </table>
 </div>
 <div class="paragraph">
-<p>It can be a good idea to create a configuration by selecting <code>Modify Run Configuration</code> in the context menu of that <code>package</code> goal, and press OK in the window below. You can then easily run this configuration to trigger the GWT build.</p>
+<p>It can be a good idea to create a configuration by selecting <code>Modify Run Configuration</code> in the context menu of that <code>package</code> goal, and press OK in the dialog. You can then easily run this configuration to trigger the GWT build.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1918,7 +1918,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 </div>
 </div>
 <div class="paragraph">
-<p>Once built, you can ask your IDE to open the generated html file in a browser.</p>
+<p>Once built, you can ask your IDE to open the generated HTML file in a browser.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1929,7 +1929,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Locate the generated html file</td>
+<td>Locate the generated HTML file</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1945,7 +1945,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 <div class="sect3">
 <h4 id="_making_changes">Making changes</h4>
 <div class="paragraph">
-<p>Let&#8217;s do a first little change by replacing the Text with a Button. At first sight, it looks an insignificant change, but actually it&#8217;s not, because this involves a new dependency to the <code>javafx-controls</code> module (our application was only using the <code>javafx-graphics</code> module so far). To take advantage of the CLI, let&#8217;s enter the fully qualified Button class name like this:</p>
+<p>Let&#8217;s do a first small change by replacing the Text with a Button. At first sight, it looks like an insignificant change, but actually it&#8217;s not, because this involves a new dependency on the <code>javafx-controls</code> module (our application was only using the <code>javafx-graphics</code> module so far). To take advantage of the CLI, let&#8217;s enter the fully qualified Button class name like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1969,7 +1969,7 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 </div>
 </div>
 <div class="paragraph">
-<p>The CLI should make all necessary changes in the <code>pom.xml</code>, <code>module-info.java</code>, and <code>module.gwt.xml</code> files. After a few seconds, your IDE should automatically detect and consider these changes. Then it should recognize the Button class, and allow you to import it.</p>
+<p>The CLI should make all necessary changes in the <code>pom.xml</code>, <code>module-info.java</code>, and <code>module.gwt.xml</code> files. After a few seconds, your IDE should automatically detect and apply these changes. Then it should recognize the Button class, and allow you to import it.</p>
 </div>
 <div class="paragraph">
 <p>Finally, let&#8217;s add a simple code to react to the button:</p>
@@ -1990,13 +1990,13 @@ You can just type <code>AB</code> for the main class, and your IDE should quickl
 </div>
 </div>
 <div class="paragraph">
-<p>You can first check the code is working as expected with the OpenJFX runtime by running the OpenJFX configuration. And then build and run the GWT version using one of the methods already explained.</p>
+<p>First, check that the code works as expected with the OpenJFX runtime by running the OpenJFX configuration. Then build and run the GWT version using one of the methods already explained.</p>
 </div>
 <div class="paragraph">
-<p>Our application looks a bit sad? Maybe you can try <a href="https://github.com/webfx-project/webfx-example/blob/main/webfx-example-application/src/main/java/org/example/webfxexample/WebFxExampleApplication.java" target="_blank" rel="noopener">this little code</a> that adds a bit of colors, animation and effect?</p>
+<p>Our application looks a bit sad? Maybe you can try <a href="https://github.com/webfx-project/webfx-example/blob/main/webfx-example-application/src/main/java/org/example/webfxexample/WebFxExampleApplication.java" target="_blank" rel="noopener">this little code</a> that adds a bit of color, animation, and effects?</p>
 </div>
 <div class="paragraph">
-<p>Some more creative ideas pop up in your mind? Now is the time to play with WebFX!</p>
+<p>Got more creative ideas? Now is the time to play with WebFX!</p>
 </div>
 </div>
 </div>
@@ -2015,7 +2015,7 @@ of this documentation.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-08 15:01:27 UTC
+Last updated 2026-02-08 15:30:24 UTC
 </div>
 </div>
 </body>
