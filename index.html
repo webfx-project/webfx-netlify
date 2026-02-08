@@ -677,7 +677,7 @@ window.onload = function() {
 <div class="sect3">
 <h4 id="_performance">Performance</h4>
 <div class="paragraph">
-<p>Despite the large size of OpenJFX, WebFX can produce lightweight web apps, as demonstrated by the demos and the website:</p>
+<p>Despite the large size of OpenJFX, WebFX can produce lightweight web apps, as demonstrated by the demos:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -687,54 +687,82 @@ window.onload = function() {
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">WebFX application</th>
-<th class="tableblock halign-center valign-top">JS size *</th>
+<th class="tableblock halign-center valign-top">GWT JS size *</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TeaVM JS size *</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">TeaVM Wasm size *</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://colorfulcircles.webfx.dev" target="_blank" rel="noopener">Colorful circles demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">93 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">97 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">176 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">220 kB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://tallycounter.webfx.dev" target="_blank" rel="noopener">Tally counter demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">104 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">113 kB</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://moderngauge.webfx.dev" target="_blank" rel="noopener">Modern gauge demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">141 kB</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://enzoclocks.webfx.dev" target="_blank" rel="noopener">Enzo clocks demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">260 kB</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://fx2048.webfx.dev" target="_blank" rel="noopener">FX2048 demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">181 kB</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://spacefx.webfx.dev" target="_blank" rel="noopener">SpaceFX demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">142 kB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">253 kB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://demofx.webfx.dev" target="_blank" rel="noopener">DemoFX demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">128 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">147 kB</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://raytracer.webfx.dev" target="_blank" rel="noopener">Ray tracer demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">137 kB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">241 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">303 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://moderngauge.webfx.dev" target="_blank" rel="noopener">Modern gauge demo</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">157 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">225 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">278 kB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://mandelbrot.webfx.dev" target="_blank" rel="noopener">Mandelbrot demo</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">145 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">159 kB</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://webfx.dev" target="_blank" rel="noopener">Website</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">226 kB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">247 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">310 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://spacefx.webfx.dev" target="_blank" rel="noopener">SpaceFX demo</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">171 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">259 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">331 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://fx2048.webfx.dev" target="_blank" rel="noopener">FX2048 demo</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">206 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">341 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">428 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://enzoclocks.webfx.dev" target="_blank" rel="noopener">Enzo clocks demo</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">296 kB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">371 kB</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">484 kB</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p><span class="small">* compressed JS size transferred over the network, excluding images and other resources</span></p>
+<p><span class="small">* compressed JS/Wasm size transferred over the network, excluding images and other resources</span></p>
 </div>
 <div class="paragraph">
 <p>The secret? Three things:</p>
@@ -748,7 +776,7 @@ window.onload = function() {
 <p>GWT and TeaVM run a dead code elimination (tree-shaking) process, which removes the JavaFX classes not used by the WebFX application.</p>
 </li>
 <li>
-<p>GWT produces compact and optimized JS code, leading to highly performant web apps.</p>
+<p>GWT produces very compact and optimized JS code, leading to highly performant web apps.</p>
 </li>
 </ul>
 </div>
@@ -2015,7 +2043,7 @@ of this documentation.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-08 17:20:06 UTC
+Last updated 2026-02-08 21:53:30 UTC
 </div>
 </div>
 </body>
