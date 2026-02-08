@@ -613,7 +613,7 @@ window.onload = function() {
 <li><a href="#_web_platform_via_gwt">Web platform via GWT</a></li>
 <li><a href="#_web_platform_via_teavm">Web platform via TeaVM</a></li>
 <li><a href="#_desktop_platform_jar">Desktop platform (JAR)</a></li>
-<li><a href="#_desktop_platform_embed_jre">Desktop platform (embed JRE)</a></li>
+<li><a href="#_desktop_platform_embedded_jre">Desktop platform (embedded JRE)</a></li>
 <li><a href="#_desktop_platform_native">Desktop platform (native)</a></li>
 <li><a href="#_android_platform">Android platform</a></li>
 <li><a href="#_ios_platform">iOS platform</a></li>
@@ -671,7 +671,7 @@ window.onload = function() {
 <div class="sect3">
 <h4 id="_java_full_stack">Java full-stack</h4>
 <div class="paragraph">
-<p>Writing your whole stack in Java is a big advantage, keeping your environment simple and homogenous from a single Java IDE. This prevents you from having to master other complex ecosystems such as JavaScript or TypeScript, and also allows you to share common code between your backend and frontend using the Java module system - a great advantage compared to heterogeneous systems.</p>
+<p>Writing your whole stack in Java is a big advantage, keeping your environment simple and homogeneous from a single Java IDE. This prevents you from having to master other complex ecosystems such as JavaScript or TypeScript, and also allows you to share common code between your backend and frontend using the Java module system - a great advantage compared to heterogeneous systems.</p>
 </div>
 </div>
 <div class="sect3">
@@ -734,7 +734,7 @@ window.onload = function() {
 </tbody>
 </table>
 <div class="paragraph">
-<p><span class="small">* compressed JS size transiting over the network, without eventual images or other resources</span></p>
+<p><span class="small">* compressed JS size transferred over the network, without eventual images or other resources</span></p>
 </div>
 <div class="paragraph">
 <p>The secret? Three things:</p>
@@ -859,7 +859,7 @@ Note for the impatient: OpenJFX is a huge library (about 10MB) compared to stand
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>This module targets the standard desktop platform. It binds your application with the OpenJFX runtime, and is directly executable in your IDE. It can also call the standard Java toolchain to produce the desktop executables (Windows, macOS or Linux) with an embed JRE.</td>
+<td>This module targets the standard desktop platform. It binds your application with the OpenJFX runtime, and is directly executable in your IDE. It can also call the standard Java toolchain to produce the desktop executables (Windows, macOS or Linux) with an embedded JRE.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -1046,7 +1046,7 @@ source ~/.bash_profile <i class="conum" data-value="2"></i><b>(2)</b></code></pr
 <div class="sect3">
 <h4 id="_updating_the_webfx_cli_to_the_latest_version">Updating the WebFX CLI to the latest version</h4>
 <div class="paragraph">
-<p>You can check for update at anytime by running:</p>
+<p>You can check for update at any time by running:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1184,21 +1184,21 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 <td class="tableblock halign-center valign-top"><p class="tableblock">fat jar</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Linux (embed JRE)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux (embedded JRE)</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Linux</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ubuntu-tools</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--openjfx-desktop</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">executable, .AppImage, .rpm, .deb</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">macOS (embed JRE)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">macOS (embedded JRE)</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">macOS</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">xcode</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--openjfx-desktop</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">executable, .dmg, .pkg</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Windows (embed JRE)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows (embedded JRE)</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Windows</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">wix*, inno*</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--openjfx-desktop</p></td>
@@ -1454,7 +1454,7 @@ webfx build -tjr <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The desktop JAR executable is usually used for local testing. If you want to distribute your desktop application, the embed JRE or native executables are preferred, as they don&#8217;t require Java installed on the users machines.
+The desktop JAR executable is usually used for local testing. If you want to distribute your desktop application, the embedded JRE or native executables are preferred, as they don&#8217;t require Java installed on the users' machines.
 </td>
 </tr>
 </table>
@@ -1491,9 +1491,9 @@ You can combine the build options. For example <code>webfx build --gwt --openjfx
 </div>
 </div>
 <div class="sect2">
-<h3 id="_desktop_platform_embed_jre">Desktop platform (embed JRE)</h3>
+<h3 id="_desktop_platform_embedded_jre">Desktop platform (embedded JRE)</h3>
 <div class="paragraph">
-<p>As opposed to the JAR, the embed JRE will be specific to the target platform. Therefore, a Linux machine will build a Linux executable, a Mac a macOS executable, and a Windows machine a Windows executable.</p>
+<p>As opposed to the JAR, the embedded JRE will be specific to the target platform. Therefore, a Linux machine will build a Linux executable, a Mac will build a macOS executable, and a Windows machine a Windows executable.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/fvarrui/JavaPackager" target="_blank" rel="noopener">JavaPackager Maven plugin</a> will be invoked to generate the executables and installers for the different platforms.</p>
@@ -1603,7 +1603,7 @@ If the application fails to run on macOS, you can try <code>webfx run -k --open<
 <div class="sect2">
 <h3 id="_desktop_platform_native">Desktop platform (native)</h3>
 <div class="paragraph">
-<p>Like for the embed JRE, 3 different machines are required to target the Linux, macOS, and Windows executables.</p>
+<p>Like for the embedded JRE, 3 different machines are required to target the Linux, macOS, and Windows executables.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/gluonhq/gluonfx-maven-plugin" target="_blank" rel="noopener">GluonFX Maven plugin</a> will be invoked to generate the native desktops.</p>
@@ -2015,7 +2015,7 @@ of this documentation.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-08 14:49:48 UTC
+Last updated 2026-02-08 15:01:27 UTC
 </div>
 </div>
 </body>
