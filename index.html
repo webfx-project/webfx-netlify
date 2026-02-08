@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="author" content="Last updated: 2023-06-06">
+<meta name="author" content="Last updated: 2026-02-08">
 <title>WebFX Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -591,7 +591,7 @@ window.onload = function() {
 <div id="header">
 <h1>WebFX Documentation</h1>
 <div class="details">
-<span id="author" class="author">Last updated: 2023-06-06</span><br>
+<span id="author" class="author">Last updated: 2026-02-08</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -610,7 +610,8 @@ window.onload = function() {
 <li><a href="#_introducing_the_webfx_cli">Introducing the WebFX CLI</a></li>
 <li><a href="#_installing_the_webfx_cli">Installing the WebFX CLI</a></li>
 <li><a href="#_creating_your_first_webfx_app">Creating your first WebFX app</a></li>
-<li><a href="#_web_platform">Web platform</a></li>
+<li><a href="#_web_platform_via_gwt">Web platform via GWT</a></li>
+<li><a href="#_web_platform_via_teavm">Web platform via TeaVM</a></li>
 <li><a href="#_desktop_platform_jar">Desktop platform (JAR)</a></li>
 <li><a href="#_desktop_platform_embed_jre">Desktop platform (embed JRE)</a></li>
 <li><a href="#_desktop_platform_native">Desktop platform (native)</a></li>
@@ -631,7 +632,7 @@ window.onload = function() {
 <div class="sect2">
 <h3 id="_what_is_webfx">What is WebFX?</h3>
 <div class="paragraph">
-<p>WebFX is a JavaFX application transpiler powered by <a href="https://www.gwtproject.org" target="_blank" rel="noopener">GWT</a>. It can transpile a JavaFX application into a traditional self-contained pure JavaScript web app (with no plugin or server required for its execution in the browser).</p>
+<p>WebFX is a JavaFX application transpiler powered by <a href="https://www.gwtproject.org" target="_blank" rel="noopener">GWT</a> or <a href="https://www.teavm.org" target="_blank" rel="noopener">TeaVM</a>. It can transpile a JavaFX application into a traditional self-contained pure JavaScript or WebAssembly web app (with no plugin or server required for its execution in the browser).</p>
 </div>
 </div>
 <div class="sect2">
@@ -839,7 +840,7 @@ Note for the impatient: OpenJFX is a huge library (about 10MB) compared to stand
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnIHN0YW5kYWxvbmU9J25vJz8+PHN2ZyBjb250ZW50U3R5bGVUeXBlPSd0ZXh0L2NzcycgaGVpZ2h0PScxNTRweCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgc3R5bGU9J3dpZHRoOjI5OXB4O2hlaWdodDoxNTRweDtiYWNrZ3JvdW5kOiNGRkZGRkY7JyB2ZXJzaW9uPScxLjEnIHZpZXdCb3g9JzAgMCAyOTkgMTU0JyB3aWR0aD0nMjk5cHgnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHpvb21BbmRQYW49J21hZ25pZnknPjxkZWZzLz48Zz48cmVjdCBoZWlnaHQ9JzEyMC43NjU2JyByeD0nNy41JyByeT0nNy41JyBzdHlsZT0nc3Ryb2tlOiMwMDAwMDAwMDtzdHJva2Utd2lkdGg6MS4wO2ZpbGw6bm9uZTsnIHdpZHRoPScyNzUnIHg9JzgnIHk9JzE4Jy8+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTM5JyB4PScxNCcgeT0nNDAuNzA4Jz5Zb3VyIHJlcG9zaXRvcnk8L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTY2JyB4PSczOCcgeT0nNjMuNjYxMSc+eHh4LWFwcGxpY2F0aW9uICgxKTwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyMjInIHg9JzM4JyB5PSc4NC42MTQzJz54eHgtYXBwbGljYXRpb24tZ2x1b24gKDIpPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzIwNycgeD0nMzgnIHk9JzEwNS41Njc0Jz54eHgtYXBwbGljYXRpb24tZ3d0ICgzKTwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyMzknIHg9JzM4JyB5PScxMjYuNTIwNSc+eHh4LWFwcGxpY2F0aW9uLW9wZW5qZnggKDQpPC90ZXh0PjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9JzU2LjQyOTcnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nNTcuNDI5NycgeTI9JzU3LjQyOTcnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nNDYuOTUzMScgeTI9JzU3LjQyOTcnLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PSc3Ny4zODI4Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9Jzc4LjM4MjgnIHkyPSc3OC4zODI4Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9JzU3LjQyOTcnIHkyPSc3OC4zODI4Jy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nOTguMzM1OScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPSc5OS4zMzU5JyB5Mj0nOTkuMzM1OScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPSc3OC4zODI4JyB5Mj0nOTkuMzM1OScvPjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9JzExOS4yODkxJy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9JzEyMC4yODkxJyB5Mj0nMTIwLjI4OTEnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nOTkuMzM1OScgeTI9JzEyMC4yODkxJy8+PC9nPjwvc3ZnPg==" alt="webfx app structure" width="299" height="154">
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnIHN0YW5kYWxvbmU9J25vJz8+PHN2ZyBjb250ZW50U3R5bGVUeXBlPSd0ZXh0L2NzcycgaGVpZ2h0PScxOTZweCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgc3R5bGU9J3dpZHRoOjM0N3B4O2hlaWdodDoxOTZweDtiYWNrZ3JvdW5kOiNGRkZGRkY7JyB2ZXJzaW9uPScxLjEnIHZpZXdCb3g9JzAgMCAzNDcgMTk2JyB3aWR0aD0nMzQ3cHgnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHpvb21BbmRQYW49J21hZ25pZnknPjxkZWZzLz48Zz48cmVjdCBoZWlnaHQ9JzE2Mi42NzE5JyByeD0nNy41JyByeT0nNy41JyBzdHlsZT0nc3Ryb2tlOiMwMDAwMDAwMDtzdHJva2Utd2lkdGg6MS4wO2ZpbGw6bm9uZTsnIHdpZHRoPSczMjMnIHg9JzgnIHk9JzE4Jy8+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTM5JyB4PScxNCcgeT0nNDAuNzA4Jz5Zb3VyIHJlcG9zaXRvcnk8L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTY2JyB4PSczOCcgeT0nNjMuNjYxMSc+eHh4LWFwcGxpY2F0aW9uICgxKTwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyMjInIHg9JzM4JyB5PSc4NC42MTQzJz54eHgtYXBwbGljYXRpb24tZ2x1b24gKDIpPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzIwNycgeD0nMzgnIHk9JzEwNS41Njc0Jz54eHgtYXBwbGljYXRpb24tZ3d0ICgzKTwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyMzknIHg9JzM4JyB5PScxMjYuNTIwNSc+eHh4LWFwcGxpY2F0aW9uLW9wZW5qZnggKDQpPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzI0OScgeD0nMzgnIHk9JzE0Ny40NzM2Jz54eHgtYXBwbGljYXRpb24tdGVhdm0tanMgKDUpPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzI4NycgeD0nMzgnIHk9JzE2OC40MjY4Jz54eHgtYXBwbGljYXRpb24tdGVhdm0td2FzbSAoNik8L3RleHQ+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nNTYuNDI5NycvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPSc1Ny40Mjk3JyB5Mj0nNTcuNDI5NycvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPSc0Ni45NTMxJyB5Mj0nNTcuNDI5NycvPjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9Jzc3LjM4MjgnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nNzguMzgyOCcgeTI9Jzc4LjM4MjgnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nNTcuNDI5NycgeTI9Jzc4LjM4MjgnLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PSc5OC4zMzU5Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9Jzk5LjMzNTknIHkyPSc5OS4zMzU5Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9Jzc4LjM4MjgnIHkyPSc5OS4zMzU5Jy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nMTE5LjI4OTEnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nMTIwLjI4OTEnIHkyPScxMjAuMjg5MScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPSc5OS4zMzU5JyB5Mj0nMTIwLjI4OTEnLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PScxNDAuMjQyMicvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPScxNDEuMjQyMicgeTI9JzE0MS4yNDIyJy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9JzEyMC4yODkxJyB5Mj0nMTQxLjI0MjInLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PScxNjEuMTk1MycvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPScxNjIuMTk1MycgeTI9JzE2Mi4xOTUzJy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9JzE0MS4yNDIyJyB5Mj0nMTYyLjE5NTMnLz48L2c+PC9zdmc+" alt="webfx app structure" width="347" height="196">
 </div>
 </div>
 <div class="colist arabic">
@@ -854,11 +855,19 @@ Note for the impatient: OpenJFX is a huge library (about 10MB) compared to stand
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This module targets the web platform. It binds your application with the WebFX kit, and can call GWT to produce the web app.</td>
+<td>This module targets the web platform (JavaScript) via GWT. It binds your application with the WebFX kit and the GWT JavaScript compiler.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>This module targets the standard desktop platform. It binds your application with the OpenJFX runtime, and is directly executable in your IDE. It can also call the standard Java toolchain to produce the desktop executables (Windows, macOS or Linux) with an embed JRE.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>This module targets the web platform (JavaScript) via TeaVM. It binds your application with the WebFX kit and the TeaVM JavaScript compiler.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>This module targets the web platform (WebAssembly) via TeaVM. It binds your application with the WebFX kit and the TeaVM WebAssembly compiler.</td>
 </tr>
 </table>
 </div>
@@ -1094,7 +1103,7 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnIHN0YW5kYWxvbmU9J25vJz8+PHN2ZyBjb250ZW50U3R5bGVUeXBlPSd0ZXh0L2NzcycgaGVpZ2h0PScxNTRweCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgc3R5bGU9J3dpZHRoOjM3M3B4O2hlaWdodDoxNTRweDtiYWNrZ3JvdW5kOiNGRkZGRkY7JyB2ZXJzaW9uPScxLjEnIHZpZXdCb3g9JzAgMCAzNzMgMTU0JyB3aWR0aD0nMzczcHgnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHpvb21BbmRQYW49J21hZ25pZnknPjxkZWZzLz48Zz48cmVjdCBoZWlnaHQ9JzEyMC43NjU2JyByeD0nNy41JyByeT0nNy41JyBzdHlsZT0nc3Ryb2tlOiMwMDAwMDAwMDtzdHJva2Utd2lkdGg6MS4wO2ZpbGw6bm9uZTsnIHdpZHRoPSczNDknIHg9JzgnIHk9JzE4Jy8+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTM4JyB4PScxNCcgeT0nNDAuNzA4Jz53ZWJmeC1leGFtcGxlPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzI0MCcgeD0nMzgnIHk9JzYzLjY2MTEnPndlYmZ4LWV4YW1wbGUtYXBwbGljYXRpb248L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMjk2JyB4PSczOCcgeT0nODQuNjE0Myc+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi1nbHVvbjwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyODEnIHg9JzM4JyB5PScxMDUuNTY3NCc+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi1nd3Q8L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMzEzJyB4PSczOCcgeT0nMTI2LjUyMDUnPndlYmZ4LWV4YW1wbGUtYXBwbGljYXRpb24tb3BlbmpmeDwvdGV4dD48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PSc1Ni40Mjk3Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9JzU3LjQyOTcnIHkyPSc1Ny40Mjk3Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9JzQ2Ljk1MzEnIHkyPSc1Ny40Mjk3Jy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nNzcuMzgyOCcvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPSc3OC4zODI4JyB5Mj0nNzguMzgyOCcvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPSc1Ny40Mjk3JyB5Mj0nNzguMzgyOCcvPjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9Jzk4LjMzNTknLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nOTkuMzM1OScgeTI9Jzk5LjMzNTknLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nNzguMzgyOCcgeTI9Jzk5LjMzNTknLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PScxMTkuMjg5MScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPScxMjAuMjg5MScgeTI9JzEyMC4yODkxJy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9Jzk5LjMzNTknIHkyPScxMjAuMjg5MScvPjwvZz48L3N2Zz4=" alt="webfx example structure" width="373" height="154">
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnIHN0YW5kYWxvbmU9J25vJz8+PHN2ZyBjb250ZW50U3R5bGVUeXBlPSd0ZXh0L2NzcycgaGVpZ2h0PScxOTZweCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgc3R5bGU9J3dpZHRoOjQyMXB4O2hlaWdodDoxOTZweDtiYWNrZ3JvdW5kOiNGRkZGRkY7JyB2ZXJzaW9uPScxLjEnIHZpZXdCb3g9JzAgMCA0MjEgMTk2JyB3aWR0aD0nNDIxcHgnIHhtbG5zOnhsaW5rPSdodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHpvb21BbmRQYW49J21hZ25pZnknPjxkZWZzLz48Zz48cmVjdCBoZWlnaHQ9JzE2Mi42NzE5JyByeD0nNy41JyByeT0nNy41JyBzdHlsZT0nc3Ryb2tlOiMwMDAwMDAwMDtzdHJva2Utd2lkdGg6MS4wO2ZpbGw6bm9uZTsnIHdpZHRoPSczOTcnIHg9JzgnIHk9JzE4Jy8+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMTM4JyB4PScxNCcgeT0nNDAuNzA4Jz53ZWJmeC1leGFtcGxlPC90ZXh0Pjx0ZXh0IGZpbGw9JyM0NDQ0NDQnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzE4JyBsZW5ndGhBZGp1c3Q9J3NwYWNpbmcnIHRleHRMZW5ndGg9JzI0MCcgeD0nMzgnIHk9JzYzLjY2MTEnPndlYmZ4LWV4YW1wbGUtYXBwbGljYXRpb248L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMjk2JyB4PSczOCcgeT0nODQuNjE0Myc+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi1nbHVvbjwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPScyODEnIHg9JzM4JyB5PScxMDUuNTY3NCc+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi1nd3Q8L3RleHQ+PHRleHQgZmlsbD0nIzQ0NDQ0NCcgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTgnIGxlbmd0aEFkanVzdD0nc3BhY2luZycgdGV4dExlbmd0aD0nMzEzJyB4PSczOCcgeT0nMTI2LjUyMDUnPndlYmZ4LWV4YW1wbGUtYXBwbGljYXRpb24tb3BlbmpmeDwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPSczMjMnIHg9JzM4JyB5PScxNDcuNDczNic+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi10ZWF2bS1qczwvdGV4dD48dGV4dCBmaWxsPScjNDQ0NDQ0JyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC1zaXplPScxOCcgbGVuZ3RoQWRqdXN0PSdzcGFjaW5nJyB0ZXh0TGVuZ3RoPSczNjEnIHg9JzM4JyB5PScxNjguNDI2OCc+d2ViZngtZXhhbXBsZS1hcHBsaWNhdGlvbi10ZWF2bS13YXNtPC90ZXh0PjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9JzU2LjQyOTcnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nNTcuNDI5NycgeTI9JzU3LjQyOTcnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nNDYuOTUzMScgeTI9JzU3LjQyOTcnLz48cmVjdCBmaWxsPSdub25lJyBoZWlnaHQ9JzInIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgd2lkdGg9JzInIHg9JzI5JyB5PSc3Ny4zODI4Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9Jzc4LjM4MjgnIHkyPSc3OC4zODI4Jy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPScyMicgeTE9JzU3LjQyOTcnIHkyPSc3OC4zODI4Jy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nOTguMzM1OScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMzAnIHkxPSc5OS4zMzU5JyB5Mj0nOTkuMzM1OScvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPSc3OC4zODI4JyB5Mj0nOTkuMzM1OScvPjxyZWN0IGZpbGw9J25vbmUnIGhlaWdodD0nMicgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB3aWR0aD0nMicgeD0nMjknIHk9JzExOS4yODkxJy8+PGxpbmUgc3R5bGU9J3N0cm9rZTojNDQ0NDQ0O3N0cm9rZS13aWR0aDoxLjA7JyB4MT0nMjInIHgyPSczMCcgeTE9JzEyMC4yODkxJyB5Mj0nMTIwLjI4OTEnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzIyJyB5MT0nOTkuMzM1OScgeTI9JzEyMC4yODkxJy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nMTQwLjI0MjInLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nMTQxLjI0MjInIHkyPScxNDEuMjQyMicvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPScxMjAuMjg5MScgeTI9JzE0MS4yNDIyJy8+PHJlY3QgZmlsbD0nbm9uZScgaGVpZ2h0PScyJyBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHdpZHRoPScyJyB4PScyOScgeT0nMTYxLjE5NTMnLz48bGluZSBzdHlsZT0nc3Ryb2tlOiM0NDQ0NDQ7c3Ryb2tlLXdpZHRoOjEuMDsnIHgxPScyMicgeDI9JzMwJyB5MT0nMTYyLjE5NTMnIHkyPScxNjIuMTk1MycvPjxsaW5lIHN0eWxlPSdzdHJva2U6IzQ0NDQ0NDtzdHJva2Utd2lkdGg6MS4wOycgeDE9JzIyJyB4Mj0nMjInIHkxPScxNDEuMjQyMicgeTI9JzE2Mi4xOTUzJy8+PC9nPjwvc3ZnPg==" alt="webfx example structure" width="421" height="196">
 </div>
 </div>
 <div class="paragraph">
@@ -1158,6 +1167,13 @@ webfx init org.example:webfx-example:1.0.0-SNAPSHOT</pre>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Linux, macOS or Windows</p></td>
 <td class="tableblock halign-center valign-top"></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">--gwt</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">html</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Linux, macOS or Windows</p></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">--teavm</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">html</p></td>
 </tr>
 <tr>
@@ -1246,7 +1262,7 @@ You can open issues in the <a href="https://github.com/webfx-project/webfx-cli">
 </div>
 </div>
 <div class="sect2">
-<h3 id="_web_platform">Web platform</h3>
+<h3 id="_web_platform_via_gwt">Web platform via GWT</h3>
 <div class="paragraph">
 <p>The <a href="https://github.com/tbroyer/gwt-maven-plugin" target="_blank" rel="noopener">GWT Maven plugin</a> will be invoked to generate the web application.</p>
 </div>
@@ -1335,6 +1351,95 @@ As opposed to <code>--show</code>, <code>--locate</code> works even before the b
 </div>
 <div class="paragraph">
 <p>The <code>run</code> command has exactly the same options as the <code>build</code> command. The only difference between these 2 commands is that with <code>run</code> you can run the app without rebuilding it (unless <code>--build</code> is specified), and with <code>build</code> you can build the app without running it (unless <code>--run</code> is specified).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_web_platform_via_teavm">Web platform via TeaVM</h3>
+<div class="paragraph">
+<p>The <a href="https://teavm.org/docs/tooling/maven.html" target="_blank" rel="noopener">TeaVM Maven plugin</a> will be invoked to generate the web application.</p>
+</div>
+<div class="paragraph">
+<p>You can use the following commands:</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Long syntax</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">webfx build --teavm <i class="conum" data-value="1"></i><b>(1)</b>
+webfx build --teavm --locate <i class="conum" data-value="2"></i><b>(2)</b>
+webfx build --teavm --show <i class="conum" data-value="3"></i><b>(3)</b>
+webfx run --teavm --javascript <i class="conum" data-value="4"></i><b>(4)</b>
+webfx build --teavm --javascript --run <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Build the html executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Locate the generated executable files</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Show the generated executable files in the file explorer</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Execute the generated JavaScript executable in the browser</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Build the JavaScript app and execute it in a single command</td>
+</tr>
+</table>
+</div>
+<div class="listingblock secondary">
+<div class="title">Short syntax</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">webfx build -t <i class="conum" data-value="1"></i><b>(1)</b>
+webfx build -tl <i class="conum" data-value="2"></i><b>(2)</b>
+webfx build -ts <i class="conum" data-value="3"></i><b>(3)</b>
+webfx run -tj <i class="conum" data-value="4"></i><b>(4)</b>
+webfx build -tjr <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Build the html executable files (JavaScript and WebAssembly) with the TeaVM Maven plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Locate the generated executable files</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Show the generated executable files in the file explorer</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Execute the generated JavaScript executable in the browser</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Build the JavaScript app and execute it in a single command</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>webfx run --teavm --wasm</code> (short syntax <code>webfx run -tw</code>) is not working because http(s) is required for running WebAssembly. But you can use the built-in webserver of your Java IDE to serve the file located by <code>webfx build -twl</code>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>In the next sections, we won&#8217;t repeat all these commands, we will use only the last command to build and run the application in one go, but of course you can still choose to separate the build and the run.</p>
@@ -1910,7 +2015,7 @@ of this documentation.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-06-06 10:33:02 UTC
+Last updated 2026-02-08 14:31:21 UTC
 </div>
 </div>
 </body>
