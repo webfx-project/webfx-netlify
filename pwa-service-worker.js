@@ -1,4 +1,4 @@
-const MAVEN_BUILD_TIMESTAMP = "2026-02-07T22:26:35Z";
+const MAVEN_BUILD_TIMESTAMP = "2026-02-08T08:16:57Z";
 
 console.log("PWA mode is on - mavenBuildTimestamp = " + MAVEN_BUILD_TIMESTAMP);
 
