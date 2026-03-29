@@ -11,7 +11,7 @@
   <rights>All rights reserved 2026, Bruno Salmon</rights>
   <subtitle>Follow WebFX - a free and open-source JavaFX transpiler project on GitHub.</subtitle>
   <title>The WebFX blog</title>
-  <updated>2026-03-21T11:15:44.779Z</updated>
+  <updated>2026-03-29T13:39:36.206Z</updated>
   <entry>
     <author>
       <name>Bruno Salmon</name>
@@ -31,7 +31,7 @@
     <published>2025-11-17T00:00:00.000Z</published>
     <summary>WebFX is joining the emerging “post-JavaScript” era by supporting WebAssembly, Kotlin, and JavaFX on the Web.</summary>
     <title>WebFX now supports TeaVM: bringing WebAssembly and Kotlin to JavaFX on the Web!</title>
-    <updated>2026-03-21T11:15:44.779Z</updated>
+    <updated>2026-03-29T13:39:36.206Z</updated>
   </entry>
   <entry>
     <author>
@@ -48,7 +48,7 @@
 <p> First of all,]]>
     </summary>
     <title>Accessing local files with WebFX</title>
-    <updated>2026-03-21T11:15:44.778Z</updated>
+    <updated>2026-03-29T13:39:36.205Z</updated>
   </entry>
   <entry>
     <author>
@@ -65,7 +65,7 @@
 <p>You may not have noticed but we pub]]>
     </summary>
     <title>DemoFX: our new WebFX demo!</title>
-    <updated>2026-03-21T11:15:44.779Z</updated>
+    <updated>2026-03-29T13:39:36.205Z</updated>
   </entry>
   <entry>
     <author>
@@ -82,6 +82,6 @@
 <p>We are very happy to]]>
     </summary>
     <title>The WebFX website is live!</title>
-    <updated>2026-03-21T11:15:44.780Z</updated>
+    <updated>2026-03-29T13:39:36.207Z</updated>
   </entry>
 </feed>
