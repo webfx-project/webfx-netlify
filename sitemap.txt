@@ -1,8 +1,8 @@
 https://blog.webfx.dev/twitter-video-cards/demofx.html
 https://blog.webfx.dev/2022/07/22/website-launch/
-https://blog.webfx.dev/2022/09/26/demofx/
 https://blog.webfx.dev/2025/11/17/teavm/
 https://blog.webfx.dev/2022/10/19/accessing-local-files/
+https://blog.webfx.dev/2022/09/26/demofx/
 https://blog.webfx.dev/
 https://blog.webfx.dev/tags/WebFX/
 https://blog.webfx.dev/tags/TeaVM/
