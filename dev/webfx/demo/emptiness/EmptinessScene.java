@@ -6,7 +6,9 @@ import dev.webfx.platform.resource.Resource;
 import javafx.scene.canvas.Canvas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -84,7 +86,9 @@ final class EmptinessScene {
 
     // Zoom state
     private final Random random = new Random();
-    private SphereLayout[] layouts;
+    private SphereLayout[] layouts; // the layouts for the current parts count and spacing
+    // Spheres keeping the layouts of previous settings (sphere seed -> layouts), see changeLayouts()
+    private final Map<Integer, SphereLayout[]> keptLayouts = new HashMap<>();
     private double s;
     private int rootSeed;
     private double rootHue, rootSaturation, rootBrightness;
@@ -97,7 +101,7 @@ final class EmptinessScene {
     private final double[] cameraPosition = new double[3], cameraQuat = new double[4];
     private final double[] tmpPosition = new double[3], tmpQuat = new double[4];
     private final double[] view = new double[9]; // world -> view rotation
-    private double camX, camY, camZ, sigma, lnInverseR, focalPixels, cosV, sinV, cosH, sinH;
+    private double camX, camY, camZ, sigma, focalPixels, cosV, sinV, cosH, sinH;
     private final double[] cameraMatrix = new double[9];
     private double budgetScale = 1, qInFrame, qOutFrame;
 
@@ -112,6 +116,7 @@ final class EmptinessScene {
     private final double[] nodeMatrix = new double[NODE_CAPACITY * 9];
     private final int[] nodeSeed = new int[NODE_CAPACITY], nodeDepth = new int[NODE_CAPACITY];
     private final boolean[] nodeOnChain = new boolean[NODE_CAPACITY], nodeInside = new boolean[NODE_CAPACITY];
+    private final boolean[] nodeComposite = new boolean[NODE_CAPACITY]; // decomposed into its parts (even partially)
     private final int[] heap = new int[NODE_CAPACITY];
     private int nodeCount, heapSize;
     private final double[] rgb = new double[3];
@@ -194,7 +199,7 @@ final class EmptinessScene {
         return partsCount;
     }
 
-    // The parts count and the spacing restart the zoom, so they are applied only once the value has stopped changing
+    // The parts count and the spacing change the layouts (see changeLayouts()), so they are applied only once the value has stopped changing
     // for a moment (see applyPendingSettings()), not on each step of a slider drag.
     void setPartsCount(int partsCount) {
         pendingPartsCount = partsCount;
@@ -231,7 +236,7 @@ final class EmptinessScene {
         pendingPartsCount = -1;
         pendingSpacing = -1;
         if (changed)
-            restart();
+            changeLayouts();
     }
 
     double getRevealDistance() {
@@ -287,13 +292,9 @@ final class EmptinessScene {
     void restart() {
         if (gl == null)
             return;
-        layouts = new SphereLayout[LAYOUT_COUNT];
-        long layoutSeed = random.nextLong();
-        for (int i = 0; i < LAYOUT_COUNT; i++)
-            layouts[i] = new SphereLayout(partsCount, spacing, layoutSeed + i);
-        lnInverseR = Math.log(1 / layouts[0].r);
-        partX = new double[partsCount]; partY = new double[partsCount]; partZ = new double[partsCount];
-        partR = new double[partsCount]; partG = new double[partsCount]; partB = new double[partsCount];
+        layouts = createLayouts(partsCount, spacing, random.nextLong());
+        keptLayouts.clear();
+        ensurePartArrays(partsCount);
         rootSeed = random.nextInt();
         rootHue = random.nextDouble();
         rootSaturation = 0.6;
@@ -308,8 +309,55 @@ final class EmptinessScene {
 
     // ======================================== Zoom logic ========================================
 
+    // How many levels bigger than the current scale a sphere at this depth (0 = the oldest ancestor) is: the root is
+    // at level s (from 0 to 1 during a zoom cycle), its parent at s + 1, its parts at s - 1, etc. Used for the level
+    // fog (based on the depth rather than the size, as the size of the parts can differ between levels after a change
+    // of the parts count or spacing).
+    private double levelOf(int depth) {
+        return ancestors.size() - depth + s;
+    }
+
     private SphereLayout layoutOf(int seed) {
-        return layouts[(int) (Maths.unit(Maths.hash(seed, 77)) * LAYOUT_COUNT)];
+        return layoutsOf(seed)[(int) (Maths.unit(Maths.hash(seed, 77)) * LAYOUT_COUNT)];
+    }
+
+    private static SphereLayout[] createLayouts(int partsCount, double spacing, long seed) {
+        SphereLayout[] layouts = new SphereLayout[LAYOUT_COUNT];
+        for (int i = 0; i < LAYOUT_COUNT; i++)
+            layouts[i] = new SphereLayout(partsCount, spacing, seed + i);
+        return layouts;
+    }
+
+    private void ensurePartArrays(int n) {
+        if (partX.length < n) {
+            partX = new double[n]; partY = new double[n]; partZ = new double[n];
+            partR = new double[n]; partG = new double[n]; partB = new double[n];
+        }
+    }
+
+    // Applies a new parts count or spacing without wiping the scene: the spheres shown decomposed into their parts in
+    // the last frame (as well as the ancestors, the root and the current target, whose layouts the camera paths depend
+    // on) keep their layouts, and all the other spheres will use the new layouts when they get decomposed.
+    private void changeLayouts() {
+        keepLayout(rootSeed);
+        keepLayout(Maths.hash(rootSeed, currentPath.childIndex));
+        for (Frame f : ancestors)
+            keepLayout(f.seed);
+        for (int k = 0; k < nodeCount; k++)
+            if (nodeComposite[k])
+                keepLayout(nodeSeed[k]);
+        layouts = createLayouts(partsCount, spacing, random.nextLong());
+        ensurePartArrays(partsCount);
+    }
+
+    private void keepLayout(int seed) {
+        if (!keptLayouts.containsKey(seed))
+            keptLayouts.put(seed, layoutsOf(seed));
+    }
+
+    private SphereLayout[] layoutsOf(int seed) {
+        SphereLayout[] kept = keptLayouts.isEmpty() ? null : keptLayouts.get(seed);
+        return kept != null ? kept : layouts;
     }
 
     private void advance(double deltaS) {
@@ -596,7 +644,7 @@ final class EmptinessScene {
                 || pixelRadius < MIN_PIXEL_RADIUS)) // too small to be seen (and so are its parts)
             return;
         // Level fog (spheres much bigger than the current scale fade out)
-        double level = Math.log(size / sigma) / lnInverseR;
+        double level = levelOf(depth);
         double fog = 1 - Maths.smoothstep((level - FOG_START) / (FOG_END - FOG_START));
         if (fog <= 0.002 && !inside)
             return;
@@ -605,6 +653,7 @@ final class EmptinessScene {
         nodeDistance[k] = distance; nodePixelRadius[k] = pixelRadius;
         nodeViewX[k] = vx; nodeViewY[k] = vy; nodeViewZ[k] = vz;
         nodeFog[k] = fog; nodeInside[k] = inside; nodeOnChain[k] = onChain; nodeDepth[k] = depth;
+        nodeComposite[k] = false; // set by process()
         nodeSeed[k] = seed; nodeHue[k] = hue; nodeSaturation[k] = saturation; nodeBrightness[k] = brightness;
         System.arraycopy(m, mOffset, nodeMatrix, k * 9, 9);
         pushNode(k);
@@ -633,6 +682,7 @@ final class EmptinessScene {
             }
         }
         if (composite > 0) {
+            nodeComposite[k] = true;
             double x = nodeX[k], y = nodeY[k], z = nodeZ[k];
             int seed = nodeSeed[k];
             double hue = nodeHue[k], saturation = nodeSaturation[k], brightness = nodeBrightness[k];
@@ -663,13 +713,13 @@ final class EmptinessScene {
                 }
             }
             if (stemThickness > 0)
-                addStems(layout, partSize);
+                addStems(layout, partSize, depth + 1);
         }
     }
 
     // Collects the stems between the parts (positions & colors in partX... arrays) of the sphere being decomposed
-    private void addStems(SphereLayout layout, double partSize) {
-        double level = Math.log(partSize / sigma) / lnInverseR;
+    private void addStems(SphereLayout layout, double partSize, int partsDepth) {
+        double level = levelOf(partsDepth);
         double fog = 1 - Maths.smoothstep((level - FOG_START) / (FOG_END - FOG_START)); // same fog as the parts
         if (fog <= 0.002)
             return;
