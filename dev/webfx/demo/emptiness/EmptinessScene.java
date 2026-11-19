@@ -74,7 +74,7 @@ final class EmptinessScene {
 
     // Settings
     // Initial settings = middle of each slider range in EmptinessApplication (except the stems, off by default)
-    private int partsCount = 124;
+    private int partsCount = 254;
     private double revealDistance = 6.8, qIn, qOut;
     private double speed = 0.25; // zoom cycles per second
     private double hueVariety = 0.5; // maximal hue difference between parts of a same sphere (in turns of the color wheel)
@@ -278,8 +278,8 @@ final class EmptinessScene {
         rootBrightness = 0.85;
         ancestors.clear();
         previousPath = null;
-        currentPath = choosePath(layoutOf(rootSeed));
-        nextPath = choosePath(layoutOf(Maths.hash(rootSeed, currentPath.childIndex)));
+        currentPath = TargetChooser.choosePath(layoutOf(rootSeed), D0, random);
+        nextPath = TargetChooser.choosePath(layoutOf(Maths.hash(rootSeed, currentPath.childIndex)), D0, random);
         s = -INTRO_LEVELS;
         levelsCount = 0;
     }
@@ -288,67 +288,6 @@ final class EmptinessScene {
 
     private SphereLayout layoutOf(int seed) {
         return layouts[(int) (Maths.unit(Maths.hash(seed, 77)) * LAYOUT_COUNT)];
-    }
-
-    // Chooses which part of the sphere (described by its layout) the camera will dive into. The camera must not cross
-    // the other parts on its way, and should see the target unobstructed at the end.
-    private ZoomPath choosePath(SphereLayout layout) {
-        int n = layout.n;
-        double r = layout.r, clearance2 = (1.2 * r) * (1.2 * r), stemClearance2 = (0.6 * r) * (0.6 * r);
-        List<ZoomPath> valid = new ArrayList<>(), validFront = new ArrayList<>();
-        ZoomPath best = null;
-        int bestViolations = Integer.MAX_VALUE;
-        double[] p = new double[3];
-        for (int j = 0; j < n; j++) {
-            ZoomPath path = new ZoomPath(layout, j, D0);
-            int violations = 0;
-            for (int k = 1; k <= 24 && violations < bestViolations; k++) {
-                path.position(k / 24d, p);
-                for (int m = 0; m < n; m++) {
-                    if (m != j) {
-                        double dx = p[0] - layout.cx[m], dy = p[1] - layout.cy[m], dz = p[2] - layout.cz[m];
-                        if (dx * dx + dy * dy + dz * dz < clearance2)
-                            violations++;
-                    }
-                }
-                // Not going through a stem either (the thickest stem is 0.4 r)
-                for (int b = 0; b < layout.stemA.length; b++) {
-                    if (distanceToSegment2(p, layout, layout.stemA[b], layout.stemB[b]) < stemClearance2)
-                        violations++;
-                }
-            }
-            // End position: nothing between the camera and the target
-            path.position(1, p);
-            double ex = path.cx - p[0], ey = path.cy - p[1], ez = path.cz - p[2], el2 = ex * ex + ey * ey + ez * ez;
-            for (int m = 0; m < n; m++) {
-                if (m != j) {
-                    double t = Maths.clamp01(((layout.cx[m] - p[0]) * ex + (layout.cy[m] - p[1]) * ey + (layout.cz[m] - p[2]) * ez) / el2);
-                    double dx = p[0] + t * ex - layout.cx[m], dy = p[1] + t * ey - layout.cy[m], dz = p[2] + t * ez - layout.cz[m];
-                    if (dx * dx + dy * dy + dz * dz < 1.1 * r * 1.1 * r)
-                        violations += 5;
-                }
-            }
-            if (violations == 0) {
-                valid.add(path);
-                if (layout.cz[j] > 0) // front half (visible from the start position)
-                    validFront.add(path);
-            }
-            if (violations < bestViolations) {
-                bestViolations = violations;
-                best = path;
-            }
-        }
-        List<ZoomPath> candidates = !validFront.isEmpty() ? validFront : valid;
-        return candidates.isEmpty() ? best : candidates.get(random.nextInt(candidates.size()));
-    }
-
-    // Squared distance from the point p to the segment between the parts a and b of the layout
-    private static double distanceToSegment2(double[] p, SphereLayout layout, int a, int b) {
-        double ax = layout.cx[a], ay = layout.cy[a], az = layout.cz[a];
-        double ex = layout.cx[b] - ax, ey = layout.cy[b] - ay, ez = layout.cz[b] - az;
-        double t = Maths.clamp01(((p[0] - ax) * ex + (p[1] - ay) * ey + (p[2] - az) * ez) / (ex * ex + ey * ey + ez * ez));
-        double dx = ax + t * ex - p[0], dy = ay + t * ey - p[1], dz = az + t * ez - p[2];
-        return dx * dx + dy * dy + dz * dz;
     }
 
     private void advance(double deltaS) {
@@ -393,7 +332,7 @@ final class EmptinessScene {
         rootSeed = targetSeed;
         previousPath = currentPath;
         currentPath = nextPath;
-        nextPath = choosePath(layoutOf(Maths.hash(rootSeed, currentPath.childIndex)));
+        nextPath = TargetChooser.choosePath(layoutOf(Maths.hash(rootSeed, currentPath.childIndex)), D0, random);
         levelsCount++;
     }
 
