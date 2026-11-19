@@ -65,14 +65,9 @@ public final class EmptinessApplication extends Application {
                 emptinessScene::setHueVariety, v -> (int) Math.round(v * 100) + "%", false);
         addSlider(settings, row++, "Speed", 0, 0.5, emptinessScene.getSpeed(),
                 emptinessScene::setSpeed, v -> format1(v * 60) + " levels/min", false);
-        Slider stemThicknessSlider = addSlider(settings, row++, "Stem thickness", 0, 1, emptinessScene.getStemThickness(),
+        // Stems: 0 (the default) = no stems
+        addSlider(settings, row++, "Stem thickness", 0, 1, emptinessScene.getStemThickness(),
                 emptinessScene::setStemThickness, v -> (int) Math.round(v * 100) + "%", false);
-        Switch showStemsSwitch = new Switch();
-        showStemsSwitch.setCursor(Cursor.HAND);
-        showStemsSwitch.setSelected(emptinessScene.isShowStems());
-        showStemsSwitch.selectedProperty().addListener((observable, oldValue, selected) -> emptinessScene.setShowStems(selected));
-        settings.addRow(row++, createText("Show stems", Font.font("Helvetica", 13), TEXT_COLOR), showStemsSwitch);
-        stemThicknessSlider.disableProperty().bind(showStemsSwitch.selectedProperty().not());
         settings.add(statsText, 0, row, 3, 1);
         settings.setPadding(new Insets(14));
         settings.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.06), new CornerRadii(10), null)));

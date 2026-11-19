@@ -73,14 +73,13 @@ final class EmptinessScene {
     private StemMesh[] stemMeshes; // low & high tessellation
 
     // Settings
-    // Initial settings = middle of each slider range in EmptinessApplication
+    // Initial settings = middle of each slider range in EmptinessApplication (except the stems, off by default)
     private int partsCount = 124;
     private double revealDistance = 6.8, qIn, qOut;
     private double speed = 0.25; // zoom cycles per second
     private double hueVariety = 0.5; // maximal hue difference between parts of a same sphere (in turns of the color wheel)
     private double spacing = 0.5; // 0 = parts tightly packed, 1 = sparse (see SphereLayout)
-    private boolean showStems; // stems hidden by default
-    private double stemThickness = 0.5; // 0 = no stems, 1 = stem radius = 40% of the sphere radius
+    private double stemThickness = 0; // 0 = no stems (default), 1 = stem radius = 40% of the sphere radius
     private boolean paused;
 
     // Zoom state
@@ -237,14 +236,6 @@ final class EmptinessScene {
 
     void setHueVariety(double hueVariety) {
         this.hueVariety = hueVariety;
-    }
-
-    boolean isShowStems() {
-        return showStems;
-    }
-
-    void setShowStems(boolean showStems) {
-        this.showStems = showStems;
     }
 
     double getStemThickness() {
@@ -677,13 +668,13 @@ final class EmptinessScene {
                 double partHue = childHue(hue, partSeed), partSaturation = childSaturation(saturation, partSeed), partBrightness = childBrightness(brightness, partSeed);
                 consider(px, py, pz, partSize, m, 0, depth + 1, ancestor != null && i == ancestor.childIndex, partSeed,
                         partHue, partSaturation, partBrightness);
-                if (showStems && stemThickness > 0) {
+                if (stemThickness > 0) {
                     partX[i] = px; partY[i] = py; partZ[i] = pz;
                     Maths.hsbToRgb(partHue, partSaturation, partBrightness, rgb);
                     partR[i] = rgb[0]; partG[i] = rgb[1]; partB[i] = rgb[2];
                 }
             }
-            if (showStems && stemThickness > 0)
+            if (stemThickness > 0)
                 addStems(layout, partSize);
         }
     }
