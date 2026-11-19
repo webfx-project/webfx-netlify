@@ -76,10 +76,12 @@ final class EmptinessScene {
 
     // Settings
     // Initial settings = middle of each slider range in EmptinessApplication (except the stems, off by default)
-    private int partsCount = 254;
+    private int partsCount = 500;
     private double revealDistance = 6.8, qIn, qOut;
     private double speed = 0.25; // zoom cycles per second
-    private double hueVariety = 0.5; // maximal hue difference between parts of a same sphere (in turns of the color wheel)
+    private double hueVariety = 0.5; // the Colour variety setting: 0 = parts of the parent's hue, 1 = HUE_VARIETY_RANGE
+    // Maximal hue difference between parts of a same sphere (in turns of the color wheel) for a Colour variety of 100%
+    private static final double HUE_VARIETY_RANGE = 0.8;
     private double spacing = 0.5; // 0 = parts tightly packed, 1 = sparse (see SphereLayout)
     private double stemThickness = 0; // 0 = no stems (default), 1 = stem radius = 40% of the sphere radius
     private boolean paused;
@@ -407,7 +409,7 @@ final class EmptinessScene {
     }
 
     private double childHue(double parentHue, int childSeed) {
-        return parentHue + (Maths.unit(Maths.hash(childSeed, 1)) - 0.5) * hueVariety;
+        return parentHue + (Maths.unit(Maths.hash(childSeed, 1)) - 0.5) * hueVariety * HUE_VARIETY_RANGE;
     }
 
     private static double childSaturation(double parentSaturation, int childSeed) {

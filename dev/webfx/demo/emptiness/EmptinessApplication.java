@@ -55,7 +55,7 @@ public final class EmptinessApplication extends Application {
         settings.setHgap(12);
         settings.setVgap(8);
         int row = 0;
-        addSlider(settings, row++, "Parts per sphere", 8, 500, emptinessScene.getPartsCount(),
+        addSlider(settings, row++, "Parts per sphere", 8, 1000, emptinessScene.getPartsCount(),
                 v -> emptinessScene.setPartsCount((int) Math.round(v)), v -> Integer.toString((int) Math.round(v)));
         addSlider(settings, row++, "Spacing", 0, 1, emptinessScene.getSpacing(),
                 emptinessScene::setSpacing, v -> (int) Math.round(v * 100) + "%");
