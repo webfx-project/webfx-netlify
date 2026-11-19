@@ -73,7 +73,7 @@ public final class EmptinessApplication extends Application {
         settings.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.06), new CornerRadii(10), null)));
         settings.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        Text help = createText("Space: pause   H: hide", Font.font("Helvetica", 12), DIM_TEXT_COLOR);
+        Text help = createText("Space or tap: pause   H or double tap: hide", Font.font("Helvetica", 12), DIM_TEXT_COLOR);
         help.setMouseTransparent(true);
 
         StackPane root = new StackPane(canvas, header, settings, help);
@@ -87,17 +87,28 @@ public final class EmptinessApplication extends Application {
         Scene scene = new Scene(root, 1000, 700, BACKGROUND_COLOR);
         canvas.widthProperty().bind(scene.widthProperty());
         canvas.heightProperty().bind(scene.heightProperty());
-        canvas.setOnMouseClicked(e -> emptinessScene.togglePause());
+        Runnable togglePanels = () -> {
+            boolean visible = !settings.isVisible();
+            settings.setVisible(visible);
+            header.setVisible(visible);
+            help.setVisible(visible);
+        };
+        // A tap (or click) pauses, a double tap hides the panels (the way to hide them on tablets and mobiles). The first
+        // tap of a double tap has already paused, so the second one also cancels that pause.
+        canvas.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 1)
+                emptinessScene.togglePause();
+            else if (e.getClickCount() == 2) {
+                emptinessScene.togglePause();
+                togglePanels.run();
+            }
+        });
         canvas.setCursor(Cursor.HAND);
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.SPACE)
                 emptinessScene.togglePause();
-            else if (e.getCode() == KeyCode.H) {
-                boolean visible = !settings.isVisible();
-                settings.setVisible(visible);
-                header.setVisible(visible);
-                help.setVisible(visible);
-            }
+            else if (e.getCode() == KeyCode.H)
+                togglePanels.run();
         });
 
         new AnimationTimer() {
