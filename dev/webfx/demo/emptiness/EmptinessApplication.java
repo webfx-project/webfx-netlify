@@ -56,18 +56,18 @@ public final class EmptinessApplication extends Application {
         settings.setVgap(8);
         int row = 0;
         addSlider(settings, row++, "Parts per sphere", 8, 500, emptinessScene.getPartsCount(),
-                v -> emptinessScene.setPartsCount((int) Math.round(v)), v -> Integer.toString((int) Math.round(v)), true);
+                v -> emptinessScene.setPartsCount((int) Math.round(v)), v -> Integer.toString((int) Math.round(v)));
         addSlider(settings, row++, "Spacing", 0, 1, emptinessScene.getSpacing(),
-                emptinessScene::setSpacing, v -> (int) Math.round(v * 100) + "%", true);
+                emptinessScene::setSpacing, v -> (int) Math.round(v * 100) + "%");
         addSlider(settings, row++, "Reveal distance", 1.6, 12, emptinessScene.getRevealDistance(),
-                emptinessScene::setRevealDistance, v -> format1(v) + " radii", false);
+                emptinessScene::setRevealDistance, v -> format1(v) + " radii");
         addSlider(settings, row++, "Colour variety", 0, 1, emptinessScene.getHueVariety(),
-                emptinessScene::setHueVariety, v -> (int) Math.round(v * 100) + "%", false);
+                emptinessScene::setHueVariety, v -> (int) Math.round(v * 100) + "%");
         addSlider(settings, row++, "Speed", 0, 0.5, emptinessScene.getSpeed(),
-                emptinessScene::setSpeed, v -> format1(v * 60) + " levels/min", false);
+                emptinessScene::setSpeed, v -> format1(v * 60) + " levels/min");
         // Stems: 0 (the default) = no stems
         addSlider(settings, row++, "Stem thickness", 0, 1, emptinessScene.getStemThickness(),
-                emptinessScene::setStemThickness, v -> (int) Math.round(v * 100) + "%", false);
+                emptinessScene::setStemThickness, v -> (int) Math.round(v * 100) + "%");
         settings.add(statsText, 0, row, 3, 1);
         settings.setPadding(new Insets(14));
         settings.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.06), new CornerRadii(10), null)));
@@ -126,19 +126,15 @@ public final class EmptinessApplication extends Application {
     }
 
     private static Slider addSlider(GridPane grid, int row, String label, double min, double max, double value,
-                                  DoubleConsumer setter, DoubleFunction<String> formatter, boolean applyWhenReleased) {
+                                  DoubleConsumer setter, DoubleFunction<String> formatter) {
         Text labelText = createText(label, Font.font("Helvetica", 13), TEXT_COLOR);
         Text valueText = createText(formatter.apply(value), Font.font("Helvetica", 13), DIM_TEXT_COLOR);
         Slider slider = new Slider(min, max, value);
         slider.setPrefWidth(180);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             valueText.setText(formatter.apply(newValue.doubleValue()));
-            if (!applyWhenReleased)
-                setter.accept(newValue.doubleValue());
+            setter.accept(newValue.doubleValue());
         });
-        // Some settings restart the scene, so we wait for the user to release the slider before applying them
-        if (applyWhenReleased)
-            slider.setOnMouseReleased(e -> setter.accept(slider.getValue()));
         grid.addRow(row, labelText, slider, valueText);
         return slider;
     }

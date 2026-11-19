@@ -194,11 +194,11 @@ final class EmptinessScene {
         return partsCount;
     }
 
+    // The parts count and the spacing restart the zoom, so they are applied only once the value has stopped changing
+    // for a moment (see applyPendingSettings()), not on each step of a slider drag.
     void setPartsCount(int partsCount) {
-        if (partsCount != this.partsCount) {
-            this.partsCount = partsCount;
-            restart();
-        }
+        pendingPartsCount = partsCount;
+        pendingSettingsMillis = System.currentTimeMillis();
     }
 
     double getSpacing() {
@@ -206,10 +206,32 @@ final class EmptinessScene {
     }
 
     void setSpacing(double spacing) {
-        if (spacing != this.spacing) {
-            this.spacing = spacing;
-            restart();
+        pendingSpacing = spacing;
+        pendingSettingsMillis = System.currentTimeMillis();
+    }
+
+    private static final long PENDING_SETTINGS_DELAY_MILLIS = 300;
+    private int pendingPartsCount = -1;
+    private double pendingSpacing = -1;
+    private long pendingSettingsMillis;
+
+    private void applyPendingSettings() {
+        if (pendingPartsCount < 0 && pendingSpacing < 0
+                || System.currentTimeMillis() - pendingSettingsMillis < PENDING_SETTINGS_DELAY_MILLIS)
+            return;
+        boolean changed = false;
+        if (pendingPartsCount >= 0 && pendingPartsCount != partsCount) {
+            partsCount = pendingPartsCount;
+            changed = true;
         }
+        if (pendingSpacing >= 0 && pendingSpacing != spacing) {
+            spacing = pendingSpacing;
+            changed = true;
+        }
+        pendingPartsCount = -1;
+        pendingSpacing = -1;
+        if (changed)
+            restart();
     }
 
     double getRevealDistance() {
@@ -387,13 +409,40 @@ final class EmptinessScene {
     void onAnimationFrame(long nowNanos) {
         if (gl == null)
             return;
+        // When the GPU takes too long, the browser can drop the WebGL context: every draw then silently does nothing
+        // (no exception), so the last image stays frozen until the page is reloaded
+        if (gl.isContextLost()) {
+            if (!contextLostLogged) {
+                contextLostLogged = true;
+                Console.log("Emptiness: the WebGL context was lost (GPU overloaded?) - reload the page to restart the demo");
+            }
+            return;
+        }
         double deltaSeconds = lastFrameNanos == 0 ? 0 : Math.min(0.1, (nowNanos - lastFrameNanos) / 1e9);
         lastFrameNanos = nowNanos;
-        if (!paused)
-            advance(speed * deltaSeconds);
-        computeCamera();
-        drawScene();
+        // An exception escaping from here would stop the WebFX animation loop for good (the next frame is scheduled
+        // only after this one returns normally), so it is logged and the zoom is restarted instead.
+        try {
+            applyPendingSettings();
+            if (!paused)
+                advance(speed * deltaSeconds);
+            computeCamera();
+            drawScene();
+        } catch (Throwable e) {
+            if (++frameErrorCount <= 3) {
+                Console.log("Emptiness animation frame error (restarting the zoom): " + e);
+                e.printStackTrace();
+            }
+            try {
+                restart();
+            } catch (Throwable restartError) {
+                Console.log("Emptiness restart error: " + restartError);
+            }
+        }
     }
+
+    private int frameErrorCount;
+    private boolean contextLostLogged;
 
     private void drawScene() {
         int width = gl.getDrawingBufferWidth(), height = gl.getDrawingBufferHeight();

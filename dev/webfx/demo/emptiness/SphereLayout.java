@@ -15,7 +15,8 @@ import java.util.Random;
 final class SphereLayout {
 
     // Fraction of the sphere volume occupied by its parts, from tight (no spacing) to sparse (max spacing)
-    static final double TIGHT_PACKING = 0.27, SPARSE_PACKING = 0.04;
+    // (the sparse packing is what a spacing of 150% gave with the first range, 27% to 4%)
+    static final double TIGHT_PACKING = 0.27, SPARSE_PACKING = TIGHT_PACKING * Math.pow(0.04 / TIGHT_PACKING, 1.5); // ~1.5%
     // Minimal distance between parts, as a factor of the average space available for each part
     private static final double EVEN_SPREAD = 0.85;
     // Minimal gap between two parts, as a factor of their diameter
