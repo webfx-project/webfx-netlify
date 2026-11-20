@@ -1,5 +1,6 @@
 package dev.webfx.demo.emptiness;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -57,22 +58,46 @@ final class SphereLayout {
         // Parts not closer than GAP times their diameter, and spread evenly (so the stems between them can be seen)
         double averageSpace = Math.cbrt(4 * Math.PI / 3 * maxCenterRadius * maxCenterRadius * maxCenterRadius / n);
         double minDistance = Math.max(2 * r * GAP, EVEN_SPREAD * averageSpace), minDistance2 = minDistance * minDistance;
+        // Only close parts can push each other, so the parts are sorted into a grid of cells of minDistance size, and each
+        // part is only compared with the parts of its cell and of the neighbouring cells (instead of all the parts).
+        int g = Math.max(1, (int) Math.ceil(2 / minDistance)); // cells per axis (the parts are in the [-1, 1] cube)
+        int[] cellStart = new int[g * g * g + 1], cellFill = new int[g * g * g], cellParts = new int[n], partCell = new int[n];
         for (int iteration = 0; iteration < RELAXATION_ITERATIONS; iteration++) {
             boolean moved = false;
+            // Sorting the parts into the cells (counting sort)
+            Arrays.fill(cellStart, 0);
             for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    double dx = cx[j] - cx[i], dy = cy[j] - cy[i], dz = cz[j] - cz[i];
-                    double d2 = dx * dx + dy * dy + dz * dz;
-                    if (d2 < minDistance2) {
-                        double d = Math.sqrt(d2);
-                        if (d < 1e-9) { // same position => random direction
-                            dx = random.nextDouble() - 0.5; dy = random.nextDouble() - 0.5; dz = random.nextDouble() - 0.5;
-                            d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                partCell[i] = cellOf(cx[i], g) + g * (cellOf(cy[i], g) + g * cellOf(cz[i], g));
+                cellStart[partCell[i] + 1]++;
+            }
+            for (int c = 0; c < g * g * g; c++)
+                cellStart[c + 1] += cellStart[c];
+            System.arraycopy(cellStart, 0, cellFill, 0, g * g * g);
+            for (int i = 0; i < n; i++)
+                cellParts[cellFill[partCell[i]]++] = i;
+            for (int i = 0; i < n; i++) {
+                int ci = partCell[i], ix = ci % g, iy = ci / g % g, iz = ci / (g * g);
+                for (int nz = Math.max(0, iz - 1); nz <= Math.min(g - 1, iz + 1); nz++)
+                for (int ny = Math.max(0, iy - 1); ny <= Math.min(g - 1, iy + 1); ny++)
+                for (int nx = Math.max(0, ix - 1); nx <= Math.min(g - 1, ix + 1); nx++) {
+                    int c = nx + g * (ny + g * nz);
+                    for (int p = cellStart[c]; p < cellStart[c + 1]; p++) {
+                        int j = cellParts[p];
+                        if (j <= i) // each pair once
+                            continue;
+                        double dx = cx[j] - cx[i], dy = cy[j] - cy[i], dz = cz[j] - cz[i];
+                        double d2 = dx * dx + dy * dy + dz * dz;
+                        if (d2 < minDistance2) {
+                            double d = Math.sqrt(d2);
+                            if (d < 1e-9) { // same position => random direction
+                                dx = random.nextDouble() - 0.5; dy = random.nextDouble() - 0.5; dz = random.nextDouble() - 0.5;
+                                d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                            }
+                            double push = (minDistance - Math.sqrt(d2)) / 2 / d;
+                            cx[i] -= dx * push; cy[i] -= dy * push; cz[i] -= dz * push;
+                            cx[j] += dx * push; cy[j] += dy * push; cz[j] += dz * push;
+                            moved = true;
                         }
-                        double push = (minDistance - Math.sqrt(d2)) / 2 / d;
-                        cx[i] -= dx * push; cy[i] -= dy * push; cz[i] -= dz * push;
-                        cx[j] += dx * push; cy[j] += dy * push; cz[j] += dz * push;
-                        moved = true;
                     }
                 }
             }
@@ -108,18 +133,10 @@ final class SphereLayout {
                 }
             }
         }
-        int[] order = new int[count];
+        Integer[] order = new Integer[count];
         for (int k = 0; k < count; k++)
             order[k] = k;
-        for (int k = 1; k < count; k++) { // insertion sort by length
-            int o = order[k];
-            int m = k - 1;
-            while (m >= 0 && pairLength[order[m]] > pairLength[o]) {
-                order[m + 1] = order[m];
-                m--;
-            }
-            order[m + 1] = o;
-        }
+        Arrays.sort(order, (k1, k2) -> Double.compare(pairLength[k1], pairLength[k2])); // by length (stable sort)
         int[] stemsPerPart = new int[n];
         int[] a = new int[count], b = new int[count];
         int stems = 0;
@@ -134,5 +151,10 @@ final class SphereLayout {
         stemA = new int[stems]; stemB = new int[stems];
         System.arraycopy(a, 0, stemA, 0, stems);
         System.arraycopy(b, 0, stemB, 0, stems);
+    }
+
+    // Index (0 to g - 1) of the grid cell containing the coordinate v (in [-1, 1])
+    private static int cellOf(double v, int g) {
+        return Math.max(0, Math.min(g - 1, (int) ((v + 1) / 2 * g)));
     }
 }

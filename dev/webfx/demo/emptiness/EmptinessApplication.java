@@ -55,12 +55,10 @@ public final class EmptinessApplication extends Application {
         settings.setHgap(12);
         settings.setVgap(8);
         int row = 0;
-        addSlider(settings, row++, "Parts per sphere", 8, 1000, emptinessScene.getPartsCount(),
+        addSlider(settings, row++, "Parts per sphere", 8, 2000, emptinessScene.getPartsCount(),
                 v -> emptinessScene.setPartsCount((int) Math.round(v)), v -> Integer.toString((int) Math.round(v)));
         addSlider(settings, row++, "Spacing", 0, 1, emptinessScene.getSpacing(),
                 emptinessScene::setSpacing, v -> (int) Math.round(v * 100) + "%");
-        addSlider(settings, row++, "Reveal distance", 1.6, 12, emptinessScene.getRevealDistance(),
-                emptinessScene::setRevealDistance, v -> format1(v) + " radii");
         addSlider(settings, row++, "Colour variety", 0, 1, emptinessScene.getHueVariety(),
                 emptinessScene::setHueVariety, v -> (int) Math.round(v * 100) + "%");
         addSlider(settings, row++, "Speed", 0, 0.5, emptinessScene.getSpeed(),
@@ -68,6 +66,15 @@ public final class EmptinessApplication extends Application {
         // Stems: 0 (the default) = no stems
         addSlider(settings, row++, "Stem thickness", 0, 1, emptinessScene.getStemThickness(),
                 emptinessScene::setStemThickness, v -> (int) Math.round(v * 100) + "%");
+        // Reveal size: how big (diameter, in % of the window height, shown as "% of window") a sphere looks when it dissolves into its parts
+        addSlider(settings, row++, "Reveal size", 0.10, 0.55, emptinessScene.getRevealSize(),
+                emptinessScene::setRevealSize, v -> (int) Math.round(v * 100) + "% of window");
+        // Reveal target only: only the spheres on the dive path reveal their parts (less GPU usage with many parts)
+        Switch revealTargetOnlySwitch = new Switch();
+        revealTargetOnlySwitch.setCursor(Cursor.HAND);
+        revealTargetOnlySwitch.setSelected(emptinessScene.isRevealTargetOnly());
+        revealTargetOnlySwitch.selectedProperty().addListener((observable, oldValue, selected) -> emptinessScene.setRevealTargetOnly(selected));
+        settings.addRow(row++, createText("Reveal target only", Font.font("Helvetica", 13), TEXT_COLOR), revealTargetOnlySwitch);
         settings.add(statsText, 0, row, 3, 1);
         settings.setPadding(new Insets(14));
         settings.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.06), new CornerRadii(10), null)));
