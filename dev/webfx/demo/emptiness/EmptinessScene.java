@@ -202,7 +202,8 @@ final class EmptinessScene {
         for (int i = 0; i < 2; i++)
             opaqueStemDraws[i] = new double[DRAW_STRIDE * 1024];
         setRevealSize(revealSize);
-        restart();
+        // Note: the zoom is started on the first frame (see onAnimationFrame()), so the settings set before (such as
+        // the ones restored from the local storage) apply to the first sphere too.
     }
 
     boolean isWebGLAvailable() {
@@ -218,6 +219,10 @@ final class EmptinessScene {
     // The parts count and the spacing change the layouts (see changeLayouts()), so they are applied only once the value has stopped changing
     // for a moment (see applyPendingSettings()), not on each step of a slider drag.
     void setPartsCount(int partsCount) {
+        if (!started) { // not started yet => simply used when starting
+            this.partsCount = partsCount;
+            return;
+        }
         pendingPartsCount = partsCount;
         pendingSettingsMillis = System.currentTimeMillis();
     }
@@ -227,11 +232,16 @@ final class EmptinessScene {
     }
 
     void setSpacing(double spacing) {
+        if (!started) { // not started yet => simply used when starting
+            this.spacing = spacing;
+            return;
+        }
         pendingSpacing = spacing;
         pendingSettingsMillis = System.currentTimeMillis();
     }
 
     private static final long PENDING_SETTINGS_DELAY_MILLIS = 300;
+    private boolean started; // true once the zoom has started (on the first frame)
     private int pendingPartsCount = -1;
     private double pendingSpacing = -1;
     private long pendingSettingsMillis;
@@ -496,6 +506,10 @@ final class EmptinessScene {
         // An exception escaping from here would stop the WebFX animation loop for good (the next frame is scheduled
         // only after this one returns normally), so it is logged and the zoom is restarted instead.
         try {
+            if (!started) {
+                started = true;
+                restart();
+            }
             applyPendingSettings();
             if (!paused)
                 advance(speed * deltaSeconds);
