@@ -1,5 +1,6 @@
 package dev.webfx.demo.emptiness;
 
+import dev.webfx.kit.launcher.WebFxKitLauncher;
 import dev.webfx.platform.console.Console;
 import dev.webfx.platform.storage.LocalStorage;
 import javafx.animation.AnimationTimer;
@@ -93,6 +94,12 @@ public final class EmptinessApplication extends Application {
         HBox presetButtons = new HBox(8);
         for (int i = 1; i <= PRESETS_COUNT; i++)
             presetButtons.getChildren().add(createPresetButton(i, sliders, revealTargetOnlySwitch));
+        // Install button (at the end of the presets row): shown only when the browser can install the app (PWA) and the
+        // app is not already installed (ex: Chrome on Android or desktop, but never Safari, which has no install prompt)
+        Region installSpacer = new Region();
+        HBox.setHgrow(installSpacer, Priority.ALWAYS);
+        StackPane installButton = createInstallButton();
+        presetButtons.getChildren().addAll(installSpacer, installButton);
         // First start (no setting saved yet) => starting with the first start preset
         boolean firstStart = loadText(SELECTED_PRESET_KEY) == null && loadText(REVEAL_TARGET_ONLY_KEY) == null
                 && sliders.keySet().stream().allMatch(key -> loadText(key) == null);
@@ -269,6 +276,30 @@ public final class EmptinessApplication extends Application {
         }
         applyingPreset = false;
         selectPreset(number);
+    }
+
+    private static StackPane createInstallButton() {
+        StackPane button = new StackPane(createText("Install app", Font.font("Helvetica", FontWeight.BOLD, 12), TEXT_COLOR));
+        button.setPadding(new Insets(0, 10, 0, 10));
+        button.setMinHeight(24);
+        button.setBackground(PRESET_SELECTED_BACKGROUND);
+        button.setCursor(Cursor.HAND);
+        button.setOnMouseClicked(e -> {
+            e.consume();
+            WebFxKitLauncher.promptAppInstall();
+        });
+        Runnable updateVisibility = () -> {
+            boolean visible = WebFxKitLauncher.supportsAppInstall()
+                    && WebFxKitLauncher.isAppInstallPromptReady()
+                    && !WebFxKitLauncher.isAppInstalled()
+                    && !WebFxKitLauncher.isRunningAsInstalledApp();
+            button.setVisible(visible);
+            button.setManaged(visible);
+        };
+        updateVisibility.run();
+        WebFxKitLauncher.appInstallPromptReadyProperty().addListener((observable, oldValue, newValue) -> updateVisibility.run());
+        WebFxKitLauncher.appInstalledProperty().addListener((observable, oldValue, newValue) -> updateVisibility.run());
+        return button;
     }
 
     private static Background presetBackground(Color color) {

@@ -1,0 +1,28 @@
+{
+  "id": "dev.webfx.demo.emptiness",
+  "name": "Emptiness",
+  "short_name": "Emptiness",
+  "description": "A WebGL demo illustrating the emptiness of phenomena, coded with WebFX",
+  "categories": ["education", "demo"],
+  "start_url": "./",
+  "display": "fullscreen",
+  "background_color": "#04050b",
+  "theme_color": "#04050b",
+  "icons": [
+    {
+      "src": "./AppIcon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./AppIcon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./AppIcon-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
