@@ -79,21 +79,10 @@ public final class EmptinessApplication extends Application {
         // Reveal size: how big (diameter, in % of the window height, shown as "% of window") a sphere looks when it dissolves into its parts
         addSlider(settings, sliders, row++, "revealSize", "Reveal size", 0.10, 0.55, emptinessScene.getRevealSize(),
                 emptinessScene::setRevealSize, v -> (int) Math.round(v * 100) + "% of window");
-        // Reveal target only: only the spheres on the dive path reveal their parts (less GPU usage with many parts)
-        Switch revealTargetOnlySwitch = new Switch();
-        revealTargetOnlySwitch.setCursor(Cursor.HAND);
-        boolean revealTargetOnly = loadSetting(REVEAL_TARGET_ONLY_KEY, emptinessScene.isRevealTargetOnly() ? 1 : 0, 0, 1) == 1;
-        emptinessScene.setRevealTargetOnly(revealTargetOnly);
-        revealTargetOnlySwitch.setSelected(revealTargetOnly);
-        revealTargetOnlySwitch.selectedProperty().addListener((observable, oldValue, selected) -> {
-            emptinessScene.setRevealTargetOnly(selected);
-            saveSetting(REVEAL_TARGET_ONLY_KEY, selected ? 1 : 0);
-        });
-        settings.addRow(row++, createText("Reveal target only", Font.font("Helvetica", 13), TEXT_COLOR), revealTargetOnlySwitch);
         // Presets: a click loads the preset, a Ctrl (or Cmd) click saves the current settings into it
         HBox presetButtons = new HBox(8);
         for (int i = 1; i <= PRESETS_COUNT; i++)
-            presetButtons.getChildren().add(createPresetButton(i, sliders, revealTargetOnlySwitch));
+            presetButtons.getChildren().add(createPresetButton(i, sliders));
         // Install button (at the end of the presets row): shown only when the browser can install the app (PWA) and the
         // app is not already installed (ex: Chrome on Android or desktop, but never Safari, which has no install prompt)
         Region installSpacer = new Region();
@@ -101,14 +90,13 @@ public final class EmptinessApplication extends Application {
         StackPane installButton = createInstallButton();
         presetButtons.getChildren().addAll(installSpacer, installButton);
         // First start (no setting saved yet) => starting with the first start preset
-        boolean firstStart = loadText(SELECTED_PRESET_KEY) == null && loadText(REVEAL_TARGET_ONLY_KEY) == null
+        boolean firstStart = loadText(SELECTED_PRESET_KEY) == null
                 && sliders.keySet().stream().allMatch(key -> loadText(key) == null);
         // The selected preset (remembered like the settings) is unselected as soon as a setting is changed by hand
         selectPreset((int) loadSetting(SELECTED_PRESET_KEY, 0, 0, PRESETS_COUNT));
         if (firstStart)
-            applyPreset(FIRST_START_PRESET, sliders, revealTargetOnlySwitch);
+            applyPreset(FIRST_START_PRESET, sliders);
         sliders.values().forEach(slider -> slider.valueProperty().addListener((observable, oldValue, newValue) -> onSettingChangedByHand()));
-        revealTargetOnlySwitch.selectedProperty().addListener((observable, oldValue, selected) -> onSettingChangedByHand());
         settings.add(createText("Presets", Font.font("Helvetica", 13), TEXT_COLOR), 0, 0);
         settings.add(presetButtons, 1, 0, 2, 1);
         settings.add(statsText, 0, row, 3, 1);
@@ -207,15 +195,14 @@ public final class EmptinessApplication extends Application {
     // The hardcoded presets (in the format logged when saving a preset in learning mode). A preset saved in the local
     // storage (Ctrl or Cmd click) replaces its hardcoded value.
     private static final String[] DEFAULT_PRESETS = {
-            "partsCount=8;spacing=0.5;hueVariety=1;speed=0.33;stemThickness=0.05;revealSize=0.1;revealTargetOnly=0",
-            "partsCount=81;spacing=0.5;hueVariety=0.6;speed=0.33;stemThickness=0.05;revealSize=0.1;revealTargetOnly=0",
-            "partsCount=1040;spacing=0.66;hueVariety=0.5;speed=0.24;stemThickness=0;revealSize=0.24;revealTargetOnly=0",
-            "partsCount=2000;spacing=0.53;hueVariety=0.5;speed=0.33;stemThickness=0;revealSize=0.22;revealTargetOnly=0",
-            "partsCount=2000;spacing=1;hueVariety=0.5;speed=0.28;stemThickness=0;revealSize=0.36;revealTargetOnly=0",
+            "partsCount=8;spacing=0.5;hueVariety=1;speed=0.33;stemThickness=0.05;revealSize=0.1",
+            "partsCount=81;spacing=0.5;hueVariety=0.6;speed=0.33;stemThickness=0.05;revealSize=0.1",
+            "partsCount=1040;spacing=0.66;hueVariety=0.5;speed=0.24;stemThickness=0;revealSize=0.24",
+            "partsCount=2000;spacing=0.53;hueVariety=0.5;speed=0.33;stemThickness=0;revealSize=0.22",
+            "partsCount=2000;spacing=1;hueVariety=0.5;speed=0.28;stemThickness=0;revealSize=0.36",
     };
     private static final int PRESETS_COUNT = DEFAULT_PRESETS.length;
-    private static final int FIRST_START_PRESET = 2; // the preset applied when no setting is saved yet
-    private static final String REVEAL_TARGET_ONLY_KEY = "revealTargetOnly";
+    private static final int FIRST_START_PRESET = 3; // the preset applied when no setting is saved yet
     private static final Background PRESET_BACKGROUND = presetBackground(Color.rgb(255, 255, 255, 0.12));
     private static final Background PRESET_SELECTED_BACKGROUND = presetBackground(Color.rgb(10, 132, 255));
     private static final Background PRESET_SAVED_BACKGROUND = presetBackground(Color.rgb(80, 200, 120, 0.8));
@@ -227,7 +214,7 @@ public final class EmptinessApplication extends Application {
 
     // Learning mode: the presets are saved in the local storage (Ctrl or Cmd click). Each save also logs the preset in
     // the console, in the format a preset is stored, so it can be copied to be hardcoded later.
-    private StackPane createPresetButton(int number, Map<String, Slider> sliders, Switch revealTargetOnlySwitch) {
+    private StackPane createPresetButton(int number, Map<String, Slider> sliders) {
         StackPane button = new StackPane(createText(Integer.toString(number), Font.font("Helvetica", FontWeight.BOLD, 13), TEXT_COLOR));
         button.setMinSize(30, 24);
         button.setPrefSize(30, 24);
@@ -239,14 +226,13 @@ public final class EmptinessApplication extends Application {
             e.consume(); // not a tap on the canvas (no pause)
             if (e.isControlDown() || e.isMetaDown()) { // Save
                 StringBuilder sb = new StringBuilder();
-                sliders.forEach((key, slider) -> sb.append(key).append('=').append(slider.getValue()).append(';'));
-                sb.append(REVEAL_TARGET_ONLY_KEY).append('=').append(revealTargetOnlySwitch.isSelected() ? 1 : 0);
+                sliders.forEach((key, slider) -> sb.append(sb.length() == 0 ? "" : ";").append(key).append('=').append(slider.getValue()));
                 saveText(storageKey, sb.toString());
                 Console.log("Emptiness preset " + number + ": \"" + sb + "\"");
                 selectPreset(number); // (the current settings are now that preset)
                 flash(button, PRESET_SAVED_BACKGROUND);
             } else // Load
-                applyPreset(number, sliders, revealTargetOnlySwitch);
+                applyPreset(number, sliders);
         });
         // On macOS, a Ctrl click is also a right click: consuming the context menu event prevents the browser menu
         button.setOnContextMenuRequested(Event::consume);
@@ -254,7 +240,7 @@ public final class EmptinessApplication extends Application {
     }
 
     // Applies the preset (saved in the local storage, or its hardcoded value otherwise) and selects it
-    private void applyPreset(int number, Map<String, Slider> sliders, Switch revealTargetOnlySwitch) {
+    private void applyPreset(int number, Map<String, Slider> sliders) {
         String preset = loadText("preset" + number);
         if (preset == null)
             preset = DEFAULT_PRESETS[number - 1];
@@ -267,10 +253,8 @@ public final class EmptinessApplication extends Application {
             try {
                 double value = Double.parseDouble(setting.substring(equals + 1));
                 Slider slider = sliders.get(key);
-                if (slider != null)
+                if (slider != null) // (a setting that no longer exists is skipped)
                     slider.setValue(value); // (clamped by the slider) => applied & saved by the slider listener
-                else if (key.equals(REVEAL_TARGET_ONLY_KEY))
-                    revealTargetOnlySwitch.setSelected(value == 1);
             } catch (NumberFormatException ignored) { // unreadable setting => skipped
             }
         }
