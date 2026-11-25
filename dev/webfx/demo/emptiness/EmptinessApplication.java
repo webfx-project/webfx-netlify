@@ -11,20 +11,25 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
 
@@ -88,7 +93,9 @@ public final class EmptinessApplication extends Application {
         Region installSpacer = new Region();
         HBox.setHgrow(installSpacer, Priority.ALWAYS);
         StackPane installButton = createInstallButton();
-        presetButtons.getChildren().addAll(installSpacer, installButton);
+        // Chevron to expand or collapse the detailed settings (after the preset buttons)
+        StackPane chevronButton = createChevronButton();
+        presetButtons.getChildren().addAll(chevronButton, installSpacer, installButton);
         // First start (no setting saved yet) => starting with the first start preset
         boolean firstStart = loadText(SELECTED_PRESET_KEY) == null
                 && sliders.keySet().stream().allMatch(key -> loadText(key) == null);
@@ -97,9 +104,36 @@ public final class EmptinessApplication extends Application {
         if (firstStart)
             applyPreset(FIRST_START_PRESET, sliders);
         sliders.values().forEach(slider -> slider.valueProperty().addListener((observable, oldValue, newValue) -> onSettingChangedByHand()));
+        settings.add(statsText, 0, row, 3, 1);
+        // The detailed settings (sliders & stats) are collapsed by default: most watchers only use the presets. They are
+        // removed from the grid when collapsed (rather than hidden), so that their rows leave no gaps.
+        List<Node> details = new ArrayList<>(settings.getChildren());
+        // The labels column keeps the width of the widest label, so the preset buttons don't move when expanding
+        double labelsWidth = 0;
+        for (Node node : details)
+            if (node instanceof Text && GridPane.getColumnIndex(node) == 0 && GridPane.getColumnSpan(node) == null)
+                labelsWidth = Math.max(labelsWidth, node.getLayoutBounds().getWidth());
+        ColumnConstraints labelsColumn = new ColumnConstraints();
+        labelsColumn.setMinWidth(labelsWidth);
+        settings.getColumnConstraints().add(labelsColumn);
         settings.add(createText("Presets", Font.font("Helvetica", 13), TEXT_COLOR), 0, 0);
         settings.add(presetButtons, 1, 0, 2, 1);
-        settings.add(statsText, 0, row, 3, 1);
+        Node chevron = chevronButton.getChildren().get(0);
+        Consumer<Boolean> setExpanded = expanded -> {
+            if (expanded)
+                settings.getChildren().addAll(details);
+            else
+                settings.getChildren().removeAll(details);
+            chevron.setRotate(expanded ? 90 : 0); // pointing right when collapsed, down when expanded
+            saveSetting(SETTINGS_EXPANDED_KEY, expanded ? 1 : 0);
+        };
+        boolean[] expanded = { loadSetting(SETTINGS_EXPANDED_KEY, 0, 0, 1) == 1 };
+        setExpanded.accept(expanded[0]);
+        chevronButton.setOnMouseClicked(e -> {
+            e.consume();
+            expanded[0] = !expanded[0];
+            setExpanded.accept(expanded[0]);
+        });
         settings.setPadding(new Insets(14));
         settings.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255, 0.06), new CornerRadii(10), null)));
         settings.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -260,6 +294,21 @@ public final class EmptinessApplication extends Application {
         }
         applyingPreset = false;
         selectPreset(number);
+    }
+
+    private static final String SETTINGS_EXPANDED_KEY = "settingsExpanded";
+
+    private static StackPane createChevronButton() {
+        SVGPath chevron = new SVGPath();
+        chevron.setContent("M 0 0 L 5 5 L 0 10");
+        chevron.setFill(Color.TRANSPARENT);
+        chevron.setStroke(TEXT_COLOR);
+        chevron.setStrokeWidth(2);
+        StackPane button = new StackPane(chevron);
+        button.setMinSize(30, 24);
+        button.setPrefSize(30, 24);
+        button.setCursor(Cursor.HAND);
+        return button;
     }
 
     private static StackPane createInstallButton() {
